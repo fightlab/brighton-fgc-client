@@ -16,8 +16,7 @@ const styles = theme => ({
   root: {
     width: '100%',
     height: 'inherit',
-    zIndex: 1,
-    overflow: 'hidden'
+    zIndex: 1
   },
   home: {
     textDecoration: 'none'
@@ -41,10 +40,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     width: '100%',
     padding: theme.spacing.unit * 3,
-    height: 'calc(100% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('md')]: {
-      height: 'calc(100% - 64px)',
       marginTop: 64
     }
   }

@@ -10,22 +10,12 @@ import './Home.css'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
+    backgroundColor: theme.palette.background.default,
     width: '100%',
     paddingTop: 16,
     paddingBottom: 16,
-    height: 'calc(100% - 56px)',
-    background:
-      `linear-gradient(
-        rgba(0, 0, 0, 0.7), 
-        rgba(0, 0, 0, 0.7)
-      ),
-      url("https://res.cloudinary.com/mkn-sh/image/upload/f_auto/v1514624353/fgc/hbk.jpg");`,
-    backgroundPosition: 'left',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
     marginTop: 56,
     [theme.breakpoints.up('md')]: {
-      height: 'calc(100% - 64px)',
       marginTop: 64
     }
   }),
