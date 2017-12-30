@@ -8,9 +8,15 @@ import Game from './Game/Game'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    height: '100%'
+    backgroundColor: theme.palette.background.default,
+    width: '100%',
+    padding: theme.spacing.unit * 3,
+    height: 'calc(100% - 56px)',
+    marginTop: 56,
+    [theme.breakpoints.up('md')]: {
+      height: 'calc(100% - 64px)',
+      marginTop: 64
+    }
   })
 })
 
