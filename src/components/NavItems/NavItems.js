@@ -17,7 +17,7 @@ export const topListItems = (
       </ListItemIcon>
       <ListItemText primary='Home' />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to='/about'>
       <ListItemIcon>
         <InfoOutlineIcon />
       </ListItemIcon>
@@ -28,25 +28,25 @@ export const topListItems = (
 
 export const otherListItems = (
   <div>
-    <ListItem button>
+    <ListItem button component={Link} to='/events'>
       <ListItemIcon>
         <DateRangeIcon />
       </ListItemIcon>
       <ListItemText primary='Events' />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to='/tournaments'>
       <ListItemIcon>
         <StarsIcom />
       </ListItemIcon>
       <ListItemText primary='Tournaments' />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to='/standings'>
       <ListItemIcon>
         <AssessmentIcon />
       </ListItemIcon>
       <ListItemText primary='Standings' />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to='/players'>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
