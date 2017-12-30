@@ -6,10 +6,12 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
-  flex: {
-    flex: 1
+  home: {
+    flex: 1,
+    textDecoration: 'none'
   },
   menuButton: {
     marginLeft: -12,
@@ -20,14 +22,16 @@ const styles = theme => ({
 class Header extends Component {
   render () {
     return (
-      <AppBar position='static'>
+      <AppBar position='static' color='primary'>
         <Toolbar>
           <IconButton className={this.props.classes.menuButton} color='contrast' aria-label='Menu'>
             <MenuIcon />
           </IconButton>
-          <Typography type='title' color='inherit' className={this.props.classes.flex}>
-            Brighton FGC
-          </Typography>
+          <Link to='/' className={this.props.classes.home}>
+            <Typography type='title' color='default'>
+              Habrewken
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
     )

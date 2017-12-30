@@ -1,5 +1,6 @@
 import React from 'react'
 import { hydrate } from 'react-dom'
+import BrowserRouter from 'react-router-dom/BrowserRouter'
 import theme from './theme'
 import { MuiThemeProvider } from 'material-ui/styles'
 import App from './App'
@@ -8,9 +9,11 @@ import App from './App'
 const sheetsManager = new WeakMap()
 
 hydrate(
-  <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-    <App />
-  </MuiThemeProvider>,
+  <BrowserRouter>
+    <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+      <App />
+    </MuiThemeProvider>
+  </BrowserRouter>,
   document.getElementById('root'),
   () => {
     // [ReHydratation](https://github.com/cssinjs/jss/blob/master/docs/ssr.md)

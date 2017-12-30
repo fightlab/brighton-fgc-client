@@ -1,11 +1,10 @@
 import { createMuiTheme } from 'material-ui/styles'
-import indigo from 'material-ui/colors/purple'
-import orange from 'material-ui/colors/orange'
+import { deepOrange, orange } from 'material-ui/colors'
 
 // Configure Material UI theme
 const theme = createMuiTheme({
   palette: {
-    primary: indigo,
+    primary: deepOrange,
     accent: orange,
     type: 'dark'
   }

@@ -6,6 +6,7 @@ import jss from './styles'
 import { SheetsRegistry, JssProvider } from 'react-jss'
 import { MuiThemeProvider } from 'material-ui/styles'
 import { renderToString } from 'react-dom/server'
+import { StaticRouter } from 'react-router-dom'
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
 
@@ -15,16 +16,19 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res) => {
+    const context = {}
     // This is needed in order to deduplicate the injection of CSS in the page.
     const sheetsManager = new WeakMap()
     // This is needed in order to inject the critical CSS.
     const sheetsRegistry = new SheetsRegistry()
     const markup = renderToString(
-      <JssProvider registry={sheetsRegistry} jss={jss}>
-        <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-          <App />
-        </MuiThemeProvider>
-      </JssProvider>
+      <StaticRouter context={context} location={req.url}>
+        <JssProvider registry={sheetsRegistry} jss={jss}>
+          <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+            <App />
+          </MuiThemeProvider>
+        </JssProvider>
+      </StaticRouter>
     )
     const css = sheetsRegistry.toString()
     res.send(
@@ -33,7 +37,7 @@ server
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charSet='utf-8' />
-    <title>Brighton FGC</title>
+    <title>Habrewken - Brighton FGC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500">
     ${assets.client.css
