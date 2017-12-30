@@ -18,10 +18,6 @@ const styles = theme => ({
 })
 
 class Header extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     return (
       <AppBar position='static'>
