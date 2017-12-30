@@ -26,3 +26,8 @@ body {
 .footer {
   flex: 0 1 40px;
 }
+
+.no-decor {
+  text-decoration: none;
+  color: inherit;
+}
