@@ -8,6 +8,7 @@ import Tournaments from './Tournaments/Tournaments'
 import Players from './Players/Players'
 import Standings from './Standings/Standings'
 import About from './About/About'
+import Login from './Login/Login'
 
 const Main = () => (
   <Switch>
@@ -18,6 +19,7 @@ const Main = () => (
     <Route path='/players' component={Players} />
     <Route path='/standings' component={Standings} />
     <Route path='/about' component={About} />
+    <Route path='/login' component={Login} />
   </Switch>
 )
 

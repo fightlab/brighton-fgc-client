@@ -2,16 +2,21 @@ import './App.css'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import { Drawer, List, Hidden, Divider } from 'material-ui'
+import { Drawer, Hidden, Divider } from 'material-ui'
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import LoginVariantIcon from 'mdi-material-ui/LoginVariant'
+import LogoutVariantIcon from 'mdi-material-ui/LogoutVariant'
+import { withCookies } from 'react-cookie'
+import { Link } from 'react-router-dom'
 
+// components
 import { topListItems, otherListItems } from './components/NavItems/NavItems'
-
 import Header from './components/Header/Header'
 
+// routes
 import Main from './routes/Main'
 
 const drawerWidth = 240
-
 const styles = theme => ({
   root: {
     width: '100%',
@@ -56,6 +61,12 @@ class App extends React.Component {
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this)
   }
 
+  componentWillMount () {
+    const { cookies } = this.props
+    const token = cookies.get('token')
+    this.setState({ token })
+  }
+
   handleDrawerToggle () {
     this.setState({ mobileOpen: !this.state.mobileOpen })
   }
@@ -70,6 +81,24 @@ class App extends React.Component {
         <List>{topListItems}</List>
         <Divider />
         <List>{otherListItems}</List>
+        <Divider />
+        <List>
+          {
+            this.state.token
+              ? <ListItem button>
+                <ListItemIcon>
+                  <LogoutVariantIcon />
+                </ListItemIcon>
+                <ListItemText primary='Logout' />
+              </ListItem>
+              : <ListItem button component={Link} to='/login'>
+                <ListItemIcon>
+                  <LoginVariantIcon />
+                </ListItemIcon>
+                <ListItemText primary='Login' />
+              </ListItem>
+          }
+        </List>
       </div>
     )
 
@@ -114,7 +143,8 @@ class App extends React.Component {
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired,
+  cookies: PropTypes.any.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(App)
+export default withStyles(styles, { withTheme: true })(withCookies(App))

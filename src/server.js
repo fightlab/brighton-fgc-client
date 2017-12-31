@@ -7,6 +7,8 @@ import { SheetsRegistry, JssProvider } from 'react-jss'
 import { MuiThemeProvider } from 'material-ui/styles'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
+import { CookiesProvider } from 'react-cookie'
+import cookiesMiddleware from 'universal-cookie-express'
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
 
@@ -15,20 +17,24 @@ const server = express()
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+  .use(cookiesMiddleware())
   .get('/*', (req, res) => {
     const context = {}
     // This is needed in order to deduplicate the injection of CSS in the page.
     const sheetsManager = new WeakMap()
     // This is needed in order to inject the critical CSS.
     const sheetsRegistry = new SheetsRegistry()
+
     const markup = renderToString(
-      <StaticRouter context={context} location={req.url}>
-        <JssProvider registry={sheetsRegistry} jss={jss}>
-          <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-            <App />
-          </MuiThemeProvider>
-        </JssProvider>
-      </StaticRouter>
+      <CookiesProvider cookies={req.universalCookies}>
+        <StaticRouter context={context} location={req.url}>
+          <JssProvider registry={sheetsRegistry} jss={jss}>
+            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+              <App />
+            </MuiThemeProvider>
+          </JssProvider>
+        </StaticRouter>
+      </CookiesProvider>
     )
     const css = sheetsRegistry.toString()
     res.send(
