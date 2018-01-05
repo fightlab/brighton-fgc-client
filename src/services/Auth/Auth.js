@@ -1,18 +1,13 @@
+import axios from 'axios'
+
 class Auth {
-  static authenticateUser (token) {
-    window.localStorage.setItem('token', token)
-  }
-
-  static isUserAuthenticated () {
-    return window.localStorage.getItem('token') !== null
-  }
-
-  static deauthenticateUser () {
-    window.localStorage.removeItem('token')
-  }
-
-  static getToken () {
-    return window.localStorage.getItem('token')
+  static Login (username, password) {
+    return axios
+      .post('http://0.0.0.0:9000/auth', {}, {
+        auth: {
+          username, password
+        }
+      })
   }
 }
 

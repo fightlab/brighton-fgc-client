@@ -1,8 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography, Paper, Card, Button } from 'material-ui'
+import { CardContent } from 'material-ui/Card'
 import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
+
+import Auth from '../../services/Auth/Auth'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -13,7 +16,11 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       marginTop: 64
     }
-  })
+  }),
+  card: {
+    maxWidth: 345,
+    textAlign: 'center'
+  }
 })
 
 class Login extends React.Component {
@@ -38,42 +45,47 @@ class Login extends React.Component {
 
   processForm (event) {
     event.preventDefault()
+    console.log(this.state.user)
+    const promise = Auth.Login(this.state.user.email, this.state.user.password)
+    promise.then(console.log).catch(console.log)
   }
 
   render () {
     const { classes } = this.props
     return (
       <Paper className={classes.root} elevation={0}>
-        <Card>
-          <Typography type='title' component='h1'>
-            Login
-          </Typography>
-          <form name='form' onSubmit={this.processForm} noValidate>
-            <br />
-            <TextField
-              name='email'
-              id='email'
-              label='Email'
-              type='text'
-              autoComplete='username email'
-              margin='normal'
-              onChange={this.handleChange}
-            />
-            <br />
-            <TextField
-              name='password'
-              id='password'
-              label='Password'
-              type='password'
-              autoComplete='current-password'
-              margin='normal'
-              onChange={this.handleChange}
-            />
-            <br />
-            <Button raised color='primary' type='submit'>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography type='title' component='h1'>
               Login
-            </Button>
-          </form>
+            </Typography>
+            <form name='form' onSubmit={this.processForm} noValidate>
+              <br />
+              <TextField
+                name='email'
+                id='email'
+                label='Email'
+                type='text'
+                autoComplete='username email'
+                margin='normal'
+                onChange={this.handleChange}
+              />
+              <br />
+              <TextField
+                name='password'
+                id='password'
+                label='Password'
+                type='password'
+                autoComplete='current-password'
+                margin='normal'
+                onChange={this.handleChange}
+              />
+              <br />
+              <Button raised color='primary' type='submit'>
+              Login
+              </Button>
+            </form>
+          </CardContent>
         </Card>
       </Paper>
     )
