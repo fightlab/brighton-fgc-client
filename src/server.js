@@ -9,8 +9,11 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import { CookiesProvider } from 'react-cookie'
 import cookiesMiddleware from 'universal-cookie-express'
+import { Provider } from 'react-redux'
+import configureStore from './store/configureStore'
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
+const store = configureStore()
 
 const server = express()
 
@@ -26,15 +29,17 @@ server
     const sheetsRegistry = new SheetsRegistry()
 
     const markup = renderToString(
-      <CookiesProvider cookies={req.universalCookies}>
-        <StaticRouter context={context} location={req.url}>
-          <JssProvider registry={sheetsRegistry} jss={jss}>
-            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-              <App />
-            </MuiThemeProvider>
-          </JssProvider>
-        </StaticRouter>
-      </CookiesProvider>
+      <Provider store={store}>
+        <CookiesProvider cookies={req.universalCookies}>
+          <StaticRouter context={context} location={req.url}>
+            <JssProvider registry={sheetsRegistry} jss={jss}>
+              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                <App />
+              </MuiThemeProvider>
+            </JssProvider>
+          </StaticRouter>
+        </CookiesProvider>
+      </Provider>
     )
     const css = sheetsRegistry.toString()
     res.send(

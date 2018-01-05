@@ -4,8 +4,12 @@ import { Typography, Paper, Card, Button } from 'material-ui'
 import { CardContent } from 'material-ui/Card'
 import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 
-import Auth from '../../services/Auth/Auth'
+// import Auth from '../../services/Auth/Auth'
+import { loginUser } from '../../actions/index'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -45,13 +49,14 @@ class Login extends React.Component {
 
   processForm (event) {
     event.preventDefault()
-    console.log(this.state.user)
-    const promise = Auth.Login(this.state.user.email, this.state.user.password)
-    promise.then(console.log).catch(console.log)
+    const { dispatch } = this.props
+    dispatch(loginUser(this.state.user))
   }
 
   render () {
-    const { classes } = this.props
+    const { isAuthenticated, errorCode, errorMessage, classes } = this.props
+    console.log(errorCode)
+    console.log(errorMessage)
     return (
       <Paper className={classes.root} elevation={0}>
         <Card className={classes.card}>
@@ -87,13 +92,29 @@ class Login extends React.Component {
             </form>
           </CardContent>
         </Card>
+        {isAuthenticated && (
+          <Redirect to={'/'} />
+        )}
       </Paper>
     )
   }
 }
 
 Login.propTypes = {
-  classes: PropTypes.object.isRequired
+  dispatch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool,
+  errorMessage: PropTypes.any,
+  errorCode: PropTypes.any
 }
 
-export default withStyles(styles)(Login)
+const mapStateToProps = state => {
+  const { auth } = state
+  return {
+    isAuthenticated: auth.isAuthenticated,
+    errorMessage: auth.errorMessage,
+    errorCode: auth.errorCode
+  }
+}
+
+export default withStyles(styles)(withRouter(connect(mapStateToProps)(Login)))

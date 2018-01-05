@@ -5,13 +5,17 @@ import { withStyles } from 'material-ui/styles'
 import { Drawer, Hidden, Divider } from 'material-ui'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import LoginVariantIcon from 'mdi-material-ui/LoginVariant'
-import LogoutVariantIcon from 'mdi-material-ui/LogoutVariant'
 import { withCookies } from 'react-cookie'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+// actions
+import { logoutUser } from './actions'
 
 // components
 import { topListItems, otherListItems } from './components/NavItems/NavItems'
 import Header from './components/Header/Header'
+import Logout from './components/Logout'
 
 // routes
 import Main from './routes/Main'
@@ -72,8 +76,7 @@ class App extends React.Component {
   }
 
   render () {
-    const { classes, theme } = this.props
-
+    const { dispatch, isAuthenticated, classes, theme } = this.props
     const drawer = (
       <div>
         <div className={classes.drawerHeader} />
@@ -84,13 +87,8 @@ class App extends React.Component {
         <Divider />
         <List>
           {
-            this.state.token
-              ? <ListItem button>
-                <ListItemIcon>
-                  <LogoutVariantIcon />
-                </ListItemIcon>
-                <ListItemText primary='Logout' />
-              </ListItem>
+            isAuthenticated
+              ? <Logout dispatch={dispatch} onLogoutClick={logoutUser} />
               : <ListItem button component={Link} to='/login'>
                 <ListItemIcon>
                   <LoginVariantIcon />
@@ -144,7 +142,19 @@ class App extends React.Component {
 App.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
   cookies: PropTypes.any.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(withCookies(App))
+const mapStateToProps = state => {
+  console.log(state)
+  const { auth } = state
+  const { isAuthenticated } = auth
+
+  return {
+    isAuthenticated
+  }
+}
+
+export default withStyles(styles, { withTheme: true })(withCookies(withRouter(connect(mapStateToProps)(App))))
