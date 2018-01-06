@@ -15,7 +15,7 @@ const AdminRoute = ({ component: Component, ...rest }) => (
 )
 
 AdminRoute.propTypes = {
-  component: PropTypes.instanceOf(React.Component).isRequired,
+  component: PropTypes.any.isRequired,
   location: PropTypes.any
 }
 

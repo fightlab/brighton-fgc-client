@@ -8,14 +8,12 @@ class Logout extends Component {
     const { dispatch, onLogoutClick } = this.props
 
     return (
-      <div>
-        <ListItem button onClick={() => dispatch(onLogoutClick())}>
-          <ListItemIcon>
-            <LogoutVariantIcon />
-          </ListItemIcon>
-          <ListItemText primary='Logout' />
-        </ListItem>
-      </div>
+      <ListItem button onClick={() => dispatch(onLogoutClick())}>
+        <ListItemIcon>
+          <LogoutVariantIcon />
+        </ListItemIcon>
+        <ListItemText primary='Logout' />
+      </ListItem>
     )
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import AdminRoute from '../components/AdminRoute'
 
 import Home from './Home/Home'
 import Games from './Games/Games'
@@ -9,6 +10,7 @@ import Players from './Players/Players'
 import Standings from './Standings/Standings'
 import About from './About/About'
 import Login from './Login'
+import Admin from './Admin'
 
 const Main = () => (
   <Switch>
@@ -20,6 +22,7 @@ const Main = () => (
     <Route path='/standings' component={Standings} />
     <Route path='/about' component={About} />
     <Route path='/login' component={Login} />
+    <AdminRoute path='/admin' component={Admin} />
   </Switch>
 )
 

@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 )
 
 PrivateRoute.propTypes = {
-  component: PropTypes.instanceOf(React.Component).isRequired,
+  component: PropTypes.any.isRequired,
   location: PropTypes.any
 }
 

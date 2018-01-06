@@ -7,12 +7,13 @@ import List from 'material-ui/List'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 
 // actions
 import { userActions } from './_actions'
 
 // components
-import { topListItems, otherListItems } from './components/NavItems/NavItems'
+import { topListItems, otherListItems, adminItem } from './components/NavItems/NavItems'
 import Header from './components/Header/Header'
 import Logout from './components/Logout'
 import Login from './components/Login'
@@ -76,7 +77,7 @@ class App extends React.Component {
   }
 
   render () {
-    const { dispatch, isAuthenticated, classes, theme } = this.props
+    const { dispatch, isAuthenticated, classes, theme, isAdmin } = this.props
     const drawer = (
       <div>
         <div className={classes.drawerHeader} />
@@ -85,6 +86,10 @@ class App extends React.Component {
         <Divider />
         <List>{otherListItems}</List>
         <Divider />
+        {
+          isAdmin &&
+          <List>{adminItem}</List>
+        }
         <List>
           {
             isAuthenticated
@@ -115,7 +120,7 @@ class App extends React.Component {
               {drawer}
             </Drawer>
           </Hidden>
-          <Hidden mdDown implementation='css'>
+          <Hidden smDown implementation='css'>
             <Drawer
               style={{height: '100%'}}
               type='permanent'
@@ -137,18 +142,20 @@ class App extends React.Component {
 App.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   cookies: PropTypes.any.isRequired
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   const { auth } = state
-  const { isAuthenticated } = auth
+  const { isAuthenticated, user } = auth
+  const isAdmin = get(user, 'role') === 'admin'
 
   return {
-    isAuthenticated
+    isAuthenticated,
+    isAdmin
   }
 }
 
