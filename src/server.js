@@ -10,10 +10,9 @@ import { StaticRouter } from 'react-router-dom'
 import { CookiesProvider } from 'react-cookie'
 import cookiesMiddleware from 'universal-cookie-express'
 import { Provider } from 'react-redux'
-import configureStore from './store/configureStore'
+import { store } from './_store'
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
-const store = configureStore()
 
 const server = express()
 
@@ -58,6 +57,9 @@ server
       ${process.env.NODE_ENV === 'production'
     ? `<script src="${assets.client.js}" defer></script>`
     : `<script src="${assets.client.js}" defer crossorigin></script>`}
+    <style>
+    body {background-color: ${theme.palette.background.default};}
+    </style> 
   </head>
   <body>
     <div id="root" class="box">${markup}</div>

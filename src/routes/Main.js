@@ -8,7 +8,7 @@ import Tournaments from './Tournaments/Tournaments'
 import Players from './Players/Players'
 import Standings from './Standings/Standings'
 import About from './About/About'
-import Login from './Login/Login'
+import Login from './Login'
 
 const Main = () => (
   <Switch>

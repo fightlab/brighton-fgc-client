@@ -3,19 +3,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { Drawer, Hidden, Divider } from 'material-ui'
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
-import LoginVariantIcon from 'mdi-material-ui/LoginVariant'
+import List from 'material-ui/List'
 import { withCookies } from 'react-cookie'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // actions
-import { logoutUser } from './actions'
+import { userActions } from './_actions'
 
 // components
 import { topListItems, otherListItems } from './components/NavItems/NavItems'
 import Header from './components/Header/Header'
 import Logout from './components/Logout'
+import Login from './components/Login'
 
 // routes
 import Main from './routes/Main'
@@ -88,13 +88,8 @@ class App extends React.Component {
         <List>
           {
             isAuthenticated
-              ? <Logout dispatch={dispatch} onLogoutClick={logoutUser} />
-              : <ListItem button component={Link} to='/login'>
-                <ListItemIcon>
-                  <LoginVariantIcon />
-                </ListItemIcon>
-                <ListItemText primary='Login' />
-              </ListItem>
+              ? <Logout dispatch={dispatch} onLogoutClick={userActions.logout} />
+              : <Login />
           }
         </List>
       </div>

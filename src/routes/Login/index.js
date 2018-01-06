@@ -8,8 +8,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
-// import Auth from '../../services/Auth/Auth'
-import { loginUser } from '../../actions/index'
+import { userActions } from '../../_actions'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -50,7 +49,7 @@ class Login extends React.Component {
   processForm (event) {
     event.preventDefault()
     const { dispatch } = this.props
-    dispatch(loginUser(this.state.user))
+    dispatch(userActions.login(this.state.user))
   }
 
   render () {

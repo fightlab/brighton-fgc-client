@@ -7,11 +7,10 @@ import { MuiThemeProvider } from 'material-ui/styles'
 import { CookiesProvider } from 'react-cookie'
 import App from './App'
 
-import configureStore from './store/configureStore'
+import { store } from './_store'
 
 // This is needed in order to deduplicate the injection of CSS in the page.
 const sheetsManager = new WeakMap()
-const store = configureStore()
 
 const app = (
   <Provider store={store}>
