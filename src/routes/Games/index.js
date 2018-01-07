@@ -4,7 +4,8 @@ import { Typography, Paper } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { Route } from 'react-router-dom'
 
-import Game from './Game/Game'
+import Root from './Root'
+import Game from './Game'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -15,22 +16,27 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       marginTop: 64
     }
-  })
+  }),
+  container: {
+    flexGrow: 1,
+    marginTop: 30
+  }
 })
 
-const Games = ({match, classes}) => (
-  <Paper className={classes.root} elevation={0}>
-    <Typography type='display2' component='h1'>
-      Games
-    </Typography>
-    <Route path={`${match.url}/:gameId`} component={Game} />
-    <Route exact path={match.url} render={() => (
-      <Typography type='body2' component='p'>
-        Please Select A Game
-      </Typography>
-    )} />
-  </Paper>
-)
+class Games extends React.Component {
+  render () {
+    const { match, classes } = this.props
+    return (
+      <Paper className={classes.root} elevation={0}>
+        <Typography type='display2' component='h1'>
+          Games
+        </Typography>
+        <Route path={`${match.url}/:gameId`} component={Game} />
+        <Route exact path={match.url} component={Root} />
+      </Paper>
+    )
+  }
+}
 
 Games.propTypes = {
   classes: PropTypes.object.isRequired,

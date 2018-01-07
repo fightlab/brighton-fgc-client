@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import AdminRoute from '../components/AdminRoute'
 
 import Home from './Home/Home'
-import Games from './Games/Games'
+import Games from './Games'
 import Events from './Events/Events'
 import Tournaments from './Tournaments/Tournaments'
 import Players from './Players/Players'
