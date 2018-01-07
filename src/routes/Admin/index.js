@@ -10,6 +10,8 @@ import StarsIcon from 'material-ui-icons/Stars'
 import ViewListIcon from 'material-ui-icons/ViewList'
 import GavelIcon from 'material-ui-icons/Gavel'
 
+import AdminGame from './Game'
+
 const styles = theme => ({
   root: theme.mixins.gutters({
     backgroundColor: theme.palette.background.default,
@@ -67,9 +69,12 @@ class Admin extends React.Component {
         }
         {
           value === 1 && (
-            <Typography type='headline' component='h3'>
-              Games
-            </Typography>
+            <div>
+              <Typography type='headline' component='h3'>
+                Games
+              </Typography>
+              <AdminGame />
+            </div>
           )
         }
         {
