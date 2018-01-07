@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { Drawer, Hidden, Divider } from 'material-ui'
 import List from 'material-ui/List'
+import Reboot from 'material-ui/Reboot'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -80,6 +81,7 @@ class App extends React.Component {
     const { dispatch, isAuthenticated, classes, theme, isAdmin } = this.props
     const drawer = (
       <div>
+        <Reboot />
         <div className={classes.drawerHeader} />
         <Divider />
         <List>{topListItems}</List>
