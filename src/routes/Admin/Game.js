@@ -1,18 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Table, {
-  TableBody,
-  TableCell,
-  // TableFooter,
-  TableHead,
-  // TablePagination,
-  TableRow
-  // TableSortLabel
-} from 'material-ui/Table'
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import TextField from 'material-ui/TextField'
 import IconButton from 'material-ui/IconButton'
 import SaveIcon from 'material-ui-icons/Save'
 import AddCircleIcon from 'material-ui-icons/AddCircle'
+import CloseIcon from 'material-ui-icons/Close'
+import DeleteIcon from 'material-ui-icons/Delete'
+import Snackbar from 'material-ui/Snackbar'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { get } from 'lodash'
 
 import { GameService } from '../../_services'
 
@@ -26,6 +24,7 @@ class GameRow extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.saveGame = this.saveGame.bind(this)
+    this.closeSnackbar = this.closeSnackbar.bind(this)
   }
 
   handleChange (event) {
@@ -35,11 +34,26 @@ class GameRow extends React.Component {
   }
 
   saveGame () {
-    console.log(this.state.game)
+    const { token } = this.props
+    const { game } = this.state
+
+    GameService
+      .update(token, game.id, game)
+      .then(game => {
+        this.setState({ game, saved: true })
+      })
+      .catch(error => this.setState({ error }))
+  }
+
+  closeSnackbar () {
+    this.setState({
+      saved: false
+    })
   }
 
   render () {
     const { game } = this.state
+    const { deleteGame } = this.props
 
     return (
       <TableRow>
@@ -50,6 +64,7 @@ class GameRow extends React.Component {
             value={game.name || ''}
             onChange={this.handleChange}
             placeholder='Name'
+            fullWidth
             margin='normal'
           />
         </TableCell>
@@ -60,6 +75,7 @@ class GameRow extends React.Component {
             value={game.short || ''}
             onChange={this.handleChange}
             placeholder='Short'
+            fullWidth
             margin='normal'
           />
         </TableCell>
@@ -70,6 +86,7 @@ class GameRow extends React.Component {
             value={game.imageUrl || ''}
             onChange={this.handleChange}
             placeholder='Image URL'
+            fullWidth
             margin='normal'
           />
         </TableCell>
@@ -77,6 +94,32 @@ class GameRow extends React.Component {
           <IconButton onClick={this.saveGame} aria-label='Save'>
             <SaveIcon />
           </IconButton>
+          <IconButton onClick={() => deleteGame(game.id)} aria-label='Delete'>
+            <DeleteIcon />
+          </IconButton>
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left'
+            }}
+            open={this.state.saved}
+            autoHideDuration={6000}
+            onClose={this.closeSnackbar}
+            SnackbarContentProps={{
+              'aria-describedby': 'message-id'
+            }}
+            message={<span id='message-id'>Saved</span>}
+            action={[
+              <IconButton
+                key='close'
+                aria-label='Close'
+                color='inherit'
+                onClick={this.closeSnackbar}
+              >
+                <CloseIcon />
+              </IconButton>
+            ]}
+          />
         </TableCell>
       </TableRow>
     )
@@ -92,7 +135,6 @@ class NewGameRow extends React.Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
-    this.addGame = this.addGame.bind(this)
   }
 
   handleChange (event) {
@@ -101,12 +143,9 @@ class NewGameRow extends React.Component {
     this.setState({ game })
   }
 
-  addGame () {
-    console.log(this.state.game)
-  }
-
   render () {
     const { game } = this.state
+    const { addGame } = this.props
 
     return (
       <TableRow>
@@ -118,6 +157,7 @@ class NewGameRow extends React.Component {
             onChange={this.handleChange}
             placeholder='Name'
             margin='normal'
+            fullWidth
           />
         </TableCell>
         <TableCell>
@@ -128,6 +168,7 @@ class NewGameRow extends React.Component {
             onChange={this.handleChange}
             placeholder='Short'
             margin='normal'
+            fullWidth
           />
         </TableCell>
         <TableCell>
@@ -138,10 +179,11 @@ class NewGameRow extends React.Component {
             onChange={this.handleChange}
             placeholder='Image URL'
             margin='normal'
+            fullWidth
           />
         </TableCell>
         <TableCell>
-          <IconButton onClick={this.addGame} aria-label='Save'>
+          <IconButton onClick={() => addGame(game)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
         </TableCell>
@@ -157,47 +199,205 @@ class AdminGame extends React.Component {
     this.state = {
       games: []
     }
+
+    this.handleAddGame = this.handleAddGame.bind(this)
+    this.handleDeleteGame = this.handleDeleteGame.bind(this)
+    this.closeSnackbar = this.closeSnackbar.bind(this)
+    this.performDeleteGame = this.performDeleteGame.bind(this)
+    this.closeDeleted = this.closeDeleted.bind(this)
   }
 
   componentWillMount () {
     GameService
       .getAll()
       .then(games => {
-        this.setState({
-          games
-        })
+        this.setState({ games })
       })
+  }
+
+  handleAddGame (body) {
+    const { token } = this.props
+    GameService
+      .create(token, body)
+      .then(game => {
+        const { games } = this.state
+        games.push(game)
+        this.setState({ games, added: true })
+      })
+      .catch(error => this.setState({ error }))
+  }
+
+  handleDeleteGame (id) {
+    this.setState({
+      deleteStart: true,
+      id
+    })
+  }
+
+  performDeleteGame () {
+    const { token } = this.props
+    const { id } = this.state
+
+    this.closeSnackbar()
+
+    if (!id) {
+      return
+    }
+
+    GameService
+      .delete(token, id)
+      .then(() => {
+        let { games } = this.state
+        games = games.filter(o => o.id !== id)
+        this.setState({ games, deleted: true })
+      })
+      .catch(error => this.setState({ error }))
+  }
+
+  closeSnackbar () {
+    this.setState({
+      added: false,
+      deleteStart: false
+    })
+  }
+
+  closeDeleted () {
+    this.setState({
+      id: null,
+      deleted: false
+    })
   }
 
   render () {
     const { games } = this.state
+    const { token } = this.props
+
     return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Short</TableCell>
-            <TableCell>Image URL</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {
-            games && games.map(game => {
-              return (
-                <GameRow game={game} key={game.id} />
-              )
-            })
-          }
-          <NewGameRow />
-        </TableBody>
-      </Table>
+      <div>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Short</TableCell>
+              <TableCell>Image URL</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              games && games.map(game => {
+                return (
+                  <GameRow game={game} key={game.id} token={token} deleteGame={this.handleDeleteGame} />
+                )
+              })
+            }
+            <NewGameRow addGame={this.handleAddGame} />
+          </TableBody>
+        </Table>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={this.state.added}
+          autoHideDuration={6000}
+          onClose={this.closeSnackbar}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id='message-id'>Added</span>}
+          action={[
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              onClick={this.closeSnackbar}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={this.state.deleteStart}
+          autoHideDuration={6000}
+          onClose={this.closeSnackbar}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id='message-id'>Confirm Delete</span>}
+          action={[
+            <IconButton
+              key='delete'
+              aria-label='Delete'
+              color='inherit'
+              onClick={this.performDeleteGame}
+            >
+              <DeleteIcon />
+            </IconButton>,
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              onClick={this.closeSnackbar}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={this.state.deleted}
+          autoHideDuration={6000}
+          onClose={this.closeDeleted}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id='message-id'>Deleted</span>}
+          action={[
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              onClick={this.closeDeleted}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
+      </div>
     )
   }
 }
 
-GameRow.propTypes = {
-  game: PropTypes.object.isRequired
+AdminGame.propTypes = {
+  token: PropTypes.string.isRequired
 }
 
-export default AdminGame
+GameRow.propTypes = {
+  game: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  deleteGame: PropTypes.func.isRequired
+}
+
+NewGameRow.propTypes = {
+  addGame: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => {
+  const { auth } = state
+  const { user } = auth
+  const token = get(user, 'token')
+
+  return {
+    token
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(AdminGame))
