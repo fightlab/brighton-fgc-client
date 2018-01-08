@@ -51,8 +51,6 @@ class Game extends React.Component {
     const { classes } = this.props
     const { game, tournaments } = this.state
 
-    console.log(tournaments)
-
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12}>

@@ -38,23 +38,34 @@ class TournamentCard extends React.Component {
             <Typography component='p' align='center' gutterBottom>
               {tournament._gameId.name}
             </Typography>
-            <Typography component='p' align='center' type='caption'>
-              Start:
-            </Typography>
-            <Typography component='p' align='center' gutterBottom>
-              {DateService.format(tournament.dateStart, 'TIME_SIMPLE')}
-            </Typography>
-            <Typography component='p' align='center' type='caption'>
-              End:
-            </Typography>
-            <Typography component='p' align='center' gutterBottom>
-              {tournament.dateEnd ? DateService.format(tournament.dateEnd, 'TIME_SIMPLE') : 'N/A'}
-            </Typography>
+            <Grid container>
+              <Grid item xs={6}>
+                <Typography component='p' align='center' type='caption'>
+                  Start:
+                </Typography>
+                <Typography component='p' align='center' gutterBottom>
+                  {DateService.format(tournament.dateStart, 'TIME_SIMPLE')}
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography component='p' align='center' type='caption'>
+                  End:
+                </Typography>
+                <Typography component='p' align='center' gutterBottom>
+                  {tournament.dateEnd ? DateService.format(tournament.dateEnd, 'TIME_SIMPLE') : 'N/A'}
+                </Typography>
+              </Grid>
+            </Grid>
           </CardContent>
           <CardActions>
             <Button dense color='primary' component={Link} to={`/tournaments/${tournament.id}`}>
               View Tournament
             </Button>
+            <a href={tournament.bracket} target='_blank' className='no-decor'>
+              <Button dense color='primary'>
+                View Challonge
+              </Button>
+            </a>
           </CardActions>
         </Card>
       </Grid>
