@@ -1,3 +1,6 @@
+export * from './date.service'
+export * from './meta.service'
+
 export * from './user.service'
 export * from './event.service'
 export * from './game.service'
