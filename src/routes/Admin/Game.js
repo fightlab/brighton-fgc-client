@@ -57,6 +57,7 @@ class GameRow extends React.Component {
 
     return (
       <TableRow>
+        <TableCell>{game.id}</TableCell>
         <TableCell>
           <TextField
             id='name'
@@ -149,6 +150,7 @@ class NewGameRow extends React.Component {
 
     return (
       <TableRow>
+        <TableCell />
         <TableCell>
           <TextField
             id='name'
@@ -210,9 +212,8 @@ class AdminGame extends React.Component {
   componentWillMount () {
     GameService
       .getAll()
-      .then(games => {
-        this.setState({ games })
-      })
+      .then(games => this.setState({ games }))
+      .catch(error => this.setState({ error }))
   }
 
   handleAddGame (body) {
@@ -277,6 +278,7 @@ class AdminGame extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Short</TableCell>
               <TableCell>Image URL</TableCell>
@@ -285,11 +287,9 @@ class AdminGame extends React.Component {
           </TableHead>
           <TableBody>
             {
-              games && games.map(game => {
-                return (
-                  <GameRow game={game} key={game.id} token={token} deleteGame={this.handleDeleteGame} />
-                )
-              })
+              games && games.map(game => (
+                <GameRow game={game} key={game.id} token={token} deleteGame={this.handleDeleteGame} />
+              ))
             }
             <NewGameRow addGame={this.handleAddGame} />
           </TableBody>
