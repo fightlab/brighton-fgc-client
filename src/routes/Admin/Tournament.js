@@ -299,7 +299,7 @@ class AdminTournament extends React.Component {
       .create(token, body)
       .then(tournament => {
         const { tournaments } = this.state
-        tournaments.push(tournament)
+        tournaments.unshift(tournament)
         this.setState({ tournaments, added: true })
       })
       .catch(error => this.setState({ error }))
