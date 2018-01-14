@@ -286,12 +286,12 @@ class AdminGame extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
+            <NewGameRow addGame={this.handleAddGame} />
             {
               games && games.map(game => (
                 <GameRow game={game} key={game.id} token={token} deleteGame={this.handleDeleteGame} />
               ))
             }
-            <NewGameRow addGame={this.handleAddGame} />
           </TableBody>
         </Table>
         <Snackbar

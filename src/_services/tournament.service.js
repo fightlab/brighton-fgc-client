@@ -39,4 +39,11 @@ export class TournamentService {
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }
+
+  static challongeUpdate (token, id, body) {
+    return axios
+      .put(`${URL}/${id}/challonge`, body, getAuthHeader(token))
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
 }

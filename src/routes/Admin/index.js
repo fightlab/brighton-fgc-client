@@ -8,7 +8,6 @@ import VideogameAssetIcon from 'material-ui-icons/VideogameAsset'
 import PeopleIcon from 'material-ui-icons/People'
 import StarsIcon from 'material-ui-icons/Stars'
 import ViewListIcon from 'material-ui-icons/ViewList'
-import GavelIcon from 'material-ui-icons/Gavel'
 
 import AdminGame from './Game'
 import AdminTournament from './Tournament'
@@ -57,7 +56,6 @@ class Admin extends React.Component {
           <BottomNavigationAction label='Events' icon={<DateRangeIcon />} />
           <BottomNavigationAction label='Games' icon={<VideogameAssetIcon />} />
           <BottomNavigationAction label='Players' icon={<PeopleIcon />} />
-          <BottomNavigationAction label='Results' icon={<GavelIcon />} />
           <BottomNavigationAction label='Series' icon={<ViewListIcon />} />
           <BottomNavigationAction label='Tournaments' icon={<StarsIcon />} />
         </BottomNavigation>
@@ -88,19 +86,12 @@ class Admin extends React.Component {
         {
           value === 3 && (
             <Typography type='headline' component='h3'>
-              Results
-            </Typography>
-          )
-        }
-        {
-          value === 4 && (
-            <Typography type='headline' component='h3'>
               Series
             </Typography>
           )
         }
         {
-          value === 5 && (
+          value === 4 && (
             <div>
               <Typography type='headline' component='h3'>
                 Tournaments

@@ -10,6 +10,8 @@ import SaveIcon from 'material-ui-icons/Save'
 import DeleteIcon from 'material-ui-icons/Delete'
 import Snackbar from 'material-ui/Snackbar'
 import CloseIcon from 'material-ui-icons/Close'
+import Button from 'material-ui/Button'
+import AddCircleIcon from 'material-ui-icons/AddCircle'
 
 import { TournamentService, DateService } from '../../_services'
 
@@ -20,6 +22,41 @@ class TournamentRow extends React.Component {
     this.state = {
       tournament: props.tournament
     }
+
+    this.challongeUpdate = this.challongeUpdate.bind(this)
+    this.closeSnackbar = this.closeSnackbar.bind(this)
+  }
+
+  handleChange (event) {
+    const { tournament } = this.state
+    tournament[event.target.name] = event.target.value
+    this.setState({ tournament })
+  }
+
+  challongeUpdate () {
+    const { token } = this.props
+    const { tournament } = this.state
+
+    TournamentService
+      .challongeUpdate(token, tournament.id, tournament)
+      .then(tournament => this.setState({ tournament, saved: true }))
+      .catch(error => this.setState({ error }))
+  }
+
+  saveTournament () {
+    const { token } = this.props
+    const { tournament } = this.state
+
+    TournamentService
+      .update(token, tournament.id, tournament)
+      .then(tournament => this.setState({ tournament, saved: true }))
+      .catch(error => this.setState({ error }))
+  }
+
+  closeSnackbar () {
+    this.setState({
+      saved: false
+    })
   }
 
   render () {
@@ -41,11 +78,135 @@ class TournamentRow extends React.Component {
             placeholder='Bracket URL'
             fullWidth
             margin='normal'
+            onChange={this.handleChange}
           />
         </TableCell>
         <TableCell>
           <TextField
             id='signUpUrl'
+            name='signUpUrl'
+            placeholder='Sign Up URL'
+            value={tournament.signUpUrl || ''}
+            fullWidth
+            margin='normal'
+            onChange={this.handleChange}
+          />
+        </TableCell>
+        <TableCell>
+          <TextField
+            id='series'
+            name='series'
+            placeholder='Series ID'
+            value={tournament.series || ''}
+            fullWidth
+            margin='normal'
+            onChange={this.handleChange}
+          />
+        </TableCell>
+        <TableCell>
+          <TextField
+            id='event'
+            name='event'
+            placeholder='Event ID'
+            value={tournament.event || ''}
+            fullWidth
+            margin='normal'
+            onChange={this.handleChange}
+          />
+        </TableCell>
+        <TableCell>
+          <TextField
+            id='_gameId'
+            name='_gameId'
+            placeholder='Game ID'
+            value={tournament._gameId || ''}
+            fullWidth
+            margin='normal'
+            onChange={this.handleChange}
+          />
+        </TableCell>
+        <TableCell>
+          <Button raised color='primary' onClick={this.challongeUpdate}>
+            Challonge Update
+          </Button>
+          <IconButton aria-label='Save'>
+            <SaveIcon />
+          </IconButton>
+          <IconButton onClick={() => deleteTournament(tournament.id)} aria-label='Delete'>
+            <DeleteIcon />
+          </IconButton>
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left'
+            }}
+            open={this.state.saved}
+            autoHideDuration={6000}
+            onClose={this.closeSnackbar}
+            SnackbarContentProps={{
+              'aria-describedby': 'message-id'
+            }}
+            message={<span id='message-id'>Saved</span>}
+            action={[
+              <IconButton
+                key='close'
+                aria-label='Close'
+                color='inherit'
+                onClick={this.closeSnackbar}
+              >
+                <CloseIcon />
+              </IconButton>
+            ]}
+          />
+        </TableCell>
+      </TableRow>
+    )
+  }
+}
+
+class NewTournamentRow extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      tournament: {}
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange (event) {
+    const { tournament } = this.state
+    tournament[event.target.name] = event.target.value
+    this.setState({ tournament })
+  }
+
+  render () {
+    const { tournament } = this.state
+    const { addTournament } = this.props
+
+    return (
+      <TableRow>
+        <TableCell />
+        <TableCell />
+        <TableCell />
+        <TableCell />
+        <TableCell />
+        <TableCell>
+          <TextField
+            id='bracket'
+            name='bracket'
+            onChange={this.handleChange}
+            value={tournament.bracket || ''}
+            placeholder='Bracket URL'
+            fullWidth
+            margin='normal'
+          />
+        </TableCell>
+        <TableCell>
+          <TextField
+            id='signUpUrl'
+            onChange={this.handleChange}
             name='signUpUrl'
             placeholder='Sign Up URL'
             value={tournament.signUpUrl || ''}
@@ -59,6 +220,7 @@ class TournamentRow extends React.Component {
             name='series'
             placeholder='Series ID'
             value={tournament.series || ''}
+            onChange={this.handleChange}
             fullWidth
             margin='normal'
           />
@@ -69,16 +231,25 @@ class TournamentRow extends React.Component {
             name='event'
             placeholder='Event ID'
             value={tournament.event || ''}
+            onChange={this.handleChange}
             fullWidth
             margin='normal'
           />
         </TableCell>
         <TableCell>
-          <IconButton aria-label='Save'>
-            <SaveIcon />
-          </IconButton>
-          <IconButton onClick={() => deleteTournament(tournament.id)} aria-label='Delete'>
-            <DeleteIcon />
+          <TextField
+            id='_gameId'
+            name='_gameId'
+            onChange={this.handleChange}
+            placeholder='Game ID'
+            value={tournament._gameId || ''}
+            fullWidth
+            margin='normal'
+          />
+        </TableCell>
+        <TableCell>
+          <IconButton onClick={() => addTournament(tournament)} aria-label='Save'>
+            <AddCircleIcon />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -95,6 +266,7 @@ class AdminTournament extends React.Component {
     }
 
     this.handleDeleteTournament = this.handleDeleteTournament.bind(this)
+    this.handleAddTournament = this.handleAddTournament.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
     this.closeDeleted = this.closeDeleted.bind(this)
     this.performDeleteTournament = this.performDeleteTournament.bind(this)
@@ -121,6 +293,18 @@ class AdminTournament extends React.Component {
     })
   }
 
+  handleAddTournament (body) {
+    const { token } = this.props
+    TournamentService
+      .create(token, body)
+      .then(tournament => {
+        const { tournaments } = this.state
+        tournaments.push(tournament)
+        this.setState({ tournaments, added: true })
+      })
+      .catch(error => this.setState({ error }))
+  }
+
   handleDeleteTournament (id) {
     this.setState({
       deleteStart: true,
@@ -138,8 +322,14 @@ class AdminTournament extends React.Component {
       return
     }
 
-    console.log(token)
-    this.setState({ deleted: true })
+    TournamentService
+      .delete(token, id)
+      .then(() => {
+        let { tournaments } = this.state
+        tournaments = tournaments.filter(o => o.id !== id)
+        this.setState({ tournaments, deleted: true })
+      })
+      .catch(error => this.setState({ error }))
   }
 
   render () {
@@ -161,10 +351,12 @@ class AdminTournament extends React.Component {
               <TableCell>Sign Up</TableCell>
               <TableCell>Series</TableCell>
               <TableCell>Event</TableCell>
+              <TableCell>Game</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+            <NewTournamentRow addTournament={this.handleAddTournament} />
             {
               tournaments.map(tournament => (
                 <TournamentRow tournament={tournament} key={tournament.id} deleteTournament={this.handleDeleteTournament} token={token} />
@@ -172,6 +364,29 @@ class AdminTournament extends React.Component {
             }
           </TableBody>
         </Table>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={this.state.added}
+          autoHideDuration={6000}
+          onClose={this.closeSnackbar}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id='message-id'>Added</span>}
+          action={[
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              onClick={this.closeSnackbar}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -236,8 +451,12 @@ AdminTournament.propTypes = {
 
 TournamentRow.propTypes = {
   tournament: PropTypes.object.isRequired,
-  deleteTournament: PropTypes.func.isRequired
-  // token: PropTypes.string.isRequired
+  deleteTournament: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired
+}
+
+NewTournamentRow.propTypes = {
+  addTournament: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
