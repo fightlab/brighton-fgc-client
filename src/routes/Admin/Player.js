@@ -11,37 +11,78 @@ import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
+import Chip from 'material-ui/Chip'
+import { withStyles } from 'material-ui/styles'
+import Switch from 'material-ui/Switch'
 
-import { GameService } from '../../_services'
+import { PlayerService } from '../../_services'
 
-class GameRow extends React.Component {
+const styles = theme => ({
+  box: {
+    // display: 'flex',
+    // justifyContent: 'center',
+    // flexWrap: 'wrap'
+  },
+  chip: {
+    // margin: 0
+  }
+})
+
+class PlayerRow extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      game: props.game
+      player: props.player,
+      show: false
     }
 
     this.handleChange = this.handleChange.bind(this)
-    this.saveGame = this.saveGame.bind(this)
+    this.handleChallongeNameAdd = this.handleChallongeNameAdd.bind(this)
+    this.handleChangechallongeNameInput = this.handleChangechallongeNameInput.bind(this)
+    this.savePlayer = this.savePlayer.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
+    this.handleSwitch = this.handleSwitch.bind(this)
   }
 
   handleChange (event) {
-    const { game } = this.state
-    game[event.target.name] = event.target.value
-    this.setState({ game })
+    const { player } = this.state
+    player[event.target.name] = event.target.value
+    this.setState({ player })
   }
 
-  saveGame () {
-    const { token } = this.props
-    const { game } = this.state
+  handleChangechallongeNameInput (event) {
+    this.setState({ challongeNameInput: event.target.value })
+  }
 
-    GameService
-      .update(token, game.id, game)
-      .then(game => {
-        this.setState({ game, saved: true })
-      })
+  handleChallongeNameAdd (event) {
+    if (event.key === 'Enter') {
+      const { player } = this.state
+      if (!player.challongeName) {
+        player.challongeName = []
+      }
+      player.challongeName.push(event.target.value)
+      this.setState({ player })
+    }
+  }
+
+  handleSwitch (event, checked) {
+    this.setState({ show: checked })
+  }
+
+  handleDeleteChallongeName (index) {
+    const { player } = this.state
+    player.challongeName.splice(index, 1)
+    this.setState({ player })
+  }
+
+  savePlayer () {
+    const { token } = this.props
+    const { player } = this.state
+
+    PlayerService
+      .update(token, player.id, player)
+      .then(player => this.setState({ player, saved: true }))
       .catch(error => this.setState({ error }))
   }
 
@@ -52,50 +93,72 @@ class GameRow extends React.Component {
   }
 
   render () {
-    const { game } = this.state
-    const { deleteGame } = this.props
+    const { player, challongeNameInput, show } = this.state
+    const { deletePlayer, classes } = this.props
 
     return (
       <TableRow>
-        <TableCell>{game.id}</TableCell>
+        <TableCell>{player.id}</TableCell>
         <TableCell>
           <TextField
-            id='name'
-            name='name'
-            value={game.name || ''}
+            id='handle'
+            name='handle'
+            value={player.handle || ''}
             onChange={this.handleChange}
-            placeholder='Name'
-            fullWidth
+            placeholder='Handle'
             margin='normal'
+            fullWidth
           />
         </TableCell>
         <TableCell>
           <TextField
-            id='short'
-            name='short'
-            value={game.short || ''}
+            id='challongeUsername'
+            name='challongeUsername'
+            value={player.challongeUsername || ''}
             onChange={this.handleChange}
-            placeholder='Short'
-            fullWidth
+            placeholder='Challonge Username'
             margin='normal'
+            fullWidth
           />
+        </TableCell>
+        <TableCell className={classes.box}>
+          <Switch
+            checked={show}
+            onChange={this.handleSwitch}
+            aria-label='switch'
+          />
+          {
+            player.challongeName.map((name, i) => show && <Chip className={classes.chip} label={name} key={name} onDelete={() => this.handleDeleteChallongeName(i)} />)
+          }
+          {
+            show && <TextField
+              id='challongeNameInput'
+              name='challongeNameInput'
+              value={challongeNameInput || ''}
+              onChange={this.handleChangechallongeNameInput}
+              onKeyPress={this.handleChallongeNameAdd}
+              placeholder='Challonge Names'
+              margin='normal'
+              fullWidth
+            />
+          }
         </TableCell>
         <TableCell>
           <TextField
-            id='imageUrl'
-            name='imageUrl'
-            value={game.imageUrl || ''}
+            id='emailHash'
+            name='emailHash'
+            value={player.emailHash || ''}
             onChange={this.handleChange}
-            placeholder='Image URL'
-            fullWidth
+            placeholder='Email Hash'
             margin='normal'
+            fullWidth
           />
         </TableCell>
         <TableCell>
-          <IconButton onClick={this.saveGame} aria-label='Save'>
+          <IconButton onClick={this.savePlayer} aria-label='Save'>
             <SaveIcon />
           </IconButton>
-          <IconButton onClick={() => deleteGame(game.id)} aria-label='Delete'>
+          <IconButton onClick={() => deletePlayer(player.id)} aria-label='Delete'>
             <DeleteIcon />
           </IconButton>
           <Snackbar
@@ -127,65 +190,76 @@ class GameRow extends React.Component {
   }
 }
 
-class NewGameRow extends React.Component {
+class NewPlayerRow extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      game: {}
+      player: {}
     }
 
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange (event) {
-    const { game } = this.state
-    game[event.target.name] = event.target.value
-    this.setState({ game })
+    const { player } = this.state
+    player[event.target.name] = event.target.value
+    this.setState({ player })
   }
 
   render () {
-    const { game } = this.state
-    const { addGame } = this.props
+    const { player } = this.state
+    const { addPlayer } = this.props
 
     return (
       <TableRow>
         <TableCell />
         <TableCell>
           <TextField
-            id='name'
-            name='name'
-            value={game.name || ''}
+            id='handle'
+            name='handle'
+            value={player.handle || ''}
             onChange={this.handleChange}
-            placeholder='Name'
+            placeholder='Handle'
             margin='normal'
             fullWidth
           />
         </TableCell>
         <TableCell>
           <TextField
-            id='short'
-            name='short'
-            value={game.short || ''}
+            id='challongeUsername'
+            name='challongeUsername'
+            value={player.challongeUsername || ''}
             onChange={this.handleChange}
-            placeholder='Short'
+            placeholder='Challonge Username'
             margin='normal'
             fullWidth
           />
         </TableCell>
         <TableCell>
           <TextField
-            id='imageUrl'
-            name='imageUrl'
-            value={game.imageUrl || ''}
+            id='challongeName'
+            name='challongeName'
+            value={player.challongeName || ''}
             onChange={this.handleChange}
-            placeholder='Image URL'
+            placeholder='Challonge Names'
             margin='normal'
             fullWidth
           />
         </TableCell>
         <TableCell>
-          <IconButton onClick={() => addGame(game)} aria-label='Save'>
+          <TextField
+            id='emailHash'
+            name='emailHash'
+            value={player.emailHash || ''}
+            onChange={this.handleChange}
+            placeholder='Email Hash'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell>
+          <IconButton onClick={() => addPlayer(player)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
         </TableCell>
@@ -194,48 +268,48 @@ class NewGameRow extends React.Component {
   }
 }
 
-class AdminGame extends React.Component {
+class AdminPlayer extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      games: []
+      players: []
     }
 
-    this.handleAddGame = this.handleAddGame.bind(this)
-    this.handleDeleteGame = this.handleDeleteGame.bind(this)
+    this.handleAddPlayer = this.handleAddPlayer.bind(this)
+    this.handleDeletePlayer = this.handleDeletePlayer.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
-    this.performDeleteGame = this.performDeleteGame.bind(this)
+    this.performDeletePlayer = this.performDeletePlayer.bind(this)
     this.closeDeleted = this.closeDeleted.bind(this)
   }
 
   componentWillMount () {
-    GameService
+    PlayerService
       .getAll()
-      .then(games => this.setState({ games }))
+      .then(players => this.setState({ players }))
       .catch(error => this.setState({ error }))
   }
 
-  handleAddGame (body) {
+  handleAddPlayer (body) {
     const { token } = this.props
-    GameService
+    PlayerService
       .create(token, body)
-      .then(game => {
-        const { games } = this.state
-        games.unshift(game)
-        this.setState({ games, added: true })
+      .then(player => {
+        const { players } = this.state
+        players.push(player)
+        this.setState({ players, added: true })
       })
       .catch(error => this.setState({ error }))
   }
 
-  handleDeleteGame (id) {
+  handleDeletePlayer (id) {
     this.setState({
       deleteStart: true,
       id
     })
   }
 
-  performDeleteGame () {
+  performDeletePlayer () {
     const { token } = this.props
     const { id } = this.state
 
@@ -245,12 +319,12 @@ class AdminGame extends React.Component {
       return
     }
 
-    GameService
+    PlayerService
       .delete(token, id)
       .then(() => {
-        let { games } = this.state
-        games = games.filter(o => o.id !== id)
-        this.setState({ games, deleted: true })
+        let { players } = this.state
+        players = players.filter(o => o.id !== id)
+        this.setState({ players, deleted: true })
       })
       .catch(error => this.setState({ error }))
   }
@@ -270,26 +344,27 @@ class AdminGame extends React.Component {
   }
 
   render () {
-    const { games } = this.state
-    const { token } = this.props
-
+    const { players } = this.state
+    const { token, classes } = this.props
+    console.log(players[0])
+    console.log(players.length)
     return (
       <div>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Short</TableCell>
-              <TableCell>Image URL</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>Handle</TableCell>
+              <TableCell>Challonge Username</TableCell>
+              <TableCell>Challonge Names</TableCell>
+              <TableCell>Email Hash</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <NewGameRow addGame={this.handleAddGame} />
+            {/* <NewPlayerRow addPlayer={this.handleAddPlayer} /> */}
             {
-              games && games.map(game => (
-                <GameRow game={game} key={game.id} token={token} deleteGame={this.handleDeleteGame} />
+              players && players.map(player => (
+                <PlayerRow classes={classes} player={player} key={player.id} token={token} deletePlayer={this.handleDeletePlayer} />
               ))
             }
           </TableBody>
@@ -334,7 +409,7 @@ class AdminGame extends React.Component {
               key='delete'
               aria-label='Delete'
               color='inherit'
-              onClick={this.performDeleteGame}
+              onClick={this.performDeletePlayer}
             >
               <DeleteIcon />
             </IconButton>,
@@ -376,18 +451,20 @@ class AdminGame extends React.Component {
   }
 }
 
-AdminGame.propTypes = {
-  token: PropTypes.string.isRequired
-}
-
-GameRow.propTypes = {
-  game: PropTypes.object.isRequired,
+AdminPlayer.propTypes = {
   token: PropTypes.string.isRequired,
-  deleteGame: PropTypes.func.isRequired
+  classes: PropTypes.object.isRequired
 }
 
-NewGameRow.propTypes = {
-  addGame: PropTypes.func.isRequired
+PlayerRow.propTypes = {
+  player: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  deletePlayer: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
+}
+
+NewPlayerRow.propTypes = {
+  addPlayer: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -400,4 +477,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(AdminGame))
+export default withStyles(styles)(withRouter(connect(mapStateToProps)(AdminPlayer)))
