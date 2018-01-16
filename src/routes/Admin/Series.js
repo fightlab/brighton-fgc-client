@@ -11,78 +11,52 @@ import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
-import Chip from 'material-ui/Chip'
-import { withStyles } from 'material-ui/styles'
 import Switch from 'material-ui/Switch'
 
-import { PlayerService } from '../../_services'
+import { SeriesService } from '../../_services'
 
-const styles = theme => ({
-  box: {
-    // display: 'flex',
-    // justifyContent: 'center',
-    // flexWrap: 'wrap'
-  },
-  chip: {
-    // margin: 0
-  }
-})
-
-class PlayerRow extends React.Component {
+class SeriesRow extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      player: props.player,
-      show: false
+      series: props.series
     }
 
     this.handleChange = this.handleChange.bind(this)
-    this.handleChallongeNameAdd = this.handleChallongeNameAdd.bind(this)
-    this.handleChangechallongeNameInput = this.handleChangechallongeNameInput.bind(this)
-    this.savePlayer = this.savePlayer.bind(this)
+    this.saveSeries = this.saveSeries.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
     this.handleSwitch = this.handleSwitch.bind(this)
+    this.handlePointsChange = this.handlePointsChange.bind(this)
   }
 
   handleChange (event) {
-    const { player } = this.state
-    player[event.target.name] = event.target.value
-    this.setState({ player })
+    const { series } = this.state
+    series[event.target.name] = event.target.value
+    this.setState({ series })
   }
 
-  handleChangechallongeNameInput (event) {
-    this.setState({ challongeNameInput: event.target.value })
+  handleSwitch (event, changed) {
+    const { series } = this.state
+    series.isCurrent = changed
+    this.setState({ series })
   }
 
-  handleChallongeNameAdd (event) {
-    if (event.key === 'Enter') {
-      const { player } = this.state
-      if (!player.challongeName) {
-        player.challongeName = []
-      }
-      player.challongeName.push(event.target.value)
-      this.setState({ player })
-    }
+  handlePointsChange (event) {
+    const { series } = this.state
+    series.points = event.target.value.split(',').map(v => +v)
+    this.setState({ series })
   }
 
-  handleSwitch (event, checked) {
-    this.setState({ show: checked })
-  }
-
-  handleDeleteChallongeName (index) {
-    const { player } = this.state
-    player.challongeName.splice(index, 1)
-    this.setState({ player })
-  }
-
-  savePlayer () {
+  saveSeries () {
     const { token } = this.props
-    const { player } = this.state
+    const { series } = this.state
 
-    PlayerService
-      .update(token, player.id, player)
-      .then(player => this.setState({ player, saved: true }))
+    SeriesService
+      .update(token, series.id, series)
+      .then(series => {
+        this.setState({ series, saved: true })
+      })
       .catch(error => this.setState({ error }))
   }
 
@@ -93,72 +67,59 @@ class PlayerRow extends React.Component {
   }
 
   render () {
-    const { player, challongeNameInput, show } = this.state
-    const { deletePlayer, classes } = this.props
+    const { series } = this.state
+    const { deleteSeries } = this.props
 
     return (
       <TableRow>
-        <TableCell>{player.id}</TableCell>
+        <TableCell>{series.id}</TableCell>
         <TableCell>
           <TextField
-            id='handle'
-            name='handle'
-            value={player.handle || ''}
+            id='name'
+            name='name'
+            value={series.name || ''}
             onChange={this.handleChange}
-            placeholder='Handle'
-            margin='normal'
+            placeholder='Name'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell>
           <TextField
-            id='challongeUsername'
-            name='challongeUsername'
-            value={player.challongeUsername || ''}
+            id='_gameId'
+            name='_gameId'
+            value={series._gameId || ''}
             onChange={this.handleChange}
-            placeholder='Challonge Username'
-            margin='normal'
+            placeholder='Short'
             fullWidth
+            margin='normal'
           />
         </TableCell>
-        <TableCell className={classes.box}>
+        <TableCell>
+          <TextField
+            id='points'
+            name='points'
+            value={series.points || []}
+            onChange={this.handlePointsChange}
+            placeholder='Image URL'
+            fullWidth
+            margin='normal'
+          />
+        </TableCell>
+        <TableCell>
           <Switch
-            checked={show}
+            id='isCurrent'
+            name='isCurrent'
+            checked={series.isCurrent || false}
             onChange={this.handleSwitch}
             aria-label='switch'
           />
-          {
-            player.challongeName.map((name, i) => show && <Chip className={classes.chip} label={name} key={name} onDelete={() => this.handleDeleteChallongeName(i)} />)
-          }
-          {
-            show && <TextField
-              id='challongeNameInput'
-              name='challongeNameInput'
-              value={challongeNameInput || ''}
-              onChange={this.handleChangechallongeNameInput}
-              onKeyPress={this.handleChallongeNameAdd}
-              placeholder='Challonge Names'
-              margin='normal'
-              fullWidth
-            />
-          }
         </TableCell>
         <TableCell>
-          <TextField
-            id='emailHash'
-            name='emailHash'
-            value={player.emailHash || ''}
-            onChange={this.handleChange}
-            placeholder='Email Hash'
-            margin='normal'
-            fullWidth
-          />
-        </TableCell>
-        <TableCell>
-          <IconButton onClick={this.savePlayer} aria-label='Save'>
+          <IconButton onClick={this.saveSeries} aria-label='Save'>
             <SaveIcon />
           </IconButton>
-          <IconButton onClick={() => deletePlayer(player.id)} aria-label='Delete'>
+          <IconButton onClick={() => deleteSeries(series.id)} aria-label='Delete'>
             <DeleteIcon />
           </IconButton>
           <Snackbar
@@ -190,76 +151,88 @@ class PlayerRow extends React.Component {
   }
 }
 
-class NewPlayerRow extends React.Component {
+class NewSeriesRow extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      player: {}
+      series: {}
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleSwitch = this.handleSwitch.bind(this)
+    this.handlePointsChange = this.handlePointsChange.bind(this)
   }
 
-  handleChange (event) {
-    const { player } = this.state
-    player[event.target.name] = event.target.value
-    this.setState({ player })
+  handleChange (event, checked) {
+    const { series } = this.state
+    series[event.target.name] = event.target.value || checked
+    this.setState({ series })
+  }
+
+  handleSwitch (event, changed) {
+    const { series } = this.state
+    series.isCurrent = changed
+    this.setState({ series })
+  }
+
+  handlePointsChange (event) {
+    const { series } = this.state
+    series.points = event.target.value.split(',').map(v => +v)
+    this.setState({ series })
   }
 
   render () {
-    const { player } = this.state
-    const { addPlayer } = this.props
+    const { series } = this.state
+    const { addSeries } = this.props
 
     return (
       <TableRow>
         <TableCell />
         <TableCell>
           <TextField
-            id='handle'
-            name='handle'
-            value={player.handle || ''}
+            id='name'
+            name='name'
+            value={series.name || ''}
             onChange={this.handleChange}
-            placeholder='Handle'
-            margin='normal'
+            placeholder='Name'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell>
           <TextField
-            id='challongeUsername'
-            name='challongeUsername'
-            value={player.challongeUsername || ''}
+            id='_gameId'
+            name='_gameId'
+            value={series._gameId || ''}
             onChange={this.handleChange}
-            placeholder='Challonge Username'
-            margin='normal'
+            placeholder='Game Id'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell>
           <TextField
-            id='challongeName'
-            name='challongeName'
-            value={player.challongeName || ''}
-            onChange={this.handleChange}
-            placeholder='Challonge Names'
-            margin='normal'
+            id='points'
+            name='points'
+            value={series.points || []}
+            onChange={this.handlePointsChange}
+            placeholder='Points Array'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell>
-          <TextField
-            id='emailHash'
-            name='emailHash'
-            value={player.emailHash || ''}
-            onChange={this.handleChange}
-            placeholder='Email Hash'
-            margin='normal'
-            fullWidth
+          <Switch
+            id='isCurrent'
+            name='isCurrent'
+            checked={series.isCurrent || false}
+            onChange={this.handleSwitch}
+            aria-label='switch'
           />
         </TableCell>
         <TableCell>
-          <IconButton onClick={() => addPlayer(player)} aria-label='Save'>
+          <IconButton onClick={() => addSeries(series)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
         </TableCell>
@@ -268,48 +241,48 @@ class NewPlayerRow extends React.Component {
   }
 }
 
-class AdminPlayer extends React.Component {
+class AdminSeries extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      players: []
+      serieses: []
     }
 
-    this.handleAddPlayer = this.handleAddPlayer.bind(this)
-    this.handleDeletePlayer = this.handleDeletePlayer.bind(this)
+    this.handleAddSeries = this.handleAddSeries.bind(this)
+    this.handleDeleteSeries = this.handleDeleteSeries.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
-    this.performDeletePlayer = this.performDeletePlayer.bind(this)
+    this.performDeleteSeries = this.performDeleteSeries.bind(this)
     this.closeDeleted = this.closeDeleted.bind(this)
   }
 
   componentWillMount () {
-    PlayerService
+    SeriesService
       .getAll()
-      .then(players => this.setState({ players }))
+      .then(serieses => this.setState({ serieses }))
       .catch(error => this.setState({ error }))
   }
 
-  handleAddPlayer (body) {
+  handleAddSeries (body) {
     const { token } = this.props
-    PlayerService
+    SeriesService
       .create(token, body)
-      .then(player => {
-        const { players } = this.state
-        players.push(player)
-        this.setState({ players, added: true })
+      .then(series => {
+        const { serieses } = this.state
+        serieses.unshift(series)
+        this.setState({ serieses, added: true })
       })
       .catch(error => this.setState({ error }))
   }
 
-  handleDeletePlayer (id) {
+  handleDeleteSeries (id) {
     this.setState({
       deleteStart: true,
       id
     })
   }
 
-  performDeletePlayer () {
+  performDeleteSeries () {
     const { token } = this.props
     const { id } = this.state
 
@@ -319,12 +292,12 @@ class AdminPlayer extends React.Component {
       return
     }
 
-    PlayerService
+    SeriesService
       .delete(token, id)
       .then(() => {
-        let { players } = this.state
-        players = players.filter(o => o.id !== id)
-        this.setState({ players, deleted: true })
+        let { serieses } = this.state
+        serieses = serieses.filter(o => o.id !== id)
+        this.setState({ serieses, deleted: true })
       })
       .catch(error => this.setState({ error }))
   }
@@ -344,8 +317,8 @@ class AdminPlayer extends React.Component {
   }
 
   render () {
-    const { players } = this.state
-    const { token, classes } = this.props
+    const { serieses } = this.state
+    const { token } = this.props
 
     return (
       <div>
@@ -353,17 +326,18 @@ class AdminPlayer extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Handle</TableCell>
-              <TableCell>Challonge Username</TableCell>
-              <TableCell>Challonge Names</TableCell>
-              <TableCell>Email Hash</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Game</TableCell>
+              <TableCell>Points</TableCell>
+              <TableCell>Is Current?</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* <NewPlayerRow addPlayer={this.handleAddPlayer} /> */}
+            <NewSeriesRow addSeries={this.handleAddSeries} />
             {
-              players && players.map(player => (
-                <PlayerRow classes={classes} player={player} key={player.id} token={token} deletePlayer={this.handleDeletePlayer} />
+              serieses && serieses.map(series => (
+                <SeriesRow series={series} key={series.id} token={token} deleteSeries={this.handleDeleteSeries} />
               ))
             }
           </TableBody>
@@ -408,7 +382,7 @@ class AdminPlayer extends React.Component {
               key='delete'
               aria-label='Delete'
               color='inherit'
-              onClick={this.performDeletePlayer}
+              onClick={this.performDeleteSeries}
             >
               <DeleteIcon />
             </IconButton>,
@@ -450,20 +424,18 @@ class AdminPlayer extends React.Component {
   }
 }
 
-AdminPlayer.propTypes = {
-  token: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired
+AdminSeries.propTypes = {
+  token: PropTypes.string.isRequired
 }
 
-PlayerRow.propTypes = {
-  player: PropTypes.object.isRequired,
+SeriesRow.propTypes = {
+  series: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
-  deletePlayer: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  deleteSeries: PropTypes.func.isRequired
 }
 
-NewPlayerRow.propTypes = {
-  addPlayer: PropTypes.func.isRequired
+NewSeriesRow.propTypes = {
+  addSeries: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -476,4 +448,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withStyles(styles)(withRouter(connect(mapStateToProps)(AdminPlayer)))
+export default withRouter(connect(mapStateToProps)(AdminSeries))

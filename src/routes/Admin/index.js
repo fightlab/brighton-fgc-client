@@ -12,6 +12,7 @@ import ViewListIcon from 'material-ui-icons/ViewList'
 import AdminGame from './Game'
 import AdminTournament from './Tournament'
 import AdminPlayer from './Player'
+import AdminSeries from './Series'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -89,9 +90,12 @@ class Admin extends React.Component {
         }
         {
           value === 3 && (
-            <Typography type='headline' component='h3'>
-              Series
-            </Typography>
+            <div>
+              <Typography type='headline' component='h3'>
+                Series
+              </Typography>
+              <AdminSeries />
+            </div>
           )
         }
         {

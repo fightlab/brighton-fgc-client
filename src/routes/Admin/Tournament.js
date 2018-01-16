@@ -334,7 +334,6 @@ class AdminTournament extends React.Component {
 
   render () {
     const { tournaments } = this.state
-    console.log(tournaments[0])
     const { token } = this.props
 
     return (
