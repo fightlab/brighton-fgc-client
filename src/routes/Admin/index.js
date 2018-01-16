@@ -13,6 +13,7 @@ import AdminGame from './Game'
 import AdminTournament from './Tournament'
 import AdminPlayer from './Player'
 import AdminSeries from './Series'
+import AdminEvent from './Event'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -63,9 +64,12 @@ class Admin extends React.Component {
         </BottomNavigation>
         {
           value === 0 && (
-            <Typography type='headline' component='h3'>
-              Events
-            </Typography>
+            <div>
+              <Typography type='headline' component='h3'>
+                Events
+              </Typography>
+              <AdminEvent />
+            </div>
           )
         }
         {

@@ -72,8 +72,8 @@ class SeriesRow extends React.Component {
 
     return (
       <TableRow>
-        <TableCell>{series.id}</TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>{series.id}</TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='name'
             name='name'
@@ -84,7 +84,7 @@ class SeriesRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='_gameId'
             name='_gameId'
@@ -95,7 +95,7 @@ class SeriesRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='points'
             name='points'
@@ -106,7 +106,7 @@ class SeriesRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <Switch
             id='isCurrent'
             name='isCurrent'
@@ -115,7 +115,7 @@ class SeriesRow extends React.Component {
             aria-label='switch'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <IconButton onClick={this.saveSeries} aria-label='Save'>
             <SaveIcon />
           </IconButton>
@@ -190,7 +190,7 @@ class NewSeriesRow extends React.Component {
     return (
       <TableRow>
         <TableCell />
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='name'
             name='name'
@@ -201,7 +201,7 @@ class NewSeriesRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='_gameId'
             name='_gameId'
@@ -212,7 +212,7 @@ class NewSeriesRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='points'
             name='points'
@@ -223,7 +223,7 @@ class NewSeriesRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <Switch
             id='isCurrent'
             name='isCurrent'
@@ -232,7 +232,7 @@ class NewSeriesRow extends React.Component {
             aria-label='switch'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <IconButton onClick={() => addSeries(series)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
@@ -327,12 +327,12 @@ class AdminSeries extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Game</TableCell>
-              <TableCell>Points</TableCell>
-              <TableCell>Is Current?</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell style={{padding: '5px'}}>ID</TableCell>
+              <TableCell style={{padding: '5px'}}>Name</TableCell>
+              <TableCell style={{padding: '5px'}}>Game</TableCell>
+              <TableCell style={{padding: '5px'}}>Points</TableCell>
+              <TableCell style={{padding: '5px'}}>Is Current?</TableCell>
+              <TableCell style={{padding: '5px'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

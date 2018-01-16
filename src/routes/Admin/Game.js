@@ -57,8 +57,8 @@ class GameRow extends React.Component {
 
     return (
       <TableRow>
-        <TableCell>{game.id}</TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>{game.id}</TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='name'
             name='name'
@@ -69,7 +69,7 @@ class GameRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='short'
             name='short'
@@ -80,7 +80,7 @@ class GameRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='imageUrl'
             name='imageUrl'
@@ -91,7 +91,7 @@ class GameRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <IconButton onClick={this.saveGame} aria-label='Save'>
             <SaveIcon />
           </IconButton>
@@ -151,7 +151,7 @@ class NewGameRow extends React.Component {
     return (
       <TableRow>
         <TableCell />
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='name'
             name='name'
@@ -162,7 +162,7 @@ class NewGameRow extends React.Component {
             fullWidth
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='short'
             name='short'
@@ -173,7 +173,7 @@ class NewGameRow extends React.Component {
             fullWidth
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='imageUrl'
             name='imageUrl'
@@ -184,7 +184,7 @@ class NewGameRow extends React.Component {
             fullWidth
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <IconButton onClick={() => addGame(game)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
@@ -278,11 +278,11 @@ class AdminGame extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Short</TableCell>
-              <TableCell>Image URL</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell style={{padding: '5px'}}>ID</TableCell>
+              <TableCell style={{padding: '5px'}}>Name</TableCell>
+              <TableCell style={{padding: '5px'}}>Short</TableCell>
+              <TableCell style={{padding: '5px'}}>Image URL</TableCell>
+              <TableCell style={{padding: '5px'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

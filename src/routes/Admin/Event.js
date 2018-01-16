@@ -11,78 +11,37 @@ import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
-import Chip from 'material-ui/Chip'
-import { withStyles } from 'material-ui/styles'
-import Switch from 'material-ui/Switch'
 
-import { PlayerService } from '../../_services'
+import { EventService } from '../../_services'
 
-const styles = theme => ({
-  box: {
-    // display: 'flex',
-    // justifyContent: 'center',
-    // flexWrap: 'wrap'
-  },
-  chip: {
-    // margin: 0
-  }
-})
-
-class PlayerRow extends React.Component {
+class EventRow extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      player: props.player,
-      show: false
+      event: props.event
     }
 
     this.handleChange = this.handleChange.bind(this)
-    this.handleChallongeNameAdd = this.handleChallongeNameAdd.bind(this)
-    this.handleChangechallongeNameInput = this.handleChangechallongeNameInput.bind(this)
-    this.savePlayer = this.savePlayer.bind(this)
+    this.saveEvent = this.saveEvent.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
-    this.handleSwitch = this.handleSwitch.bind(this)
   }
 
-  handleChange (event) {
-    const { player } = this.state
-    player[event.target.name] = event.target.value
-    this.setState({ player })
+  handleChange (e) {
+    const { event } = this.state
+    event[e.target.name] = e.target.value
+    this.setState({ event })
   }
 
-  handleChangechallongeNameInput (event) {
-    this.setState({ challongeNameInput: event.target.value })
-  }
-
-  handleChallongeNameAdd (event) {
-    if (event.key === 'Enter') {
-      const { player } = this.state
-      if (!player.challongeName) {
-        player.challongeName = []
-      }
-      player.challongeName.push(event.target.value)
-      this.setState({ player })
-    }
-  }
-
-  handleSwitch (event, checked) {
-    this.setState({ show: checked })
-  }
-
-  handleDeleteChallongeName (index) {
-    const { player } = this.state
-    player.challongeName.splice(index, 1)
-    this.setState({ player })
-  }
-
-  savePlayer () {
+  saveEvent () {
     const { token } = this.props
-    const { player } = this.state
+    const { event } = this.state
 
-    PlayerService
-      .update(token, player.id, player)
-      .then(player => this.setState({ player, saved: true }))
+    EventService
+      .update(token, event.id, event)
+      .then(event => {
+        this.setState({ event, saved: true })
+      })
       .catch(error => this.setState({ error }))
   }
 
@@ -93,72 +52,72 @@ class PlayerRow extends React.Component {
   }
 
   render () {
-    const { player, challongeNameInput, show } = this.state
-    const { deletePlayer, classes } = this.props
+    const { event } = this.state
+    const { deleteEvent } = this.props
 
     return (
       <TableRow>
-        <TableCell style={{padding: '5px'}}>{player.id}</TableCell>
+        <TableCell style={{padding: '5px'}}>{event.id}</TableCell>
         <TableCell style={{padding: '5px'}}>
           <TextField
-            id='handle'
-            name='handle'
-            value={player.handle || ''}
+            id='number'
+            name='number'
+            value={event.number || 1}
             onChange={this.handleChange}
-            placeholder='Handle'
-            margin='normal'
+            placeholder='Number'
             fullWidth
-          />
-        </TableCell>
-        <TableCell style={{padding: '5px'}}>
-          <TextField
-            id='challongeUsername'
-            name='challongeUsername'
-            value={player.challongeUsername || ''}
-            onChange={this.handleChange}
-            placeholder='Challonge Username'
             margin='normal'
-            fullWidth
           />
-        </TableCell>
-        <TableCell className={classes.box}>
-          <Switch
-            checked={show}
-            onChange={this.handleSwitch}
-            aria-label='switch'
-          />
-          {
-            player.challongeName.map((name, i) => show && <Chip className={classes.chip} label={name} key={name} onDelete={() => this.handleDeleteChallongeName(i)} />)
-          }
-          {
-            show && <TextField
-              id='challongeNameInput'
-              name='challongeNameInput'
-              value={challongeNameInput || ''}
-              onChange={this.handleChangechallongeNameInput}
-              onKeyPress={this.handleChallongeNameAdd}
-              placeholder='Challonge Names'
-              margin='normal'
-              fullWidth
-            />
-          }
         </TableCell>
         <TableCell style={{padding: '5px'}}>
           <TextField
-            id='emailHash'
-            name='emailHash'
-            value={player.emailHash || ''}
+            id='name'
+            name='name'
+            value={event.name || ''}
             onChange={this.handleChange}
-            placeholder='Email Hash'
-            margin='normal'
+            placeholder='Name'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
-          <IconButton onClick={this.savePlayer} aria-label='Save'>
+          <TextField
+            id='date'
+            name='date'
+            value={event.date || new Date().toISOString()}
+            onChange={this.handleChange}
+            placeholder='Date'
+            fullWidth
+            margin='normal'
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='venue'
+            name='venue'
+            value={event.venue || ''}
+            onChange={this.handleChange}
+            placeholder='Venue'
+            fullWidth
+            margin='normal'
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='url'
+            name='url'
+            value={event.url || ''}
+            onChange={this.handleChange}
+            placeholder='URL'
+            fullWidth
+            margin='normal'
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <IconButton onClick={this.saveEvent} aria-label='Save'>
             <SaveIcon />
           </IconButton>
-          <IconButton onClick={() => deletePlayer(player.id)} aria-label='Delete'>
+          <IconButton onClick={() => deleteEvent(event.id)} aria-label='Delete'>
             <DeleteIcon />
           </IconButton>
           <Snackbar
@@ -190,76 +149,87 @@ class PlayerRow extends React.Component {
   }
 }
 
-class NewPlayerRow extends React.Component {
+class NewEventRow extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      player: {}
+      event: {}
     }
 
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange (event) {
-    const { player } = this.state
-    player[event.target.name] = event.target.value
-    this.setState({ player })
+  handleChange (e) {
+    const { event } = this.state
+    event[e.target.name] = e.target.value
+    this.setState({ event })
   }
 
   render () {
-    const { player } = this.state
-    const { addPlayer } = this.props
+    const { event } = this.state
+    const { addEvent } = this.props
 
     return (
       <TableRow>
         <TableCell />
         <TableCell style={{padding: '5px'}}>
           <TextField
-            id='handle'
-            name='handle'
-            value={player.handle || ''}
+            id='number'
+            name='number'
+            value={event.number || 1}
             onChange={this.handleChange}
-            placeholder='Handle'
-            margin='normal'
+            placeholder='Number'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
           <TextField
-            id='challongeUsername'
-            name='challongeUsername'
-            value={player.challongeUsername || ''}
+            id='name'
+            name='name'
+            value={event.name || ''}
             onChange={this.handleChange}
-            placeholder='Challonge Username'
-            margin='normal'
+            placeholder='Name'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
           <TextField
-            id='challongeName'
-            name='challongeName'
-            value={player.challongeName || ''}
+            id='date'
+            name='date'
+            value={event.date || new Date().toISOString()}
             onChange={this.handleChange}
-            placeholder='Challonge Names'
-            margin='normal'
+            placeholder='Date'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
           <TextField
-            id='emailHash'
-            name='emailHash'
-            value={player.emailHash || ''}
+            id='venue'
+            name='venue'
+            value={event.venue || ''}
             onChange={this.handleChange}
-            placeholder='Email Hash'
-            margin='normal'
+            placeholder='Venue'
             fullWidth
+            margin='normal'
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
-          <IconButton onClick={() => addPlayer(player)} aria-label='Save'>
+          <TextField
+            id='url'
+            name='url'
+            value={event.url || ''}
+            onChange={this.handleChange}
+            placeholder='URL'
+            fullWidth
+            margin='normal'
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <IconButton onClick={() => addEvent(event)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
         </TableCell>
@@ -268,48 +238,48 @@ class NewPlayerRow extends React.Component {
   }
 }
 
-class AdminPlayer extends React.Component {
+class AdminEvent extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      players: []
+      events: []
     }
 
-    this.handleAddPlayer = this.handleAddPlayer.bind(this)
-    this.handleDeletePlayer = this.handleDeletePlayer.bind(this)
+    this.handleAddEvent = this.handleAddEvent.bind(this)
+    this.handleDeleteEvent = this.handleDeleteEvent.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
-    this.performDeletePlayer = this.performDeletePlayer.bind(this)
+    this.performDeleteEvent = this.performDeleteEvent.bind(this)
     this.closeDeleted = this.closeDeleted.bind(this)
   }
 
   componentWillMount () {
-    PlayerService
+    EventService
       .getAll()
-      .then(players => this.setState({ players }))
+      .then(events => this.setState({ events }))
       .catch(error => this.setState({ error }))
   }
 
-  handleAddPlayer (body) {
+  handleAddEvent (body) {
     const { token } = this.props
-    PlayerService
+    EventService
       .create(token, body)
-      .then(player => {
-        const { players } = this.state
-        players.push(player)
-        this.setState({ players, added: true })
+      .then(event => {
+        const { events } = this.state
+        events.unshift(event)
+        this.setState({ events, added: true })
       })
       .catch(error => this.setState({ error }))
   }
 
-  handleDeletePlayer (id) {
+  handleDeleteEvent (id) {
     this.setState({
       deleteStart: true,
       id
     })
   }
 
-  performDeletePlayer () {
+  performDeleteEvent () {
     const { token } = this.props
     const { id } = this.state
 
@@ -319,12 +289,12 @@ class AdminPlayer extends React.Component {
       return
     }
 
-    PlayerService
+    EventService
       .delete(token, id)
       .then(() => {
-        let { players } = this.state
-        players = players.filter(o => o.id !== id)
-        this.setState({ players, deleted: true })
+        let { events } = this.state
+        events = events.filter(o => o.id !== id)
+        this.setState({ events, deleted: true })
       })
       .catch(error => this.setState({ error }))
   }
@@ -344,8 +314,8 @@ class AdminPlayer extends React.Component {
   }
 
   render () {
-    const { players } = this.state
-    const { token, classes } = this.props
+    const { events } = this.state
+    const { token } = this.props
 
     return (
       <div>
@@ -353,17 +323,19 @@ class AdminPlayer extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell style={{padding: '5px'}}>ID</TableCell>
-              <TableCell style={{padding: '5px'}}>Handle</TableCell>
-              <TableCell style={{padding: '5px'}}>Challonge Username</TableCell>
-              <TableCell style={{padding: '5px'}}>Challonge Names</TableCell>
-              <TableCell style={{padding: '5px'}}>Email Hash</TableCell>
+              <TableCell style={{padding: '5px'}}>Number</TableCell>
+              <TableCell style={{padding: '5px'}}>Name</TableCell>
+              <TableCell style={{padding: '5px'}}>Date</TableCell>
+              <TableCell style={{padding: '5px'}}>Venue</TableCell>
+              <TableCell style={{padding: '5px'}}>URL</TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* <NewPlayerRow addPlayer={this.handleAddPlayer} /> */}
+            <NewEventRow addEvent={this.handleAddEvent} />
             {
-              players && players.map(player => (
-                <PlayerRow classes={classes} player={player} key={player.id} token={token} deletePlayer={this.handleDeletePlayer} />
+              events && events.map(event => (
+                <EventRow event={event} key={event.id} token={token} deleteEvent={this.handleDeleteEvent} />
               ))
             }
           </TableBody>
@@ -408,7 +380,7 @@ class AdminPlayer extends React.Component {
               key='delete'
               aria-label='Delete'
               color='inherit'
-              onClick={this.performDeletePlayer}
+              onClick={this.performDeleteEvent}
             >
               <DeleteIcon />
             </IconButton>,
@@ -450,20 +422,18 @@ class AdminPlayer extends React.Component {
   }
 }
 
-AdminPlayer.propTypes = {
-  token: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired
+AdminEvent.propTypes = {
+  token: PropTypes.string.isRequired
 }
 
-PlayerRow.propTypes = {
-  player: PropTypes.object.isRequired,
+EventRow.propTypes = {
+  event: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
-  deletePlayer: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  deleteEvent: PropTypes.func.isRequired
 }
 
-NewPlayerRow.propTypes = {
-  addPlayer: PropTypes.func.isRequired
+NewEventRow.propTypes = {
+  addEvent: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -476,4 +446,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withStyles(styles)(withRouter(connect(mapStateToProps)(AdminPlayer)))
+export default withRouter(connect(mapStateToProps)(AdminEvent))

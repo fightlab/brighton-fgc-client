@@ -65,12 +65,12 @@ class TournamentRow extends React.Component {
 
     return (
       <TableRow>
-        <TableCell>{tournament.id}</TableCell>
-        <TableCell>{tournament.name}</TableCell>
-        <TableCell>{tournament.type}</TableCell>
-        <TableCell>{DateService.format(tournament.dateStart)}</TableCell>
-        <TableCell>{DateService.format(tournament.dateEnd)}</TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>{tournament.id}</TableCell>
+        <TableCell style={{padding: '5px'}}>{tournament.name}</TableCell>
+        <TableCell style={{padding: '5px'}}>{tournament.type}</TableCell>
+        <TableCell style={{padding: '5px'}}>{DateService.format(tournament.dateStart)}</TableCell>
+        <TableCell style={{padding: '5px'}}>{DateService.format(tournament.dateEnd)}</TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='bracket'
             name='bracket'
@@ -81,7 +81,7 @@ class TournamentRow extends React.Component {
             onChange={this.handleChange}
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='signUpUrl'
             name='signUpUrl'
@@ -92,7 +92,7 @@ class TournamentRow extends React.Component {
             onChange={this.handleChange}
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='series'
             name='series'
@@ -103,7 +103,7 @@ class TournamentRow extends React.Component {
             onChange={this.handleChange}
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='event'
             name='event'
@@ -114,7 +114,7 @@ class TournamentRow extends React.Component {
             onChange={this.handleChange}
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='_gameId'
             name='_gameId'
@@ -125,7 +125,7 @@ class TournamentRow extends React.Component {
             onChange={this.handleChange}
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <Button raised color='primary' onClick={this.challongeUpdate}>
             Challonge Update
           </Button>
@@ -192,7 +192,7 @@ class NewTournamentRow extends React.Component {
         <TableCell />
         <TableCell />
         <TableCell />
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='bracket'
             name='bracket'
@@ -203,7 +203,7 @@ class NewTournamentRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='signUpUrl'
             onChange={this.handleChange}
@@ -214,7 +214,7 @@ class NewTournamentRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='series'
             name='series'
@@ -225,7 +225,7 @@ class NewTournamentRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='event'
             name='event'
@@ -236,7 +236,7 @@ class NewTournamentRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <TextField
             id='_gameId'
             name='_gameId'
@@ -247,7 +247,7 @@ class NewTournamentRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell>
+        <TableCell style={{padding: '5px'}}>
           <IconButton onClick={() => addTournament(tournament)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
@@ -341,17 +341,17 @@ class AdminTournament extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Start</TableCell>
-              <TableCell>End</TableCell>
-              <TableCell>Bracket</TableCell>
-              <TableCell>Sign Up</TableCell>
-              <TableCell>Series</TableCell>
-              <TableCell>Event</TableCell>
-              <TableCell>Game</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell style={{padding: '5px'}}>ID</TableCell>
+              <TableCell style={{padding: '5px'}}>Name</TableCell>
+              <TableCell style={{padding: '5px'}}>Type</TableCell>
+              <TableCell style={{padding: '5px'}}>Start</TableCell>
+              <TableCell style={{padding: '5px'}}>End</TableCell>
+              <TableCell style={{padding: '5px'}}>Bracket</TableCell>
+              <TableCell style={{padding: '5px'}}>Sign Up</TableCell>
+              <TableCell style={{padding: '5px'}}>Series</TableCell>
+              <TableCell style={{padding: '5px'}}>Event</TableCell>
+              <TableCell style={{padding: '5px'}}>Game</TableCell>
+              <TableCell style={{padding: '5px'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
