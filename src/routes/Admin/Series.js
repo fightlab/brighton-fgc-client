@@ -185,6 +185,7 @@ class NewSeriesRow extends React.Component {
   render () {
     const { series } = this.state
     const { addSeries } = this.props
+    series.points = series.points || [16, 12, 10, 8, 6, 6, 4, 4, 2, 2, 2, 2, 1, 1, 1, 1]
 
     return (
       <TableRow>
@@ -215,7 +216,7 @@ class NewSeriesRow extends React.Component {
           <TextField
             id='points'
             name='points'
-            value={series.points || []}
+            value={series.points}
             onChange={this.handlePointsChange}
             placeholder='Points Array'
             fullWidth
@@ -265,6 +266,7 @@ class AdminSeries extends React.Component {
 
   handleAddSeries (body) {
     const { token } = this.props
+    console.log(body)
     SeriesService
       .create(token, body)
       .then(series => {
