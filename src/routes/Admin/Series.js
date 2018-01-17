@@ -10,7 +10,7 @@ import DeleteIcon from 'material-ui-icons/Delete'
 import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import { get, orderBy } from 'lodash'
 import Switch from 'material-ui/Switch'
 
 import { SeriesService } from '../../_services'
@@ -260,7 +260,7 @@ class AdminSeries extends React.Component {
   componentWillMount () {
     SeriesService
       .getAll()
-      .then(serieses => this.setState({ serieses }))
+      .then(serieses => this.setState({ serieses: orderBy(serieses, 'isCurrent', 'asc') }))
       .catch(error => this.setState({ error }))
   }
 

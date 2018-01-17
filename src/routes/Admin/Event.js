@@ -10,7 +10,7 @@ import DeleteIcon from 'material-ui-icons/Delete'
 import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import { get, orderBy } from 'lodash'
 
 import { EventService } from '../../_services'
 
@@ -259,7 +259,7 @@ class AdminEvent extends React.Component {
   componentWillMount () {
     EventService
       .getAll()
-      .then(events => this.setState({ events }))
+      .then(events => this.setState({ events: orderBy(events, 'date', 'desc') }))
       .catch(error => this.setState({ error }))
   }
 

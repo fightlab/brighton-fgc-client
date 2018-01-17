@@ -131,7 +131,7 @@ class TournamentRow extends React.Component {
           <Button raised color='primary' onClick={this.challongeUpdate}>
             Challonge Update
           </Button>
-          <IconButton aria-label='Save'>
+          <IconButton aria-label='Save' onClick={this.saveTournament}>
             <SaveIcon />
           </IconButton>
           <IconButton onClick={() => deleteTournament(tournament.id)} aria-label='Delete'>
