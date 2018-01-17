@@ -185,8 +185,6 @@ class NewTournamentRow extends React.Component {
     const { tournament } = this.state
     const { addTournament } = this.props
 
-    tournament.venue = tournament.venue || 'Brewdog Brighton'
-
     return (
       <TableRow>
         <TableCell />

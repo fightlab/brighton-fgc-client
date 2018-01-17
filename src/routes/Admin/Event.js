@@ -170,6 +170,8 @@ class NewEventRow extends React.Component {
     const { event } = this.state
     const { addEvent } = this.props
 
+    event.venue = event.venue || 'Brewdog Brighton'
+
     return (
       <TableRow>
         <TableCell />
