@@ -25,6 +25,8 @@ class TournamentRow extends React.Component {
 
     this.challongeUpdate = this.challongeUpdate.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.saveTournament = this.saveTournament.bind(this)
   }
 
   handleChange (event) {
