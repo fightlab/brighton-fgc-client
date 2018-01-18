@@ -5,9 +5,9 @@ import { API_URL, getAuthHeader } from '../_constants'
 const URL = `${API_URL}/events`
 
 export class EventService {
-  static getAll () {
+  static getAll (limit) {
     return axios
-      .get(URL)
+      .get(limit ? `${URL}?limit=${limit}` : URL)
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }
