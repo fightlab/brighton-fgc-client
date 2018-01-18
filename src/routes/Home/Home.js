@@ -45,7 +45,6 @@ class Home extends React.Component {
 
   render () {
     const { classes, event } = this.props
-    console.log(classes)
     const { events } = event
 
     return (

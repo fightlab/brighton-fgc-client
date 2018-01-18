@@ -266,7 +266,6 @@ class AdminSeries extends React.Component {
 
   handleAddSeries (body) {
     const { token } = this.props
-    console.log(body)
     SeriesService
       .create(token, body)
       .then(series => {
