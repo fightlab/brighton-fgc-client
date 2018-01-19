@@ -92,6 +92,17 @@ class GameRow extends React.Component {
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='bgUrl'
+            name='bgUrl'
+            value={game.bgUrl || ''}
+            onChange={this.handleChange}
+            placeholder='BG URL'
+            fullWidth
+            margin='normal'
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
           <IconButton onClick={this.saveGame} aria-label='Save'>
             <SaveIcon />
           </IconButton>
@@ -180,6 +191,17 @@ class NewGameRow extends React.Component {
             value={game.imageUrl || ''}
             onChange={this.handleChange}
             placeholder='Image URL'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='bgUrl'
+            name='bgUrl'
+            value={game.bgUrl || ''}
+            onChange={this.handleChange}
+            placeholder='BG URL'
             margin='normal'
             fullWidth
           />
@@ -282,6 +304,7 @@ class AdminGame extends React.Component {
               <TableCell style={{padding: '5px'}}>Name</TableCell>
               <TableCell style={{padding: '5px'}}>Short</TableCell>
               <TableCell style={{padding: '5px'}}>Image URL</TableCell>
+              <TableCell style={{padding: '5px'}}>Background URL</TableCell>
               <TableCell style={{padding: '5px'}}>Actions</TableCell>
             </TableRow>
           </TableHead>

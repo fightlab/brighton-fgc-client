@@ -18,7 +18,7 @@ class EventCard extends React.Component {
   render () {
     const { event, classes } = this.props
     return (
-      <Card className={classes.card}>
+      <Card className={classes.card} elevation={10}>
         <CardHeader
           title={event.name}
           subheader={DateService.format(event.date, 'DATE_HUGE')}

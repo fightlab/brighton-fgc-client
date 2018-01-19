@@ -14,7 +14,9 @@ import './Home.css'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
+    background: 'url(https://res.cloudinary.com/mkn-sh/image/upload/c_lfill,h_720,w_1280/o_20,e_gradient_fade,y_-0.999/v1514624353/fgc/hbk.png) no-repeat center center fixed',
     backgroundColor: theme.palette.background.default,
+    backgroundSize: 'cover',
     width: '100%',
     paddingTop: 16,
     paddingBottom: 16,
@@ -66,7 +68,7 @@ class Home extends React.Component {
           </Typography>
         </Hidden>
         <Grid container className={classes.container}>
-          <Grid item sm={6} xs={12}>
+          <Grid item lg={6} md={12}>
             <Paper className={classes.paper} elevation={4}>
               <Typography type='title' component='h3'>
             Latest Events

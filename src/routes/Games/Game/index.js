@@ -36,13 +36,15 @@ class Game extends React.Component {
   }
 
   async componentWillMount () {
-    const { match } = this.props
+    const { match, setBg } = this.props
 
     // get game information
     const game = await GameService.get(match.params.gameId).catch(this.handleError)
 
     // get tournaments information
     const tournaments = orderBy(await GameService.getTournaments(match.params.gameId).catch(this.handleError), ['dateStart'], ['desc'])
+
+    setBg(game.bgUrl)
 
     this.setState({ game, tournaments })
   }
@@ -70,7 +72,8 @@ class Game extends React.Component {
 
 Game.propTypes = {
   match: PropTypes.any.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  setBg: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(Game)
