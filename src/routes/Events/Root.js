@@ -34,8 +34,8 @@ class Root extends React.Component {
 
   render () {
     const { classes, event } = this.props
-    const upcoming = orderBy(filter(event.events, e => DateService.compareDates(e.date, new Date().toISOString())), 'date', 1)
-    const past = orderBy(filter(event.events, e => !DateService.compareDates(e.date, new Date().toISOString())), 'date', 1)
+    const upcoming = orderBy(filter(event.events, e => DateService.compareDates(e.date, new Date().toISOString())), 'date', 'desc')
+    const past = orderBy(filter(event.events, e => !DateService.compareDates(e.date, new Date().toISOString())), 'date', 'desc')
 
     return (
       <div>
