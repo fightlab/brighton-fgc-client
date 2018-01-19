@@ -29,7 +29,7 @@ const styles = theme => ({
 class Root extends React.Component {
   componentWillMount () {
     const { dispatch } = this.props
-    dispatch(eventActions.getAll(4))
+    dispatch(eventActions.getAll())
   }
 
   render () {
