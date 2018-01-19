@@ -4,7 +4,8 @@ import { Typography, Paper } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { Route } from 'react-router-dom'
 
-import Event from './Event/Event'
+import Root from './Root'
+import Event from './Event'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -15,22 +16,28 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       marginTop: 64
     }
-  })
+  }),
+  container: {
+    flexGrow: 1,
+    marginTop: 30
+  }
 })
 
-const Events = ({match, classes}) => (
-  <Paper className={classes.root} elevation={0}>
-    <Typography type='display2' component='h1'>
-      Events
-    </Typography>
-    <Route path={`${match.url}/:eventId`} component={Event} />
-    <Route exact path={match.url} render={() => (
-      <Typography type='body2' component='p'>
-        Please Select A Event
-      </Typography>
-    )} />
-  </Paper>
-)
+class Events extends React.Component {
+  render () {
+    const { match, classes } = this.props
+
+    return (
+      <Paper className={classes.root} elevation={0}>
+        <Typography type='display2' component='h1'>
+          Events
+        </Typography>
+        <Route path={`${match.url}/:eventId`} render={props => <Event {...props} />} />
+        <Route exact path={match.url} component={Root} />
+      </Paper>
+    )
+  }
+}
 
 Events.propTypes = {
   classes: PropTypes.object.isRequired,

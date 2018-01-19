@@ -4,7 +4,7 @@ import AdminRoute from '../components/AdminRoute'
 
 import Home from './Home/Home'
 import Games from './Games'
-import Events from './Events/Events'
+import Events from './Events'
 import Tournaments from './Tournaments/Tournaments'
 import Players from './Players/Players'
 import Standings from './Standings/Standings'

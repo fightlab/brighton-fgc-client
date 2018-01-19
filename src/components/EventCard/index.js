@@ -31,7 +31,7 @@ class EventCard extends React.Component {
             {event.venue}
           </Typography>
           <Typography component='p' align='center' type='caption'>
-              Date:
+              Time:
           </Typography>
           <Typography component='p' align='center' gutterBottom>
             {DateService.format(event.date, 'TIME_SIMPLE')}
