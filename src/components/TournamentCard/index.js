@@ -38,6 +38,12 @@ class TournamentCard extends React.Component {
             <Typography component='p' align='center' gutterBottom>
               {tournament._gameId.name}
             </Typography>
+            <Typography component='p' align='center' type='caption'>
+              Participants:
+            </Typography>
+            <Typography component='p' align='center' gutterBottom>
+              {tournament.players.length}
+            </Typography>
             <Grid container>
               <Grid item xs={6}>
                 <Typography component='p' align='center' type='caption'>

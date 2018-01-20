@@ -133,6 +133,7 @@ class App extends React.Component {
         <Divider />
         <div style={{justifyContent: 'flex-start'}} className={classes.drawerHeader}>
           <Typography type='caption' component='p'>
+            <br />
             Brighton FGC Site by
             <br />
             <a href='http://mkn.sh' target='_blank' className='no-decor'>
@@ -143,8 +144,11 @@ class App extends React.Component {
             <a href='https://github.com/coldlink/brighton-fgc-client' target='_blank' className='no-decor'>Client</a>: {process.env.RAZZLE_ENV_CLIENT_VERSION || 'dev'}
             <br />
             <a href='https://github.com/coldlink/brighton-fgc-api' target='_blank' className='no-decor'>API</a>: {process.env.RAZZLE_ENV_API_VERSION || 'dev'}
+            <br />
+            <br />
           </Typography>
         </div>
+        <Divider />
       </div>
     )
 

@@ -4,7 +4,8 @@ import { Typography, Paper } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { Route } from 'react-router-dom'
 
-import Tournament from './Tournament/Tournament'
+import Tournament from './Tournament'
+import Root from './Root'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -24,11 +25,7 @@ const Tournaments = ({match, classes}) => (
       Tournaments
     </Typography>
     <Route path={`${match.url}/:tournamentId`} component={Tournament} />
-    <Route exact path={match.url} render={() => (
-      <Typography type='body2' component='p'>
-        Please Select A Tournament
-      </Typography>
-    )} />
+    <Route exact path={match.url} component={Root} />
   </Paper>
 )
 
