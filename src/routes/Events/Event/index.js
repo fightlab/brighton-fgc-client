@@ -37,7 +37,7 @@ class Event extends React.Component {
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12}>
-          <Typography type='title' component='h3'>
+          <Typography type='display1' component='h2'>
             {event.event && event.event.name}
           </Typography>
           <Typography type='subheading' component='h4'>
@@ -54,7 +54,7 @@ class Event extends React.Component {
         </Grid>
         {
           tournaments.length && <Grid item xs={12}>
-            <Typography type='display1' component='h2'>
+            <Typography type='title' component='h3'>
                 Tournaments
             </Typography>
           </Grid>
