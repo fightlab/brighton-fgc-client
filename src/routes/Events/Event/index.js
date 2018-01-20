@@ -1,15 +1,86 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography } from 'material-ui'
+import { withStyles } from 'material-ui/styles'
+import Grid from 'material-ui/Grid'
+import { orderBy } from 'lodash'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import Button from 'material-ui/Button'
 
-const Event = ({ match }) => (
-  <Typography type='body2' component='p'>
-    {match.params.eventId}
-  </Typography>
-)
+import TournamentCard from '../../../components/TournamentCard'
 
-Event.propTypes = {
-  match: PropTypes.any
+import { DateService } from '../../../_services'
+import { eventActions } from '../../../_actions'
+
+const styles = theme => ({
+  container: {
+    flexGrow: 1,
+    marginTop: 30
+  },
+  card: {
+    width: '100%'
+  }
+})
+
+class Event extends React.Component {
+  componentWillMount () {
+    const { dispatch, match } = this.props
+    dispatch(eventActions.get(match.params.eventId))
+    dispatch(eventActions.getTournaments(match.params.eventId))
+  }
+
+  render () {
+    const { classes, event } = this.props
+    const { tournaments = [] } = event
+
+    return (
+      <Grid container className={classes.container}>
+        <Grid item xs={12}>
+          <Typography type='title' component='h3'>
+            {event.event && event.event.name}
+          </Typography>
+          <Typography type='subheading' component='h4'>
+            {event.event && DateService.format(event.event.date)}
+          </Typography>
+          <Typography type='subheading' component='h4'>
+            {event.event && event.event.venue}
+          </Typography>
+          <a href={event.event && event.event.url} target='_blank' className='no-decor'>
+            <Button dense>
+              Event page
+            </Button>
+          </a>
+        </Grid>
+        {
+          tournaments.length && <Grid item xs={12}>
+            <Typography type='display1' component='h2'>
+                Tournaments
+            </Typography>
+          </Grid>
+        }
+        {
+          tournaments.length && orderBy(tournaments, 'dateStart', 'desc').map(tournament => (
+            <TournamentCard tournament={tournament} key={tournament.id} />
+          ))
+        }
+      </Grid>
+    )
+  }
 }
 
-export default Event
+Event.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  event: PropTypes.object.isRequired,
+  match: PropTypes.any.isRequired,
+  classes: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => {
+  const { event } = state
+  return {
+    event
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Event)))

@@ -46,12 +46,12 @@ const get = id => dispatch => {
     }
   }
 
-  const success = game => {
+  const success = event => {
     return {
       type: eventConstants.GET_SUCCESS,
       isFetching: false,
       isAuthenticated: true,
-      game
+      event
     }
   }
 
@@ -62,7 +62,7 @@ const get = id => dispatch => {
       isAuthenticated: false,
       status: error.status,
       statusText: error.statusText,
-      game: null
+      event: null
     }
   }
 
@@ -70,7 +70,7 @@ const get = id => dispatch => {
 
   EventService
     .get(id)
-    .then(game => dispatch(success(game)))
+    .then(event => dispatch(success(event)))
     .catch(error => dispatch(failure(error)))
 }
 

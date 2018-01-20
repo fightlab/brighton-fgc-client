@@ -39,4 +39,11 @@ export class EventService {
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }
+
+  static getTournaments (id) {
+    return axios
+      .get(`${URL}/${id}/tournaments`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
 }
