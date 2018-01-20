@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
-// import { orderBy } from 'lodash'
+import { orderBy } from 'lodash'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -31,7 +31,7 @@ class Game extends React.Component {
   render () {
     const { classes, game } = this.props
     const { tournaments = [] } = game
-    console.log(game)
+
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12}>
@@ -40,7 +40,7 @@ class Game extends React.Component {
           </Typography>
         </Grid>
         {
-          tournaments.map(tournament => (
+          orderBy(tournaments, 'dateStart', 'desc').map(tournament => (
             <TournamentCard tournament={tournament} key={tournament.id} />
           ))
         }

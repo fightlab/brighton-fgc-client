@@ -5,16 +5,28 @@ import { gameConstants } from '../_constants'
 const init = {
   isFetching: false,
   games: [],
-  game: null
+  game: null,
+  tournaments: []
 }
 
 export const game = (state = init, action) => {
   switch (action.type) {
     case gameConstants.GETALL_REQUEST:
-    case gameConstants.GET_REQUEST:
-    case gameConstants.GETTOURNAMENTS_REQUEST:
+      state.games = []
       return merge({}, state, {
-        isFetching: true
+        isFetching: true,
+        games: action.games
+      })
+    case gameConstants.GET_REQUEST:
+      return merge({}, state, {
+        isFetching: true,
+        game: action.game
+      })
+    case gameConstants.GETTOURNAMENTS_REQUEST:
+      state.tournaments = []
+      return merge({}, state, {
+        isFetching: true,
+        tournaments: action.tournaments
       })
     case gameConstants.GETALL_SUCCESS:
       return merge({}, state, {
@@ -26,7 +38,7 @@ export const game = (state = init, action) => {
         isFetching: false,
         errorMessage: action.statusText,
         errorCode: action.status,
-        games: []
+        games: action.games
       })
     case gameConstants.GET_SUCCESS:
       return merge({}, state, {
@@ -38,7 +50,7 @@ export const game = (state = init, action) => {
         isFetching: false,
         errorMessage: action.statusText,
         errorCode: action.status,
-        game: null
+        game: action.game
       })
     case gameConstants.GETTOURNAMENTS_SUCCESS:
       return merge({}, state, {
@@ -50,7 +62,7 @@ export const game = (state = init, action) => {
         isFetching: false,
         errorMessage: action.statusText,
         errorCode: action.status,
-        tournaments: []
+        tournaments: action.tournaments
       })
     default:
       return state

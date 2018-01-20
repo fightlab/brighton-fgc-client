@@ -12,6 +12,7 @@ import Game from './Game'
 const styles = theme => ({
   root: theme.mixins.gutters({
     backgroundColor: theme.palette.background.default,
+    backgroundSize: 'cover !important',
     width: '100%',
     padding: theme.spacing.unit * 3,
     marginTop: 56,
@@ -38,7 +39,7 @@ class Games extends React.Component {
 
   setBg (url = '') {
     let { bg } = this.state
-    bg = url ? { background: `url(${url}) no-repeat center center fixed`, backgroundSize: 'cover' } : {}
+    bg = url ? { background: `url(${url}) no-repeat center center fixed` } : {}
     this.setState({ bg })
   }
 
@@ -51,10 +52,8 @@ class Games extends React.Component {
   }
 
   render () {
-    const { match, classes, game } = this.props
+    const { match, classes } = this.props
     const { bg } = this.state
-
-    console.log(game)
 
     return (
       <Paper style={bg} className={classes.root} elevation={0}>

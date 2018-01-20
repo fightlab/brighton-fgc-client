@@ -79,7 +79,8 @@ const getTournaments = id => dispatch => {
     return {
       type: gameConstants.GETTOURNAMENTS_REQUEST,
       isFetching: true,
-      id
+      id,
+      tournaments: []
     }
   }
 
