@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography, Paper } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { get } from 'lodash'
 
 import Root from './Root'
 import Game from './Game'
@@ -34,7 +36,7 @@ class Games extends React.Component {
     this.setBg = this.setBg.bind(this)
   }
 
-  setBg (url) {
+  setBg (url = '') {
     let { bg } = this.state
     bg = url ? { background: `url(${url}) no-repeat center center fixed`, backgroundSize: 'cover' } : {}
     this.setState({ bg })
@@ -43,19 +45,23 @@ class Games extends React.Component {
   componentWillReceiveProps (nextProps) {
     if (nextProps.match.isExact) {
       this.setBg('')
+    } else {
+      this.setBg(get(nextProps, 'game.game.bgUrl', ''))
     }
   }
 
   render () {
-    const { match, classes } = this.props
+    const { match, classes, game } = this.props
     const { bg } = this.state
+
+    console.log(game)
 
     return (
       <Paper style={bg} className={classes.root} elevation={0}>
         <Typography type='display2' component='h1'>
           Games
         </Typography>
-        <Route path={`${match.url}/:gameId`} render={props => <Game {...props} setBg={this.setBg} />} />
+        <Route path={`${match.url}/:gameId`} render={props => <Game {...props} />} />
         <Route exact path={match.url} component={Root} />
       </Paper>
     )
@@ -64,7 +70,15 @@ class Games extends React.Component {
 
 Games.propTypes = {
   classes: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired,
   match: PropTypes.any
 }
 
-export default withStyles(styles)(Games)
+const mapStateToProps = state => {
+  const { game } = state
+  return {
+    game
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Games)))

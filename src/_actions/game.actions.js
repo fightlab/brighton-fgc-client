@@ -37,6 +37,82 @@ const getAll = limit => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const get = id => dispatch => {
+  const request = id => {
+    return {
+      type: gameConstants.GET_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = game => {
+    return {
+      type: gameConstants.GET_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      game
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: gameConstants.GET_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      status: error.status,
+      statusText: error.statusText,
+      game: null
+    }
+  }
+
+  dispatch(request({ id }))
+
+  GameService
+    .get(id)
+    .then(game => dispatch(success(game)))
+    .catch(error => dispatch(failure(error)))
+}
+
+const getTournaments = id => dispatch => {
+  const request = id => {
+    return {
+      type: gameConstants.GETTOURNAMENTS_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = tournaments => {
+    return {
+      type: gameConstants.GETTOURNAMENTS_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      tournaments
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: gameConstants.GETTOURNAMENTS_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      status: error.status,
+      statusText: error.statusText,
+      tournaments: []
+    }
+  }
+
+  dispatch(request({ id }))
+
+  GameService
+    .getTournaments(id)
+    .then(tournaments => dispatch(success(tournaments)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const gameActions = {
-  getAll
+  getAll,
+  get,
+  getTournaments
 }
