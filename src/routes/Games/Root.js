@@ -6,8 +6,10 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import { withStyles } from 'material-ui/styles'
 import { orderBy } from 'lodash'
-import { Link } from 'react-router-dom'
-import { GameService } from '../../_services'
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import { gameActions } from '../../_actions'
 
 const styles = theme => ({
   container: {
@@ -24,27 +26,14 @@ const styles = theme => ({
 })
 
 class Root extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      games: []
-    }
-  }
-
   componentWillMount () {
-    GameService
-      .getAll()
-      .then(games => {
-        games = orderBy(games, 'name')
-        this.setState({ games })
-      })
-      .catch(error => this.setState({ error }))
+    const { dispatch } = this.props
+    dispatch(gameActions.getAll())
   }
 
   render () {
-    const { classes } = this.props
-    const { games } = this.state
+    const { classes, game } = this.props
+    const games = orderBy(game.games, 'name', 'asc')
 
     return (
       <Grid container className={classes.container}>
@@ -77,7 +66,16 @@ class Root extends React.Component {
 }
 
 Root.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  game: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Root)
+const mapStateToProps = state => {
+  const { game } = state
+  return {
+    game
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Root)))
