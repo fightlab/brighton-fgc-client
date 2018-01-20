@@ -2,13 +2,18 @@ import './App.css'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import { Drawer, Hidden, Divider } from 'material-ui'
+import { Drawer, Hidden, Divider, Typography } from 'material-ui'
 import List from 'material-ui/List'
 import Reboot from 'material-ui/Reboot'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
+import IconButton from 'material-ui/IconButton'
+import Facebook from 'mdi-material-ui/Facebook'
+import Twitter from 'mdi-material-ui/Twitter'
+import Discord from 'mdi-material-ui/Discord'
+import Twitch from 'mdi-material-ui/Twitch'
 
 // actions
 import { userActions } from './_actions'
@@ -38,7 +43,13 @@ const styles = theme => ({
     width: '100%',
     minHeight: '100%'
   },
-  drawerHeader: theme.mixins.toolbar,
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar
+  },
   drawerPaper: {
     height: '100%',
     width: 250,
@@ -81,8 +92,28 @@ class App extends React.Component {
     const { dispatch, isAuthenticated, classes, theme, isAdmin } = this.props
     const drawer = (
       <div>
-        <Reboot />
-        <div className={classes.drawerHeader} />
+        <div className={classes.drawerHeader}>
+          <a href='https://www.facebook.com/FightLabBrighton/' target='_blank' className='no-decor'>
+            <IconButton>
+              <Facebook />
+            </IconButton>
+          </a>
+          <a href='https://twitter.com/Fight_Lab/' target='_blank' className='no-decor'>
+            <IconButton>
+              <Twitter />
+            </IconButton>
+          </a>
+          <a href='https://www.twitch.tv/fightlab' target='_blank' className='no-decor'>
+            <IconButton>
+              <Twitch />
+            </IconButton>
+          </a>
+          <a href='https://discord.gg/9kZAXTT' target='_blank' className='no-decor'>
+            <IconButton>
+              <Discord />
+            </IconButton>
+          </a>
+        </div>
         <Divider />
         <List>{topListItems}</List>
         <Divider />
@@ -99,11 +130,27 @@ class App extends React.Component {
               : <Login />
           }
         </List>
+        <Divider />
+        <div style={{justifyContent: 'flex-start'}} className={classes.drawerHeader}>
+          <Typography type='caption' component='p'>
+            Brighton FGC Site by
+            <br />
+            <a href='http://mkn.sh' target='_blank' className='no-decor'>
+              Mahesh Makani (ColdLink)
+            </a>
+            <br />
+            <br />
+            <a href='https://github.com/coldlink/brighton-fgc-client' target='_blank' className='no-decor'>Client</a>: {process.env.RAZZLE_ENV_CLIENT_VERSION || 'dev'}
+            <br />
+            <a href='https://github.com/coldlink/brighton-fgc-api' target='_blank' className='no-decor'>API</a>: {process.env.RAZZLE_ENV_API_VERSION || 'dev'}
+          </Typography>
+        </div>
       </div>
     )
 
     return (
       <div className={classes.root}>
+        <Reboot />
         <div className={classes.appFrame}>
           <Header drawClick={this.handleDrawerToggle} />
           <Hidden mdUp>

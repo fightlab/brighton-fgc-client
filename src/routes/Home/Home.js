@@ -53,28 +53,28 @@ class Home extends React.Component {
       <Paper className={classes.root} elevation={0}>
         <Hidden smUp>
           <Typography type='display2' component='h1'>
-        Habrewken
+            Habrewken
           </Typography>
           <Typography type='headline' component='h2'>
-        Brighton Fighting Game Community - Website and Resource
+            Brighton Fighting Game Community - Website and Resource
           </Typography>
         </Hidden>
         <Hidden smDown>
           <Typography type='display4' component='h1'>
-        Habrewken
+            Habrewken
           </Typography>
           <Typography type='display1' component='h2'>
-        Brighton Fighting Game Community - Website and Resource
+            Brighton Fighting Game Community - Website and Resource
           </Typography>
         </Hidden>
         <Grid container className={classes.container}>
           <Grid item lg={6} md={12}>
             <Paper className={classes.paper} elevation={4}>
               <Typography type='title' component='h3'>
-            Latest Events
+                Latest Events
               </Typography>
               <Typography type='subheading' component='h4'>
-            Habrewken
+                Habrewken
               </Typography>
               <Grid container className={classes.container}>
                 {
@@ -90,10 +90,10 @@ class Home extends React.Component {
           <Grid item sm={6} xs={12}>
             <Paper className={classes.paper} elevation={4}>
               <Typography type='title' component='h3'>
-            Current Standings
+                Current Standings
               </Typography>
               <Typography type='subheading' component='h4'>
-            Street Fighter V - 2018 Series
+                Street Fighter V - 2018 Series
               </Typography>
               <Table>
                 <TableHead>
