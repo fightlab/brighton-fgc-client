@@ -17,6 +17,9 @@ const styles = theme => ({
   },
   card: {
     width: '100%'
+  },
+  box: {
+    display: 'flex'
   }
 })
 
@@ -36,13 +39,25 @@ class Tournament extends React.Component {
             {tournament.tournament && tournament.tournament.name}
           </Typography>
           <Typography type='subheading' component='h4'>
-            {tournament.tournament && DateService.format(tournament.tournament.dateStart)}
+            {tournament.tournament && DateService.format(tournament.tournament.dateStart)} {
+              tournament.tournament && tournament.tournament.dateEnd && <span> - {DateService.format(tournament.tournament.dateEnd)}</span>
+            }
           </Typography>
-          <a href={tournament.tournament && tournament.tournament.bracket} target='_blank' className='no-decor'>
-            <Button dense>
+          <br />
+          <div className={classes.box}>
+            <a style={{paddingRight: '4px'}} href={tournament.tournament && tournament.tournament.bracket} target='_blank' className='no-decor'>
+              <Button dense raised color='primary'>
               Challonge Page
-            </Button>
-          </a>
+              </Button>
+            </a>
+            {
+              tournament.tournament && DateService.compareDates(tournament.tournament.dateStart, new Date().toISOString()) && <a style={{paddingLeft: '4px'}} href={tournament.tournament && tournament.tournament.signUpUrl} target='_blank' className='no-decor'>
+                <Button dense raised color='primary'>
+                  Sign Up
+                </Button>
+              </a>
+            }
+          </div>
         </Grid>
       </Grid>
     )
