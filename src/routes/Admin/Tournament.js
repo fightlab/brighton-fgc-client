@@ -276,7 +276,7 @@ class AdminTournament extends React.Component {
 
   componentWillMount () {
     TournamentService
-      .getAll()
+      .getAllNoGame()
       .then(tournaments => this.setState({ tournaments: orderBy(tournaments, 'dateStart', 'desc') }))
       .catch(error => this.setState({ error }))
   }

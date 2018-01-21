@@ -12,6 +12,13 @@ export class TournamentService {
       .catch(err => Promise.reject(err.response))
   }
 
+  static getAllNoGame () {
+    return axios
+      .get(`${URL}/nogame`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
   static get (id) {
     return axios
       .get(`${URL}/${id}`)
