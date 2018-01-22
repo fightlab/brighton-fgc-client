@@ -13,6 +13,7 @@ import { tournamentActions } from '../../../_actions'
 
 import EventCard from '../../../components/EventCard'
 import GameCard from '../../../components/GameCard'
+import PlayersCard from '../../../components/PlayersCard'
 
 const styles = theme => ({
   container: {
@@ -82,9 +83,9 @@ class Tournament extends React.Component {
         <Grid item sm={6} xs={12}>
           { game && <GameCard game={game} /> }
         </Grid>
-        {/* <Grid item sm={6} xs={12}>
-          players
-        </Grid> */}
+        <Grid item sm={6} xs={12}>
+          { players && <PlayersCard players={players} />}
+        </Grid>
         <Grid item xs={12}>
           <Card
             className={classes.card}
