@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles'
 import { filter, orderBy } from 'lodash'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { CircularProgress } from 'material-ui/Progress'
 
 import { tournamentActions } from '../../_actions'
 import { DateService } from '../../_services'
@@ -17,8 +18,8 @@ const styles = theme => ({
     flexGrow: 1,
     marginTop: 30
   },
-  card: {
-    width: '100%'
+  progress: {
+    margin: `0 ${theme.spacing.unit * 2}px`
   },
   media: {
     height: 200,
@@ -40,7 +41,19 @@ class Root extends React.Component {
     return (
       <div>
         {
-          upcoming.length && <Grid container className={classes.container}>
+          tournament.isFetching && <Grid container className={classes.container}>
+            <Grid item xs={12}>
+              <Typography type='display1' component='h2'>
+                Upcoming Tournaments
+              </Typography>
+            </Grid>
+            {
+              <CircularProgress className={classes.progress} size={50} />
+            }
+          </Grid>
+        }
+        {
+          !!upcoming.length && <Grid container className={classes.container}>
             <Grid item xs={12}>
               <Typography type='display1' component='h2'>
                 Upcoming Tournaments
@@ -54,7 +67,19 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          past.length && <Grid container className={classes.container}>
+          tournament.isFetching && <Grid container className={classes.container}>
+            <Grid item xs={12}>
+              <Typography type='display1' component='h2'>
+                Past Tournaments
+              </Typography>
+            </Grid>
+            {
+              <CircularProgress className={classes.progress} size={50} />
+            }
+          </Grid>
+        }
+        {
+          !!past.length && <Grid container className={classes.container}>
             <Grid item xs={12}>
               <Typography type='display1' component='h2'>
                 Past Tournaments

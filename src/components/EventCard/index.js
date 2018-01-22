@@ -10,7 +10,19 @@ import { DateService } from '../../_services'
 
 const styles = theme => ({
   card: {
-    width: '100%'
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  cardHeader: {
+    flexGrow: 1
+  },
+  cardContent: {
+    flexGrow: 1
+  },
+  cardActions: {
+    flexGrow: 1
   }
 })
 
@@ -21,9 +33,12 @@ class EventCard extends React.Component {
       <Card className={classes.card} elevation={10}>
         <CardHeader
           title={event.name}
+          className={classes.cardHeader}
           subheader={DateService.format(event.date, 'DATE_HUGE')}
         />
-        <CardContent>
+        <CardContent
+          className={classes.cardContent}
+        >
           <Typography component='p' align='center' type='caption'>
               Venue:
           </Typography>
@@ -37,7 +52,9 @@ class EventCard extends React.Component {
             {DateService.format(event.date, 'TIME_SIMPLE')}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions
+          className={classes.cardActions}
+        >
           <Button dense color='primary' component={Link} to={`/events/${event.id}`}>
               View Event
           </Button>

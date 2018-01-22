@@ -11,7 +11,19 @@ import { DateService, MetaService } from '../../_services'
 
 const styles = theme => ({
   card: {
-    width: '100%'
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  cardHeader: {
+    flexGrow: 1
+  },
+  cardContent: {
+    flexGrow: 1
+  },
+  cardActions: {
+    flexGrow: 1
   }
 })
 
@@ -22,10 +34,13 @@ class TournamentCard extends React.Component {
       <Grid item xs={12} sm={6} lg={4}>
         <Card className={classes.card}>
           <CardHeader
+            className={classes.cardHeader}
             title={tournament.name}
             subheader={DateService.format(tournament.dateStart, 'DATE_HUGE')}
           />
-          <CardContent>
+          <CardContent
+            className={classes.cardContent}
+          >
             <Typography component='p' align='center' type='caption'>
               Type:
             </Typography>
@@ -63,7 +78,7 @@ class TournamentCard extends React.Component {
               </Grid>
             </Grid>
           </CardContent>
-          <CardActions>
+          <CardActions className={classes.cardActions}>
             <Button dense color='primary' component={Link} to={`/tournaments/${tournament.id}`}>
               View Tournament
             </Button>

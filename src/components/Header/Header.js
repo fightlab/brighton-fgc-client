@@ -36,7 +36,6 @@ class Header extends Component {
         <Toolbar>
           <IconButton
             className={this.props.classes.menuButton}
-            color='contrast'
             aria-label='Menu'
             onClick={this.props.drawClick}
           >

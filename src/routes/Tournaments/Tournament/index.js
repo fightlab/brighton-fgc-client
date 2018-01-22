@@ -6,9 +6,13 @@ import Grid from 'material-ui/Grid'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Button from 'material-ui/Button'
+import Card from 'material-ui/Card'
 
 import { DateService } from '../../../_services'
 import { tournamentActions } from '../../../_actions'
+
+import EventCard from '../../../components/EventCard'
+import GameCard from '../../../components/GameCard'
 
 const styles = theme => ({
   container: {
@@ -16,7 +20,8 @@ const styles = theme => ({
     marginTop: 30
   },
   card: {
-    width: '100%'
+    width: '100%',
+    display: 'flex'
   },
   box: {
     display: 'flex'
@@ -30,34 +35,64 @@ class Tournament extends React.Component {
   }
 
   render () {
-    const { classes, tournament } = this.props
+    const { classes, tournament: tournamentObj } = this.props
 
+    const { tournament } = tournamentObj
+    const { event, _gameId: game, series, players } = tournament || {}
+    console.log(series)
+    console.log(players)
     return (
-      <Grid container className={classes.container}>
+      <Grid
+        container
+        className={classes.container}
+      >
         <Grid item xs={12}>
           <Typography type='display1' component='h2'>
-            {tournament.tournament && tournament.tournament.name}
+            {tournament && tournament.name}
+          </Typography>
+          <Typography type='caption' gutterBottom>
+            Last Updated - {tournament && DateService.format(tournament.updatedAt)}
           </Typography>
           <Typography type='subheading' component='h4'>
-            {tournament.tournament && DateService.format(tournament.tournament.dateStart)} {
-              tournament.tournament && tournament.tournament.dateEnd && <span> - {DateService.format(tournament.tournament.dateEnd)}</span>
+            <b>Event Date:</b>
+            <br />
+            {tournament && DateService.format(tournament.dateStart)} {
+              tournament && tournament.dateEnd && <span> - {DateService.format(tournament.dateEnd)}</span>
             }
           </Typography>
           <br />
           <div className={classes.box}>
-            <a style={{paddingRight: '4px'}} href={tournament.tournament && tournament.tournament.bracket} target='_blank' className='no-decor'>
+            <a style={{paddingRight: '4px'}} href={tournament && tournament.bracket} target='_blank' className='no-decor'>
               <Button dense raised color='primary'>
-              Challonge Page
+                Challonge Page
               </Button>
             </a>
             {
-              tournament.tournament && DateService.compareDates(tournament.tournament.dateStart, new Date().toISOString()) && <a style={{paddingLeft: '4px'}} href={tournament.tournament && tournament.tournament.signUpUrl} target='_blank' className='no-decor'>
+              tournament && DateService.compareDates(tournament.dateStart, new Date().toISOString()) && <a style={{paddingLeft: '4px'}} href={tournament && tournament.signUpUrl} target='_blank' className='no-decor'>
                 <Button dense raised color='primary'>
-                  Sign Up
+                  Sign Up Page
                 </Button>
               </a>
             }
           </div>
+        </Grid>
+        <Grid item sm={6} xs={12}>
+          { event && <EventCard event={event} /> }
+        </Grid>
+        <Grid item sm={6} xs={12}>
+          { game && <GameCard game={game} /> }
+        </Grid>
+        {/* <Grid item sm={6} xs={12}>
+          players
+        </Grid> */}
+        <Grid item xs={12}>
+          <Card
+            className={classes.card}
+          >
+            {
+              tournament && <iframe src={`${tournament.bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{minHeight: '500px', width: '100%'}} frameBorder='0' scrolling='auto' />
+            }
+          </Card>
         </Grid>
       </Grid>
     )
@@ -72,9 +107,10 @@ Tournament.propTypes = {
 }
 
 const mapStateToProps = state => {
-  const { tournament } = state
+  const { tournament, game } = state
   return {
-    tournament
+    tournament,
+    game
   }
 }
 
