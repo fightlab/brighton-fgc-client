@@ -38,7 +38,6 @@ class PlayersCard extends React.Component {
   render () {
     const { players, classes } = this.props
     console.log(players)
-    console.log(classes)
     return (
       <Card className={classes.card} elevation={10}>
         <CardHeader
@@ -50,7 +49,7 @@ class PlayersCard extends React.Component {
         >
           <List className={classes.list} dense>
             {
-              players && map(orderBy(players, 'challongeUsername', 'asc'), player => (
+              players && map(orderBy(players, p => p.handle.toLowerCase(), 'asc'), player => (
                 <ListItem button key={player.id}>
                   <ListItemAvatar>
                     <Avatar

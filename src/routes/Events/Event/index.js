@@ -47,7 +47,7 @@ class Event extends React.Component {
             {event.event && event.event.venue}
           </Typography>
           <a href={event.event && event.event.url} target='_blank' className='no-decor'>
-            <Button dense>
+            <Button dense raised color='primary'>
               Event page
             </Button>
           </a>

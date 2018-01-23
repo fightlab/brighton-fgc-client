@@ -6,7 +6,9 @@ import Grid from 'material-ui/Grid'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Button from 'material-ui/Button'
-import Card from 'material-ui/Card'
+import Card, { CardContent, CardHeader } from 'material-ui/Card'
+import Tabs, { Tab } from 'material-ui/Tabs'
+import AppBar from 'material-ui/AppBar'
 
 import { DateService } from '../../../_services'
 import { tournamentActions } from '../../../_actions'
@@ -14,6 +16,7 @@ import { tournamentActions } from '../../../_actions'
 import EventCard from '../../../components/EventCard'
 import GameCard from '../../../components/GameCard'
 import PlayersCard from '../../../components/PlayersCard'
+// import SeriesCard from '../../../components/SeriesCard'
 
 const styles = theme => ({
   container: {
@@ -24,12 +27,43 @@ const styles = theme => ({
     width: '100%',
     display: 'flex'
   },
+  cardGrid: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  standingsCard: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1
+  },
+  standingsCardHeader: {
+    // flexGrow: 1
+  },
+  standingsCardContent: {
+    flexGrow: 1
+  },
   box: {
     display: 'flex'
   }
 })
 
 class Tournament extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      selectedTab: 0
+    }
+
+    this.handleTabChange = this.handleTabChange.bind(this)
+  }
+
+  handleTabChange (event, index) {
+    console.log(index)
+    this.setState({ selectedTab: index })
+  }
+
   componentWillMount () {
     const { dispatch, match } = this.props
     dispatch(tournamentActions.get(match.params.tournamentId))
@@ -37,11 +71,10 @@ class Tournament extends React.Component {
 
   render () {
     const { classes, tournament: tournamentObj } = this.props
-
+    const { selectedTab } = this.state
     const { tournament } = tournamentObj
-    const { event, _gameId: game, series, players } = tournament || {}
-    console.log(series)
-    console.log(players)
+    const { event, _gameId: game, /* series, */ players } = tournament || {}
+
     return (
       <Grid
         container
@@ -84,7 +117,55 @@ class Tournament extends React.Component {
           { game && <GameCard game={game} /> }
         </Grid>
         <Grid item sm={6} xs={12}>
-          { players && <PlayersCard players={players} />}
+          { players && <PlayersCard players={players} /> }
+        </Grid>
+        <Grid item sm={6} xs={12} className={classes.cardGrid}>
+          <AppBar position='static' color='default'>
+            <Tabs
+              value={selectedTab}
+              onChange={this.handleTabChange}
+              indicatorColor='primary'
+              textColor='primary'
+              fullWidth
+            >
+              <Tab label='Tournament' />
+              <Tab label='Game' />
+              <Tab label='Series' />
+            </Tabs>
+          </AppBar>
+          {
+            selectedTab === 0 && <Card className={classes.standingsCard} elevation={10}>
+              <CardHeader
+                title='Tournament Standings'
+                className={classes.standingsCardHeader}
+              />
+              <CardContent
+                className={classes.standingsCardContent}
+              />
+            </Card>
+          }
+          {
+            selectedTab === 1 && <Card className={classes.standingsCard} elevation={10}>
+              <CardHeader
+                title='Game Standings'
+                className={classes.standingsCardHeader}
+              />
+              <CardContent
+                className={classes.standingsCardContent}
+              />
+            </Card>
+          }
+          {
+            selectedTab === 2 && <Card className={classes.standingsCard} elevation={10}>
+              <CardHeader
+                title='Series Standings'
+                className={classes.standingsCardHeader}
+              />
+              <CardContent
+                className={classes.standingsCardContent}
+              />
+            </Card>
+          }
         </Grid>
         <Grid item xs={12}>
           <Card
