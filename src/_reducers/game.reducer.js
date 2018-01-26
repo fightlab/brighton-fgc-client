@@ -6,7 +6,8 @@ const init = {
   isFetching: false,
   games: [],
   game: null,
-  tournaments: []
+  tournaments: [],
+  standings: []
 }
 
 export const game = (state = init, action) => {
@@ -21,6 +22,12 @@ export const game = (state = init, action) => {
       return merge({}, state, {
         isFetching: true,
         game: action.game
+      })
+    case gameConstants.GETSTANDINGS_REQUEST:
+      state.standings = []
+      return merge({}, state, {
+        isFetching: true,
+        standings: action.standings
       })
     case gameConstants.GETTOURNAMENTS_REQUEST:
       state.tournaments = []
@@ -63,6 +70,18 @@ export const game = (state = init, action) => {
         errorMessage: action.statusText,
         errorCode: action.status,
         tournaments: action.tournaments
+      })
+    case gameConstants.GETSTANDINGS_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        standings: action.standings
+      })
+    case gameConstants.GETSTANDINGS_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        standings: action.standings
       })
     default:
       return state

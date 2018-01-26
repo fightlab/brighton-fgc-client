@@ -16,7 +16,8 @@ import { tournamentActions } from '../../../_actions'
 import EventCard from '../../../components/EventCard'
 import GameCard from '../../../components/GameCard'
 import PlayersCard from '../../../components/PlayersCard'
-// import SeriesCard from '../../../components/SeriesCard'
+
+import StandingList from '../../../components/StandingsList'
 
 const styles = theme => ({
   container: {
@@ -60,7 +61,6 @@ class Tournament extends React.Component {
   }
 
   handleTabChange (event, index) {
-    console.log(index)
     this.setState({ selectedTab: index })
   }
 
@@ -73,7 +73,20 @@ class Tournament extends React.Component {
     const { classes, tournament: tournamentObj } = this.props
     const { selectedTab } = this.state
     const { tournament } = tournamentObj
-    const { event, _gameId: game, /* series, */ players } = tournament || {}
+    const {
+      event = {},
+      _gameId: game,
+      /* series, */
+      players = [],
+      bracket = '',
+      name = '',
+      updatedAt = null,
+      dateStart = null,
+      dateEnd = null,
+      signUpUrl = '',
+      id = '',
+      series = {}
+    } = tournament || {}
 
     return (
       <Grid
@@ -82,27 +95,27 @@ class Tournament extends React.Component {
       >
         <Grid item xs={12}>
           <Typography type='display1' component='h2'>
-            {tournament && tournament.name}
+            {name && name}
           </Typography>
           <Typography type='caption' gutterBottom>
-            Last Updated - {tournament && DateService.format(tournament.updatedAt)}
+            Last Updated - {updatedAt && DateService.format(updatedAt)}
           </Typography>
           <Typography type='subheading' component='h4'>
             <b>Event Date:</b>
             <br />
-            {tournament && DateService.format(tournament.dateStart)} {
-              tournament && tournament.dateEnd && <span> - {DateService.format(tournament.dateEnd)}</span>
+            {dateStart && DateService.format(dateStart)} {
+              dateEnd && <span> - {DateService.format(dateEnd)}</span>
             }
           </Typography>
           <br />
           <div className={classes.box}>
-            <a style={{paddingRight: '4px'}} href={tournament && tournament.bracket} target='_blank' className='no-decor'>
+            <a style={{paddingRight: '4px'}} href={bracket && bracket} target='_blank' className='no-decor'>
               <Button dense raised color='primary'>
                 Challonge Page
               </Button>
             </a>
             {
-              tournament && DateService.compareDates(tournament.dateStart, new Date().toISOString()) && <a style={{paddingLeft: '4px'}} href={tournament && tournament.signUpUrl} target='_blank' className='no-decor'>
+              dateStart && DateService.compareDates(dateStart, new Date().toISOString()) && <a style={{paddingLeft: '4px'}} href={signUpUrl && signUpUrl} target='_blank' className='no-decor'>
                 <Button dense raised color='primary'>
                   Sign Up Page
                 </Button>
@@ -135,24 +148,20 @@ class Tournament extends React.Component {
           </AppBar>
           {
             selectedTab === 0 && <Card className={classes.standingsCard} elevation={10}>
-              <CardHeader
-                title='Tournament Standings'
-                className={classes.standingsCardHeader}
-              />
               <CardContent
                 className={classes.standingsCardContent}
-              />
+              >
+                {id && <StandingList type='tournament' id={id} />}
+              </CardContent>
             </Card>
           }
           {
             selectedTab === 1 && <Card className={classes.standingsCard} elevation={10}>
-              <CardHeader
-                title='Game Standings'
-                className={classes.standingsCardHeader}
-              />
               <CardContent
                 className={classes.standingsCardContent}
-              />
+              >
+                {game && <StandingList type='game' id={game.id} />}
+              </CardContent>
             </Card>
           }
           {
@@ -163,7 +172,9 @@ class Tournament extends React.Component {
               />
               <CardContent
                 className={classes.standingsCardContent}
-              />
+              >
+                <StandingList type='series' id={series && series.id} />
+              </CardContent>
             </Card>
           }
         </Grid>
@@ -172,7 +183,7 @@ class Tournament extends React.Component {
             className={classes.card}
           >
             {
-              tournament && <iframe src={`${tournament.bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{minHeight: '500px', width: '100%'}} frameBorder='0' scrolling='auto' />
+              bracket && <iframe src={`${bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{minHeight: '500px', width: '100%'}} frameBorder='0' scrolling='yes' />
             }
           </Card>
         </Grid>

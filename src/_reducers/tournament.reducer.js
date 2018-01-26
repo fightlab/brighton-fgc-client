@@ -5,7 +5,8 @@ import { tournamentConstants } from '../_constants'
 const init = {
   isFetching: false,
   tournaments: [],
-  tournament: null
+  tournament: null,
+  standings: []
 }
 
 export const tournament = (state = init, action) => {
@@ -16,7 +17,14 @@ export const tournament = (state = init, action) => {
         isFetching: true,
         tournaments: action.tournaments
       })
+    case tournamentConstants.GETSTANDINGS_REQUEST:
+      state.standings = []
+      return merge({}, state, {
+        isFetching: true,
+        standings: action.standings
+      })
     case tournamentConstants.GET_REQUEST:
+      state.tournament = {}
       return merge({}, state, {
         isFetching: true,
         tournament: action.tournament
@@ -32,6 +40,18 @@ export const tournament = (state = init, action) => {
         errorMessage: action.statusText,
         errorCode: action.status,
         tournaments: action.tournaments
+      })
+    case tournamentConstants.GETSTANDINGS_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        standings: action.standings
+      })
+    case tournamentConstants.GETSTANDINGS_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        standings: action.standings
       })
     case tournamentConstants.GET_SUCCESS:
       return merge({}, state, {

@@ -112,8 +112,45 @@ const getTournaments = id => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getStandings = id => dispatch => {
+  const request = id => {
+    return {
+      type: gameConstants.GETSTANDINGS_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = standings => {
+    return {
+      type: gameConstants.GETSTANDINGS_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      standings
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: gameConstants.GETSTANDINGS_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      status: error.status,
+      statusText: error.statusText
+    }
+  }
+
+  dispatch(request({ id }))
+
+  GameService
+    .getStandings(id)
+    .then(tournaments => dispatch(success(tournaments)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const gameActions = {
   getAll,
   get,
-  getTournaments
+  getTournaments,
+  getStandings
 }

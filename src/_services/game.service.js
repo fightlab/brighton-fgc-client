@@ -12,6 +12,13 @@ export class GameService {
       .catch(err => Promise.reject(err.response))
   }
 
+  static getStandings (id) {
+    return axios
+      .get(`${URL}/${id}/standings`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
   static get (id) {
     return axios
       .get(`${URL}/${id}`)
