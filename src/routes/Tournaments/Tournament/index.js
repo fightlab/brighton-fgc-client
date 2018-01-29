@@ -6,7 +6,7 @@ import Grid from 'material-ui/Grid'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Button from 'material-ui/Button'
-import Card, { CardContent, CardHeader } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import AppBar from 'material-ui/AppBar'
 
@@ -88,6 +88,8 @@ class Tournament extends React.Component {
       series = {}
     } = tournament || {}
 
+    console.log(series)
+
     return (
       <Grid
         container
@@ -160,20 +162,16 @@ class Tournament extends React.Component {
               <CardContent
                 className={classes.standingsCardContent}
               >
-                {game && <StandingList type='game' id={game.id} />}
+                {game && <StandingList type='game' id={game.id} limit={16} />}
               </CardContent>
             </Card>
           }
           {
             selectedTab === 2 && <Card className={classes.standingsCard} elevation={10}>
-              <CardHeader
-                title='Series Standings'
-                className={classes.standingsCardHeader}
-              />
               <CardContent
                 className={classes.standingsCardContent}
               >
-                <StandingList type='series' id={series && series.id} />
+                {series && <StandingList type='series' id={series.id} limit={16} />}
               </CardContent>
             </Card>
           }

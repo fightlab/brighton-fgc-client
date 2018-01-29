@@ -12,6 +12,13 @@ export class SeriesService {
       .catch(err => Promise.reject(err.response))
   }
 
+  static getStandings (id, limit = 0) {
+    return axios
+      .get(`${URL}/${id}/standings${limit ? `?limit=${limit}` : ''}`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
   static get (id) {
     return axios
       .get(`${URL}/${id}`)

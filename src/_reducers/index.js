@@ -3,12 +3,14 @@ import { auth } from './auth.reducer'
 import { event } from './event.reducer'
 import { game } from './game.reducer'
 import { tournament } from './tournament.reducer'
+import { series } from './series.reducer'
 
 const rootReducer = combineReducers({
   auth,
   event,
   game,
-  tournament
+  tournament,
+  series
 })
 
 export default rootReducer

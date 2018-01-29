@@ -12,7 +12,7 @@ import List, {
 } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 
-import { tournamentActions, gameActions } from '../../_actions'
+import { tournamentActions, gameActions, seriesActions } from '../../_actions'
 
 const styles = theme => ({
   list: {
@@ -27,17 +27,17 @@ const styles = theme => ({
 
 class StandingsList extends React.Component {
   componentWillMount () {
-    const { type = '', id = '', dispatch } = this.props
+    const { type = '', id = '', dispatch, limit } = this.props
     if (id) {
       switch (type) {
         case 'tournament':
           dispatch(tournamentActions.getStandings(id))
           break
         case 'game':
-          dispatch(gameActions.getStandings(id))
+          dispatch(gameActions.getStandings(id, limit))
           break
         case 'series':
-
+          dispatch(seriesActions.getStandings(id, limit))
           break
         default:
           break
@@ -46,7 +46,7 @@ class StandingsList extends React.Component {
   }
 
   render () {
-    const { classes, type, tournament = {}, game = {} } = this.props
+    const { classes, type, tournament = {}, game = {}, series = {} } = this.props
     let standings = []
 
     switch (type) {
@@ -55,6 +55,9 @@ class StandingsList extends React.Component {
         break
       case 'game':
         standings = game.standings || []
+        break
+      case 'series':
+        standings = series.standings || []
         break
       default:
         break
@@ -95,15 +98,18 @@ StandingsList.propTypes = {
   id: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   tournament: PropTypes.object.isRequired,
-  game: PropTypes.object.isRequired
+  series: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired,
+  limit: PropTypes.number
 }
 
 const mapStateToProps = state => {
-  const { tournament, game } = state
+  const { tournament, game, series } = state
 
   return {
     tournament,
-    game
+    game,
+    series
   }
 }
 
