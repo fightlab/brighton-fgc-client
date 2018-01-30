@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import { orderBy } from 'lodash'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { CircularProgress } from 'material-ui/Progress'
 
 import { gameActions } from '../../_actions'
 
@@ -30,7 +31,10 @@ class Root extends React.Component {
     return (
       <Grid container className={classes.container}>
         {
-          games.map(game => (
+          game.isFetching && <CircularProgress className={classes.progress} size={50} />
+        }
+        {
+          !!games.length && games.map(game => (
             <Grid item xs={12} sm={4} lg={3} key={game.id}>
               <GameCard game={game} />
             </Grid>

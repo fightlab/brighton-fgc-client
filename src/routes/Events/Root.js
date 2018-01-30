@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles'
 import { filter, orderBy } from 'lodash'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { CircularProgress } from 'material-ui/Progress'
 
 import { eventActions } from '../../_actions'
 import { DateService } from '../../_services'
@@ -40,7 +41,19 @@ class Root extends React.Component {
     return (
       <div>
         {
-          upcoming.length && <Grid container className={classes.container}>
+          event.isFetching && <Grid container className={classes.container}>
+            <Grid item xs={12}>
+              <Typography type='display1' component='h2'>
+              Upcoming Events
+              </Typography>
+            </Grid>
+            {
+              <CircularProgress className={classes.progress} size={50} />
+            }
+          </Grid>
+        }
+        {
+          !!upcoming.length && <Grid container className={classes.container}>
             <Grid item xs={12}>
               <Typography type='display1' component='h2'>
                 Upcoming Events
@@ -56,7 +69,19 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          past.length && <Grid container className={classes.container}>
+          event.isFetching && <Grid container className={classes.container}>
+            <Grid item xs={12}>
+              <Typography type='display1' component='h2'>
+              Past Events
+              </Typography>
+            </Grid>
+            {
+              <CircularProgress className={classes.progress} size={50} />
+            }
+          </Grid>
+        }
+        {
+          !!past.length && <Grid container className={classes.container}>
             <Grid item xs={12}>
               <Typography type='display1' component='h2'>
                 Past Events

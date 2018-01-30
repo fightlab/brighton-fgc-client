@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import Card, { CardContent, CardHeader } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
 import List, {
   ListItem,
   ListItemAvatar,
@@ -9,6 +9,8 @@ import List, {
 } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import { orderBy, map } from 'lodash'
+import Tabs, { Tab } from 'material-ui/Tabs'
+import AppBar from 'material-ui/AppBar'
 // import { Link } from 'react-router-dom'
 
 const styles = theme => ({
@@ -35,37 +37,56 @@ const styles = theme => ({
 })
 
 class PlayersCard extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      selectedTab: 0
+    }
+  }
   render () {
     const { players, classes } = this.props
-    console.log(players)
+    const { selectedTab } = this.state
+
     return (
-      <Card className={classes.card} elevation={10}>
-        <CardHeader
-          title='Players'
-          className={classes.cardHeader}
-        />
-        <CardContent
-          className={classes.cardContent}
-        >
-          <List className={classes.list} dense>
-            {
-              players && map(orderBy(players, p => p.handle.toLowerCase(), 'asc'), player => (
-                <ListItem button key={player.id}>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={player.handle}
-                      src={`https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`}
-                    />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={player.handle}
-                  />
-                </ListItem>
-              ))
-            }
-          </List>
-        </CardContent>
-      </Card>
+      <div style={{width: 'inherit', height: 'inherit'}}>
+        <AppBar position='static' color='default'>
+          <Tabs
+            value={selectedTab}
+            onChange={this.handleTabChange}
+            indicatorColor='primary'
+            textColor='primary'
+            fullWidth
+          >
+            <Tab label='Players' />
+          </Tabs>
+          {
+            selectedTab === 0 && <Card className={classes.card} elevation={10}>
+              <CardContent
+                className={classes.cardContent}
+              >
+                <List className={classes.list} dense>
+                  {
+                    players && map(orderBy(players, p => p.handle.toLowerCase(), 'asc'), player => (
+                      <ListItem button key={player.id}>
+                        <ListItemAvatar>
+                          <Avatar
+                            alt={player.handle}
+                            src={`https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`}
+                          />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={player.handle}
+                        />
+                      </ListItem>
+                    ))
+                  }
+                </List>
+              </CardContent>
+            </Card>
+          }
+        </AppBar>
+      </div>
     )
   }
 }
