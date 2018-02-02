@@ -1,10 +1,11 @@
 import React from 'react'
 import { Typography, Paper, Hidden, Grid } from 'material-ui'
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import Tabs, { Tab } from 'material-ui/Tabs'
+import AppBar from 'material-ui/AppBar'
 
 import { eventActions } from '../../_actions'
 
@@ -32,7 +33,8 @@ const styles = theme => ({
   paper: {
     padding: 16,
     textAlign: 'left',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    backgroundColor: theme.palette.background.appBar
   },
   media: {
     height: 75
@@ -40,6 +42,19 @@ const styles = theme => ({
 })
 
 class Home extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      selectedTab: 0
+    }
+    this.handleTabChange = this.handleTabChange.bind(this)
+  }
+
+  handleTabChange (event, index) {
+    this.setState({ selectedTab: index })
+  }
+
   componentWillMount () {
     const { dispatch } = this.props
     dispatch(eventActions.getAll(4))
@@ -47,11 +62,12 @@ class Home extends React.Component {
 
   render () {
     const { classes, event } = this.props
+    const { selectedTab } = this.state
     const { events } = event
 
     return (
       <Paper className={classes.root} elevation={0}>
-        <Hidden smUp>
+        <Hidden mdUp>
           <Typography type='display2' component='h1'>
             Habrewken
           </Typography>
@@ -68,15 +84,20 @@ class Home extends React.Component {
           </Typography>
         </Hidden>
         <Grid container className={classes.container}>
-          <Grid item lg={6} md={12}>
+          <Grid item md={6} sm={12} xs={12}>
+            <AppBar position='static' color='default'>
+              <Tabs
+                value={0}
+                // onChange={this.handleTabChange}
+                indicatorColor='primary'
+                textColor='primary'
+                fullWidth
+              >
+                <Tab label='Latest Events' disabled />
+              </Tabs>
+            </AppBar>
             <Paper className={classes.paper} elevation={4}>
-              <Typography type='title' component='h3'>
-                Latest Events
-              </Typography>
-              <Typography type='subheading' component='h4'>
-                Habrewken
-              </Typography>
-              <Grid container className={classes.container}>
+              <Grid container>
                 {
                   events.map(event => (
                     <Grid item sm={6} xs={12} key={event.id}>
@@ -87,37 +108,31 @@ class Home extends React.Component {
               </Grid>
             </Paper>
           </Grid>
-          <Grid item sm={6} xs={12}>
-            <Paper className={classes.paper} elevation={4}>
-              <Typography type='title' component='h3'>
-                Current Standings
-              </Typography>
-              <Typography type='subheading' component='h4'>
-                Street Fighter V - 2018 Series
-              </Typography>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell numeric>Rank</TableCell>
-                    <TableCell>Player</TableCell>
-                    <TableCell numeric>Score</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {
-                    [...Array(8)].map((v, i) => (
-                      <TableRow key={i}>
-                        <TableCell numeric>{i + 1}</TableCell>
-                        <TableCell>
-                          <Link className='no-decor' to={`/players/${i + 1}`}>Player {i + 1}</Link>
-                        </TableCell>
-                        <TableCell>10</TableCell>
-                      </TableRow>
-                    ))
-                  }
-                </TableBody>
-              </Table>
-            </Paper>
+          <Grid item md={6} sm={12} xs={12}>
+            <AppBar position='static' color='default'>
+              <Tabs
+                value={0}
+                // onChange={this.handleTabChange}
+                indicatorColor='primary'
+                textColor='primary'
+                fullWidth
+              >
+                <Tab label='Series Standings' disabled />
+              </Tabs>
+            </AppBar>
+            <AppBar position='static' color='default'>
+              <Tabs
+                value={selectedTab}
+                onChange={this.handleTabChange}
+                indicatorColor='primary'
+                textColor='primary'
+                fullWidth
+              >
+                <Tab label='Series Standings 1' />
+                <Tab label='Series Standings 3' />
+                <Tab label='Series Standings 2' />
+              </Tabs>
+            </AppBar>
           </Grid>
         </Grid>
       </Paper>
