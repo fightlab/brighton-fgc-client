@@ -4,7 +4,8 @@ import { seriesConstans } from '../_constants'
 
 const init = {
   isFetching: false,
-  standings: []
+  standings: [],
+  series: []
 }
 
 export const series = (state = init, action) => {
@@ -26,6 +27,24 @@ export const series = (state = init, action) => {
         errorMessage: action.statusText,
         errorCode: action.status,
         standings: action.standings
+      })
+    case seriesConstans.GETALL_REQUEST:
+      state.series = []
+      return merge({}, state, {
+        isFetching: true,
+        series: action.series
+      })
+    case seriesConstans.GETALL_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        series: action.series
+      })
+    case seriesConstans.GETALL_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        series: action.series
       })
     default:
       return state

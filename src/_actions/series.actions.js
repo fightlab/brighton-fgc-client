@@ -33,10 +33,47 @@ const getStandings = (id, limit) => dispatch => {
 
   SeriesService
     .getStandings(id, limit)
-    .then(tournaments => dispatch(success(tournaments)))
+    .then(series => dispatch(success(series)))
+    .catch(error => dispatch(failure(error)))
+}
+
+const getAll = (id, limit) => dispatch => {
+  const request = id => {
+    return {
+      type: seriesConstans.GETALL_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = series => {
+    return {
+      type: seriesConstans.GETALL_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      series
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: seriesConstans.GETALL_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      status: error.status,
+      statusText: error.statusText
+    }
+  }
+
+  dispatch(request({ id }))
+
+  SeriesService
+    .getAll()
+    .then(series => dispatch(success(series)))
     .catch(error => dispatch(failure(error)))
 }
 
 export const seriesActions = {
-  getStandings
+  getStandings,
+  getAll
 }

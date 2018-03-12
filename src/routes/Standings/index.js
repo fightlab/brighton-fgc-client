@@ -4,7 +4,8 @@ import { Typography, Paper } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { Route } from 'react-router-dom'
 
-import Series from './Series/Series'
+import Series from './Series'
+import Root from './Root'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -24,11 +25,7 @@ const Standings = ({match, classes}) => (
       Standings
     </Typography>
     <Route path={`${match.url}/:seriesId`} component={Series} />
-    <Route exact path={match.url} render={() => (
-      <Typography type='body2' component='p'>
-        Please Select A Series
-      </Typography>
-    )} />
+    <Route exact path={match.url} component={Root} />
   </Paper>
 )
 
