@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { Drawer, Hidden, Divider, Typography } from 'material-ui'
 import List from 'material-ui/List'
-import Reboot from 'material-ui/Reboot'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -154,7 +153,6 @@ class App extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Reboot />
         <div className={classes.appFrame}>
           <Header drawClick={this.handleDrawerToggle} />
           <Hidden mdUp>
