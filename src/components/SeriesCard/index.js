@@ -48,7 +48,7 @@ class SeriesCard extends React.Component {
           <CardActions
             className={classes.cardActions}
           >
-            <Button dense color='primary' component={Link} to={`/standings/${series.id}`}>
+            <Button dense='true' color='primary' component={Link} to={`/standings/${series.id}`}>
             View Standings
             </Button>
           </CardActions>

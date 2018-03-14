@@ -46,7 +46,7 @@ class GameCard extends React.Component {
         <CardActions
           className={classes.cardActions}
         >
-          <Button dense color='primary' component={Link} to={`/games/${game.id}`}>
+          <Button dense='true' color='primary' component={Link} to={`/games/${game.id}`}>
             View Game
           </Button>
         </CardActions>

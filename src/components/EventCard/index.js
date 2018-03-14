@@ -55,7 +55,7 @@ class EventCard extends React.Component {
         <CardActions
           className={classes.cardActions}
         >
-          <Button dense color='primary' component={Link} to={`/events/${event.id}`}>
+          <Button dense='true' color='primary' component={Link} to={`/events/${event.id}`}>
               View Event
           </Button>
         </CardActions>

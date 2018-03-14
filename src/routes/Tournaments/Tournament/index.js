@@ -112,13 +112,13 @@ class Tournament extends React.Component {
           <br />
           <div className={classes.box}>
             <a style={{paddingRight: '4px'}} href={bracket && bracket} target='_blank' className='no-decor'>
-              <Button dense raised color='primary'>
+              <Button dense='true' raised color='primary'>
                 Challonge Page
               </Button>
             </a>
             {
               dateStart && DateService.compareDates(dateStart, new Date().toISOString()) && <a style={{paddingLeft: '4px'}} href={signUpUrl && signUpUrl} target='_blank' className='no-decor'>
-                <Button dense raised color='primary'>
+                <Button dense='true' raised color='primary'>
                   Sign Up Page
                 </Button>
               </a>

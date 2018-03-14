@@ -79,11 +79,11 @@ class TournamentCard extends React.Component {
             </Grid>
           </CardContent>
           <CardActions className={classes.cardActions}>
-            <Button dense color='primary' component={Link} to={`/tournaments/${tournament.id}`}>
+            <Button dense='true' color='primary' component={Link} to={`/tournaments/${tournament.id}`}>
               View Tournament
             </Button>
             <a href={tournament.bracket} target='_blank' className='no-decor'>
-              <Button dense color='primary'>
+              <Button dense='true' color='primary'>
                 View Challonge
               </Button>
             </a>

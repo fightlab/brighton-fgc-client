@@ -64,7 +64,7 @@ class StandingsList extends React.Component {
     }
 
     return (
-      <List className={classes.list} dense>
+      <List className={classes.list} dense='true'>
         {
           standings && map(standings, standing => (
             <ListItem button key={standing.id} >

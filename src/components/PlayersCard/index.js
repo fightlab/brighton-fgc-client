@@ -65,7 +65,7 @@ class PlayersCard extends React.Component {
               <CardContent
                 className={classes.cardContent}
               >
-                <List className={classes.list} dense>
+                <List className={classes.list} dense='true'>
                   {
                     players && map(orderBy(players, p => p.handle.toLowerCase(), 'asc'), player => (
                       <ListItem button key={player.id}>
