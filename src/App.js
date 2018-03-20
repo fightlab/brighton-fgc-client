@@ -13,6 +13,7 @@ import Facebook from 'mdi-material-ui/Facebook'
 import Twitter from 'mdi-material-ui/Twitter'
 import Discord from 'mdi-material-ui/Discord'
 import Twitch from 'mdi-material-ui/Twitch'
+import CssBaseline from 'material-ui/CssBaseline'
 
 // actions
 import { userActions } from './_actions'
@@ -153,6 +154,7 @@ class App extends React.Component {
 
     return (
       <div className={classes.root}>
+        <CssBaseline />
         <div className={classes.appFrame}>
           <Header drawClick={this.handleDrawerToggle} />
           <Hidden mdUp>
