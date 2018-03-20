@@ -48,7 +48,7 @@ class Admin extends React.Component {
 
     return (
       <Paper className={classes.root} elevation={0}>
-        <Typography type='display2' component='h1'>
+        <Typography variant='display2' component='h1'>
           Admin
         </Typography>
         <BottomNavigation
@@ -65,7 +65,7 @@ class Admin extends React.Component {
         {
           value === 0 && (
             <div>
-              <Typography type='headline' component='h3'>
+              <Typography variant='headline' component='h3'>
                 Events
               </Typography>
               <AdminEvent />
@@ -75,7 +75,7 @@ class Admin extends React.Component {
         {
           value === 1 && (
             <div>
-              <Typography type='headline' component='h3'>
+              <Typography variant='headline' component='h3'>
                 Games
               </Typography>
               <AdminGame />
@@ -85,7 +85,7 @@ class Admin extends React.Component {
         {
           value === 2 && (
             <div>
-              <Typography type='headline' component='h3'>
+              <Typography variant='headline' component='h3'>
                 Players
               </Typography>
               <AdminPlayer />
@@ -95,7 +95,7 @@ class Admin extends React.Component {
         {
           value === 3 && (
             <div>
-              <Typography type='headline' component='h3'>
+              <Typography variant='headline' component='h3'>
                 Series
               </Typography>
               <AdminSeries />
@@ -105,7 +105,7 @@ class Admin extends React.Component {
         {
           value === 4 && (
             <div>
-              <Typography type='headline' component='h3'>
+              <Typography variant='headline' component='h3'>
                 Tournaments
               </Typography>
               <AdminTournament />

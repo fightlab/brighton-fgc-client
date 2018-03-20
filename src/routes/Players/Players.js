@@ -20,12 +20,12 @@ const styles = theme => ({
 
 const Players = ({match, classes}) => (
   <Paper className={classes.root} elevation={0}>
-    <Typography type='display2' component='h1'>
+    <Typography variant='display2' component='h1'>
       Players
     </Typography>
     <Route path={`${match.url}/:playerId`} component={Player} />
     <Route exact path={match.url} render={() => (
-      <Typography type='body2' component='p'>
+      <Typography variant='body2' component='p'>
         Please Select A Player
       </Typography>
     )} />

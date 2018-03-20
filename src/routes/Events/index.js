@@ -29,7 +29,7 @@ class Events extends React.Component {
 
     return (
       <Paper className={classes.root} elevation={0}>
-        <Typography type='display2' component='h1'>
+        <Typography variant='display2' component='h1'>
           Events
         </Typography>
         <Route path={`${match.url}/:eventId`} render={props => <Event {...props} />} />

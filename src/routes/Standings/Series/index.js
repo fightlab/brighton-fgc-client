@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Typography } from 'material-ui'
 
 const Series = ({ match }) => (
-  <Typography type='body2' component='p'>
+  <Typography variant='body2' component='p'>
     {match.params.seriesId}
   </Typography>
 )

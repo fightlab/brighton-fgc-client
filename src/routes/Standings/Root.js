@@ -42,7 +42,7 @@ class Root extends React.Component {
         {
           series.isFetching && <Grid container className={classes.container}>
             <Grid item xs={12}>
-              <Typography type='display1' component='h2'>
+              <Typography variant='display1' component='h2'>
                 Current Series
               </Typography>
             </Grid>
@@ -54,7 +54,7 @@ class Root extends React.Component {
         {
           !!current.length && <Grid container className={classes.container}>
             <Grid item xs={12}>
-              <Typography type='display1' component='h2'>
+              <Typography variant='display1' component='h2'>
                Current Series
               </Typography>
             </Grid>
@@ -68,7 +68,7 @@ class Root extends React.Component {
         {
           series.isFetching && <Grid container className={classes.container}>
             <Grid item xs={12}>
-              <Typography type='display1' component='h2'>
+              <Typography variant='display1' component='h2'>
                 Past Series
               </Typography>
             </Grid>
@@ -80,7 +80,7 @@ class Root extends React.Component {
         {
           !!past.length && <Grid container className={classes.container}>
             <Grid item xs={12}>
-              <Typography type='display1' component='h2'>
+              <Typography variant='display1' component='h2'>
                 Past Series
               </Typography>
             </Grid>

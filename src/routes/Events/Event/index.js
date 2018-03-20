@@ -37,13 +37,13 @@ class Event extends React.Component {
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12}>
-          <Typography type='display1' component='h2'>
+          <Typography variant='display1' component='h2'>
             {event.event && event.event.name}
           </Typography>
-          <Typography type='subheading' component='h4'>
+          <Typography variant='subheading' component='h4'>
             {event.event && DateService.format(event.event.date)}
           </Typography>
-          <Typography type='subheading' component='h4'>
+          <Typography variant='subheading' component='h4'>
             {event.event && event.event.venue}
           </Typography>
           <a href={event.event && event.event.url} target='_blank' className='no-decor'>
@@ -54,7 +54,7 @@ class Event extends React.Component {
         </Grid>
         {
           tournaments.length && <Grid item xs={12}>
-            <Typography type='title' component='h3'>
+            <Typography variant='title' component='h3'>
                 Tournaments
             </Typography>
           </Grid>

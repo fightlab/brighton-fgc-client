@@ -41,19 +41,19 @@ class TournamentCard extends React.Component {
           <CardContent
             className={classes.cardContent}
           >
-            <Typography component='p' align='center' type='caption'>
+            <Typography component='p' align='center' variant='caption'>
               Type:
             </Typography>
             <Typography component='p' align='center' gutterBottom>
               {MetaService.toTitleCase(tournament.type)}
             </Typography>
-            <Typography component='p' align='center' type='caption'>
+            <Typography component='p' align='center' variant='caption'>
               Game:
             </Typography>
             <Typography component='p' align='center' gutterBottom>
               {tournament._gameId.name}
             </Typography>
-            <Typography component='p' align='center' type='caption'>
+            <Typography component='p' align='center' variant='caption'>
               Participants:
             </Typography>
             <Typography component='p' align='center' gutterBottom>
@@ -61,7 +61,7 @@ class TournamentCard extends React.Component {
             </Typography>
             <Grid container>
               <Grid item xs={6}>
-                <Typography component='p' align='center' type='caption'>
+                <Typography component='p' align='center' variant='caption'>
                   Start:
                 </Typography>
                 <Typography component='p' align='center' gutterBottom>
@@ -69,7 +69,7 @@ class TournamentCard extends React.Component {
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography component='p' align='center' type='caption'>
+                <Typography component='p' align='center' variant='caption'>
                   End:
                 </Typography>
                 <Typography component='p' align='center' gutterBottom>

@@ -35,13 +35,13 @@ class Game extends React.Component {
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12}>
-          <Typography type='display1' component='h2'>
+          <Typography variant='display1' component='h2'>
             {game.game && game.game.name}
           </Typography>
         </Grid>
         {
           tournaments.length && <Grid item xs={12}>
-            <Typography type='title' component='h3'>
+            <Typography variant='title' component='h3'>
                 Tournaments
             </Typography>
           </Grid>

@@ -22,36 +22,36 @@ const styles = theme => ({
 
 const About = ({classes}) => (
   <Paper className={classes.root} elevation={0}>
-    <Typography type='display2' component='h1'>
+    <Typography variant='display2' component='h1'>
       About Us
     </Typography>
     <br />
-    <Typography type='display1' component='h2'>
+    <Typography variant='display1' component='h2'>
       Who we are
     </Typography>
-    <Typography type='body2' component='p'>
+    <Typography variant='body2' component='p'>
       The Fight Lab Brighton are a group of players promoting the Brighton Fighting Game Community.
     </Typography>
-    <Typography type='body2' component='p'>
+    <Typography variant='body2' component='p'>
       We run events that promote the social nature of gaming, and focus on the competitive nature of fighting games.
     </Typography>
     <br />
-    <Typography type='display1' component='h2'>
+    <Typography variant='display1' component='h2'>
       Events
     </Typography>
-    <Typography type='title' component='h3'>
+    <Typography variant='title' component='h3'>
       Habrewken
     </Typography>
-    <Typography type='body1' component='p'>
+    <Typography variant='body1' component='p'>
       Habrewken is our bimonthly event taking place every 2nd and 4th Wednesday of the month at Brewdog Brighton from 7PM.
     </Typography>
-    <Typography type='body1' component='p'>
+    <Typography variant='body1' component='p'>
       It is free to attend and to take part!
     </Typography>
-    <Typography type='body1' component='p'>
+    <Typography variant='body1' component='p'>
       We play a number of games with our main tournament games being Street Fighter V and Tekken 7, we usually have casual setups and/or side tournaments in other games.
     </Typography>
-    <Typography type='body1' component='p'>
+    <Typography variant='body1' component='p'>
       Information about the tournaments, events, games and players are available on this site, as well as via our Facebook, Twitter, and Discord, with links in the menu
     </Typography>
     <br />

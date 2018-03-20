@@ -180,7 +180,7 @@ class NewEventRow extends React.Component {
             id='number'
             name='number'
             value={event.number || 1}
-            type='number'
+            variant='number'
             onChange={this.handleChange}
             placeholder='Number'
             fullWidth

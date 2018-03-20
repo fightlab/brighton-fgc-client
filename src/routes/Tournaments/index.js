@@ -21,7 +21,7 @@ const styles = theme => ({
 
 const Tournaments = ({match, classes}) => (
   <Paper className={classes.root} elevation={0}>
-    <Typography type='display2' component='h1'>
+    <Typography variant='display2' component='h1'>
       Tournaments
     </Typography>
     <Route path={`${match.url}/:tournamentId`} component={Tournament} />

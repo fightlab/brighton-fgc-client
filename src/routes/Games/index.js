@@ -57,7 +57,7 @@ class Games extends React.Component {
 
     return (
       <Paper style={bg} className={classes.root} elevation={0}>
-        <Typography type='display2' component='h1'>
+        <Typography variant='display2' component='h1'>
           Games
         </Typography>
         <Route path={`${match.url}/:gameId`} render={props => <Game {...props} />} />

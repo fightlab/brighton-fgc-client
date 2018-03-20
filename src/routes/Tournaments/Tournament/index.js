@@ -96,13 +96,13 @@ class Tournament extends React.Component {
         className={classes.container}
       >
         <Grid item xs={12}>
-          <Typography type='display1' component='h2'>
+          <Typography variant='display1' component='h2'>
             {name && name}
           </Typography>
-          <Typography type='caption' gutterBottom>
+          <Typography variant='caption' gutterBottom>
             Last Updated - {updatedAt && DateService.format(updatedAt)}
           </Typography>
-          <Typography type='subheading' component='h4'>
+          <Typography variant='subheading' component='h4'>
             <b>Event Date:</b>
             <br />
             {dateStart && DateService.format(dateStart)} {
@@ -153,7 +153,7 @@ class Tournament extends React.Component {
               <CardContent
                 className={classes.standingsCardContent}
               >
-                {id && <StandingList type='tournament' id={id} />}
+                {id && <StandingList variant='tournament' id={id} />}
               </CardContent>
             </Card>
           }
@@ -162,7 +162,7 @@ class Tournament extends React.Component {
               <CardContent
                 className={classes.standingsCardContent}
               >
-                {game && <StandingList type='game' id={game.id} limit={16} />}
+                {game && <StandingList variant='game' id={game.id} limit={16} />}
               </CardContent>
             </Card>
           } */}
@@ -171,7 +171,7 @@ class Tournament extends React.Component {
               <CardContent
                 className={classes.standingsCardContent}
               >
-                <StandingList type='series' id={series.id} limit={16} />
+                <StandingList variant='series' id={series.id} limit={16} />
               </CardContent>
             </Card>
           }

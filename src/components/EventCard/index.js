@@ -39,13 +39,13 @@ class EventCard extends React.Component {
         <CardContent
           className={classes.cardContent}
         >
-          <Typography component='p' align='center' type='caption'>
+          <Typography component='p' align='center' variant='caption'>
               Venue:
           </Typography>
           <Typography component='p' align='center' gutterBottom>
             {event.venue}
           </Typography>
-          <Typography component='p' align='center' type='caption'>
+          <Typography component='p' align='center' variant='caption'>
               Time:
           </Typography>
           <Typography component='p' align='center' gutterBottom>

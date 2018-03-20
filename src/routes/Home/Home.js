@@ -68,18 +68,18 @@ class Home extends React.Component {
     return (
       <Paper className={classes.root} elevation={0}>
         <Hidden mdUp>
-          <Typography type='display2' component='h1'>
+          <Typography variant='display2' component='h1'>
             Habrewken
           </Typography>
-          <Typography type='headline' component='h2'>
+          <Typography variant='headline' component='h2'>
             Brighton Fighting Game Community - Website and Resource
           </Typography>
         </Hidden>
         <Hidden smDown>
-          <Typography type='display4' component='h1'>
+          <Typography variant='display4' component='h1'>
             Habrewken
           </Typography>
-          <Typography type='display1' component='h2'>
+          <Typography variant='display1' component='h2'>
             Brighton Fighting Game Community - Website and Resource
           </Typography>
         </Hidden>

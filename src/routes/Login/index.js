@@ -60,7 +60,7 @@ class Login extends React.Component {
       <Paper className={classes.root} elevation={0}>
         <Card className={classes.card}>
           <CardContent>
-            <Typography type='title' component='h1'>
+            <Typography variant='title' component='h1'>
               Login
             </Typography>
             <form name='form' onSubmit={this.processForm} noValidate>
@@ -69,7 +69,7 @@ class Login extends React.Component {
                 name='email'
                 id='email'
                 label='Email'
-                type='text'
+                variant='text'
                 autoComplete='username email'
                 margin='normal'
                 onChange={this.handleChange}
@@ -79,13 +79,13 @@ class Login extends React.Component {
                 name='password'
                 id='password'
                 label='Password'
-                type='password'
+                variant='password'
                 autoComplete='current-password'
                 margin='normal'
                 onChange={this.handleChange}
               />
               <br />
-              <Button raised color='primary' type='submit'>
+              <Button raised color='primary' variant='submit'>
               Login
               </Button>
             </form>

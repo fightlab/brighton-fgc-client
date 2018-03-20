@@ -42,7 +42,7 @@ class Header extends Component {
             <MenuIcon />
           </IconButton>
           <Link to='/' className={this.props.classes.home}>
-            <Typography type='title' color='default'>
+            <Typography variant='title' color='default'>
               Habrewken - Brighton FGC
             </Typography>
           </Link>

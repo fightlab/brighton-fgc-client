@@ -21,7 +21,7 @@ const styles = theme => ({
 
 const Standings = ({match, classes}) => (
   <Paper className={classes.root} elevation={0}>
-    <Typography type='display2' component='h1'>
+    <Typography variant='display2' component='h1'>
       Standings
     </Typography>
     <Route path={`${match.url}/:seriesId`} component={Series} />

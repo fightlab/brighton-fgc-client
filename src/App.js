@@ -131,7 +131,7 @@ class App extends React.Component {
         </List>
         <Divider />
         <div style={{justifyContent: 'flex-start'}} className={classes.drawerHeader}>
-          <Typography type='caption' component='p'>
+          <Typography variant='caption' component='p'>
             <br />
             Brighton FGC Site by
             <br />
@@ -157,7 +157,7 @@ class App extends React.Component {
           <Header drawClick={this.handleDrawerToggle} />
           <Hidden mdUp>
             <Drawer
-              type='temporary'
+              variant='temporary'
               anchor={theme.direction === 'rtl' ? 'right' : 'left'}
               open={this.state.mobileOpen}
               classes={{
@@ -174,7 +174,7 @@ class App extends React.Component {
           <Hidden smDown implementation='css'>
             <Drawer
               style={{height: '100%'}}
-              type='permanent'
+              variant='permanent'
               open
               classes={{
                 paper: classes.drawerPaper

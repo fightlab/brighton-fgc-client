@@ -39,7 +39,7 @@ class GameCard extends React.Component {
         <CardContent
           className={classes.cardContent}
         >
-          <Typography type='headline' component='h2'>
+          <Typography variant='headline' component='h2'>
             {game.name}
           </Typography>
         </CardContent>
