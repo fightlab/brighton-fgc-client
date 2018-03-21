@@ -7,9 +7,10 @@ import { connect } from 'react-redux'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import AppBar from 'material-ui/AppBar'
 
-import { eventActions } from '../../_actions'
+import { eventActions, tournamentActions } from '../../_actions'
 
 import EventCard from '../../components/EventCard'
+import TournamentCard from '../../components/TournamentCard'
 
 import './Home.css'
 
@@ -45,9 +46,6 @@ class Home extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      selectedTab: 0
-    }
     this.handleTabChange = this.handleTabChange.bind(this)
   }
 
@@ -58,12 +56,13 @@ class Home extends React.Component {
   componentWillMount () {
     const { dispatch } = this.props
     dispatch(eventActions.getAll(4))
+    dispatch(tournamentActions.getAll(4))
   }
 
   render () {
-    const { classes, event } = this.props
-    const { selectedTab } = this.state
+    const { classes, event, tournament } = this.props
     const { events } = event
+    const { tournaments } = tournament
 
     return (
       <Paper className={classes.root} elevation={0}>
@@ -117,22 +116,20 @@ class Home extends React.Component {
                 textColor='primary'
                 fullWidth
               >
-                <Tab label='Series Standings' disabled />
+                <Tab label='Latest Tournaments' disabled />
               </Tabs>
             </AppBar>
-            <AppBar position='static' color='default'>
-              <Tabs
-                value={selectedTab}
-                onChange={this.handleTabChange}
-                indicatorColor='primary'
-                textColor='primary'
-                fullWidth
-              >
-                <Tab label='Series Standings 1' />
-                <Tab label='Series Standings 3' />
-                <Tab label='Series Standings 2' />
-              </Tabs>
-            </AppBar>
+            <Paper className={classes.paper} elevation={4}>
+              <Grid container>
+                {
+                  tournaments.map(tournament => (
+                    <Grid item sm={6} xs={12} key={tournament.id}>
+                      <TournamentCard tournament={tournament} />
+                    </Grid>
+                  ))
+                }
+              </Grid>
+            </Paper>
           </Grid>
         </Grid>
       </Paper>
@@ -143,13 +140,19 @@ class Home extends React.Component {
 Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  event: PropTypes.object.isRequired
+  event: PropTypes.object.isRequired,
+  tournament: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
-  const { event } = state
+  const {
+    event,
+    tournament
+  } = state
+
   return {
-    event
+    event,
+    tournament
   }
 }
 

@@ -61,7 +61,9 @@ class Root extends React.Component {
             </Grid>
             {
               upcoming.map(tournament => (
-                <TournamentCard tournament={tournament} key={tournament.id} />
+                <Grid item xs={12} sm={4} lg={3} key={tournament.id}>
+                  <TournamentCard tournament={tournament} />
+                </Grid>
               ))
             }
           </Grid>
@@ -87,7 +89,9 @@ class Root extends React.Component {
             </Grid>
             {
               past.map(tournament => (
-                <TournamentCard tournament={tournament} key={tournament.id} />
+                <Grid item xs={12} sm={4} lg={3} key={tournament.id}>
+                  <TournamentCard tournament={tournament} key={tournament.id} />
+                </Grid>
               ))
             }
           </Grid>
