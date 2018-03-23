@@ -88,8 +88,6 @@ class Tournament extends React.Component {
       series = null
     } = tournament || {}
 
-    console.log(series)
-
     return (
       <Grid
         container

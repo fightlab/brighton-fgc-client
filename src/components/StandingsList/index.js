@@ -27,9 +27,9 @@ const styles = theme => ({
 
 class StandingsList extends React.Component {
   componentWillMount () {
-    const { type = '', id = '', dispatch, limit } = this.props
+    const { variant = '', id = '', dispatch, limit } = this.props
     if (id) {
-      switch (type) {
+      switch (variant) {
         case 'tournament':
           dispatch(tournamentActions.getStandings(id))
           break
@@ -46,10 +46,10 @@ class StandingsList extends React.Component {
   }
 
   render () {
-    const { classes, type, tournament = {}, game = {}, series = {} } = this.props
+    const { classes, variant, tournament = {}, game = {}, series = {} } = this.props
     let standings = []
 
-    switch (type) {
+    switch (variant) {
       case 'tournament':
         standings = tournament.standings || []
         break
@@ -94,7 +94,7 @@ class StandingsList extends React.Component {
 
 StandingsList.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
+  variant: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   tournament: PropTypes.object.isRequired,
