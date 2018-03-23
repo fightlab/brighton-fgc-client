@@ -123,8 +123,8 @@ class Home extends React.Component {
               <Grid container>
                 {
                   tournaments.map(tournament => (
-                    <Grid item sm={6} xs={12} key={tournament.id}>
-                      <TournamentCard tournament={tournament} />
+                    <Grid item xs={12} sm={4} lg={3} key={tournament.id}>
+                      <TournamentCard key={tournament.id} tournament={tournament} />
                     </Grid>
                   ))
                 }

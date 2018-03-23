@@ -61,7 +61,9 @@ class Event extends React.Component {
         }
         {
           tournaments.length && orderBy(tournaments, 'dateStart', 'desc').map(tournament => (
-            <TournamentCard tournament={tournament} key={tournament.id} />
+            <Grid item xs={12} sm={4} lg={3} key={tournament.id}>
+              <TournamentCard tournament={tournament} key={tournament.id} />
+            </Grid>
           ))
         }
       </Grid>

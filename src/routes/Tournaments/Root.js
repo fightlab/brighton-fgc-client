@@ -62,7 +62,7 @@ class Root extends React.Component {
             {
               upcoming.map(tournament => (
                 <Grid item xs={12} sm={4} lg={3} key={tournament.id}>
-                  <TournamentCard tournament={tournament} />
+                  <TournamentCard key={tournament.id} tournament={tournament} />
                 </Grid>
               ))
             }
