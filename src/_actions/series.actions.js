@@ -73,7 +73,44 @@ const getAll = (id, limit) => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const get = (id) => dispatch => {
+  const request = id => {
+    return {
+      type: seriesConstans.GET_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = series => {
+    return {
+      type: seriesConstans.GET_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      _series: series
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: seriesConstans.GET_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      status: error.status,
+      statusText: error.statusText
+    }
+  }
+
+  dispatch(request({ id }))
+
+  SeriesService
+    .get(id)
+    .then(series => dispatch(success(series)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const seriesActions = {
   getStandings,
-  getAll
+  getAll,
+  get
 }

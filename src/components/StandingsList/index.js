@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { map } from 'lodash'
 import deepOrange from 'material-ui/colors/deepOrange'
+
 import List, {
   ListItem,
   ListItemAvatar,
@@ -22,7 +23,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     position: 'relative',
     overflow: 'auto',
-    maxHeight: 460
+    maxHeight: 460,
+    padding: 0
   },
   orange: {
     backgroundColor: deepOrange[400]
@@ -68,7 +70,7 @@ class StandingsList extends React.Component {
     }
 
     return (
-      <List className={classes.list} dense='true'>
+      <List className={classes.list} dense data-simplebar>
         {
           standings && map(standings, (standing, index) => (
             <ListItem button key={standing.id} >
@@ -82,9 +84,9 @@ class StandingsList extends React.Component {
                 primary={standing._playerId.handle}
               />
               {
-                standing.rank && <ListItemSecondaryAction>
-                  <Avatar className={index < 4 && classes.orange}>
-                    {standing.rank || ''}
+                standing.rank !== undefined && <ListItemSecondaryAction>
+                  <Avatar className={index < 4 ? classes.orange : ''}>
+                    {standing.rank.toString() || ''}
                   </Avatar>
                 </ListItemSecondaryAction>
               }
