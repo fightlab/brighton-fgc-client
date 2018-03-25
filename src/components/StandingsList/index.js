@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { map } from 'lodash'
+import deepOrange from 'material-ui/colors/deepOrange'
 import List, {
   ListItem,
   ListItemAvatar,
@@ -22,6 +23,9 @@ const styles = theme => ({
     position: 'relative',
     overflow: 'auto',
     maxHeight: 460
+  },
+  orange: {
+    backgroundColor: deepOrange[400]
   }
 })
 
@@ -66,7 +70,7 @@ class StandingsList extends React.Component {
     return (
       <List className={classes.list} dense='true'>
         {
-          standings && map(standings, standing => (
+          standings && map(standings, (standing, index) => (
             <ListItem button key={standing.id} >
               <ListItemAvatar>
                 <Avatar
@@ -78,8 +82,8 @@ class StandingsList extends React.Component {
                 primary={standing._playerId.handle}
               />
               {
-                standing.rank && <ListItemSecondaryAction style={{marginTop: '-20px'}}>
-                  <Avatar>
+                standing.rank && <ListItemSecondaryAction>
+                  <Avatar className={index < 4 && classes.orange}>
                     {standing.rank || ''}
                   </Avatar>
                 </ListItemSecondaryAction>
