@@ -85,7 +85,7 @@ class Login extends React.Component {
                 onChange={this.handleChange}
               />
               <br />
-              <Button raised color='primary' variant='submit'>
+              <Button raised='true' color='primary' variant='submit'>
               Login
               </Button>
             </form>

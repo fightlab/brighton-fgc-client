@@ -47,7 +47,7 @@ class PlayersCard extends React.Component {
   render () {
     const { players, classes } = this.props
     const { selectedTab } = this.state
-
+    console.log(players)
     return (
       <div style={{width: 'inherit', height: 'inherit'}}>
         <AppBar position='static' color='default'>
@@ -65,7 +65,7 @@ class PlayersCard extends React.Component {
               <CardContent
                 className={classes.cardContent}
               >
-                <List className={classes.list} dense='true'>
+                <List className={classes.list} dense>
                   {
                     players && map(orderBy(players, p => p.handle.toLowerCase(), 'asc'), player => (
                       <ListItem button key={player.id}>

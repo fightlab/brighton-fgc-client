@@ -128,7 +128,7 @@ class TournamentRow extends React.Component {
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
-          <Button raised color='primary' onClick={this.challongeUpdate}>
+          <Button raised='true' color='primary' onClick={this.challongeUpdate}>
             Challonge Update
           </Button>
           <IconButton aria-label='Save' onClick={this.saveTournament}>
