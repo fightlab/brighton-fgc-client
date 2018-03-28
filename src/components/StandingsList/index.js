@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { map } from 'lodash'
+import { map, isNumber } from 'lodash'
 import deepOrange from 'material-ui/colors/deepOrange'
 
 import List, {
@@ -72,7 +72,7 @@ class StandingsList extends React.Component {
     return (
       <List className={classes.list} dense data-simplebar>
         {
-          standings && map(standings, (standing, index) => (
+          standings.length && map(standings, (standing, index) => (
             <ListItem button key={standing.id} >
               <ListItemAvatar>
                 <Avatar
@@ -84,7 +84,7 @@ class StandingsList extends React.Component {
                 primary={standing._playerId.handle}
               />
               {
-                standing.rank !== undefined && <ListItemSecondaryAction>
+                isNumber(standing.rank) && <ListItemSecondaryAction>
                   <Avatar className={index < 4 ? classes.orange : ''}>
                     {standing.rank.toString() || ''}
                   </Avatar>
