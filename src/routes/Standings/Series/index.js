@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { seriesActions } from '../../../_actions'
 import { DateService } from '../../../_services'
+import Card, { CardContent } from 'material-ui/Card'
 
 import GameCard from '../../../components/GameCard'
 import StandingList from '../../../components/StandingsList'
@@ -13,6 +14,15 @@ const styles = theme => ({
   container: {
     flexGrow: 1,
     marginTop: 30
+  },
+  standingsCard: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1
+  },
+  standingsCardContent: {
+    flexGrow: 1
   }
 })
 
@@ -38,7 +48,13 @@ class Series extends React.Component {
           </Typography>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <StandingList variant='series' id={match.params.seriesId} />
+          <Card className={classes.standingsCard} elevation={10}>
+            <CardContent
+              className={classes.standingsCardContent}
+            >
+              <StandingList variant='series' id={match.params.seriesId} />
+            </CardContent>
+          </Card>
         </Grid>
         <Grid item sm={6} xs={12}>
           { game && <GameCard game={game} /> }
