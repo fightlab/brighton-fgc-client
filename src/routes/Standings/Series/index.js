@@ -6,8 +6,10 @@ import { connect } from 'react-redux'
 import { seriesActions } from '../../../_actions'
 import { DateService } from '../../../_services'
 import Card, { CardContent } from 'material-ui/Card'
+import { orderBy } from 'lodash'
 
 import GameCard from '../../../components/GameCard'
+import TournamentCard from '../../../components/TournamentCard'
 import StandingList from '../../../components/StandingsList'
 
 const styles = theme => ({
@@ -31,11 +33,15 @@ class Series extends React.Component {
     const { dispatch, match } = this.props
 
     dispatch(seriesActions.get(match.params.seriesId))
+    dispatch(seriesActions.getTournaments(match.params.seriesId))
   }
 
   render () {
     const { classes, series = {}, match } = this.props
+    let { tournaments = [] } = series
     const { name, updatedAt, _gameId: game } = series._series || {}
+
+    tournaments = orderBy(tournaments, 'dateStart', 'desc')
 
     return (
       <Grid container className={classes.container}>
@@ -59,6 +65,22 @@ class Series extends React.Component {
         <Grid item sm={6} xs={12}>
           { game && <GameCard game={game} /> }
         </Grid>
+        {
+          !!tournaments.length && <Grid container className={classes.container}>
+            <Grid item xs={12}>
+              <Typography variant='display1' component='h2'>
+                Tournaments
+              </Typography>
+            </Grid>
+            {
+              tournaments.map(tournament => (
+                <Grid item xs={12} sm={4} lg={3} key={tournament.id}>
+                  <TournamentCard key={tournament.id} tournament={tournament} />
+                </Grid>
+              ))
+            }
+          </Grid>
+        }
       </Grid>
     )
   }

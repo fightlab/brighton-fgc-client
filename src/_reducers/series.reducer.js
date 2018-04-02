@@ -6,7 +6,8 @@ const init = {
   isFetching: false,
   standings: [],
   series: [],
-  _series: {}
+  _series: {},
+  tournaments: []
 }
 
 export const series = (state = init, action) => {
@@ -28,6 +29,24 @@ export const series = (state = init, action) => {
         errorMessage: action.statusText,
         errorCode: action.status,
         standings: action.standings
+      })
+    case seriesConstans.GETTOURNAMENTS_REQUEST:
+      state.tournaments = []
+      return merge({}, state, {
+        isFetching: true,
+        tournaments: action.tournaments
+      })
+    case seriesConstans.GETTOURNAMENTS_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        tournaments: action.tournaments
+      })
+    case seriesConstans.GETTOURNAMENTS_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        tournaments: action.tournaments
       })
     case seriesConstans.GETALL_REQUEST:
       state.series = []
