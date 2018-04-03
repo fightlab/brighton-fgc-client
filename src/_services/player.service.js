@@ -5,9 +5,9 @@ import { API_URL, getAuthHeader } from '../_constants'
 const URL = `${API_URL}/players`
 
 export class PlayerService {
-  static getAll () {
+  static getAll (all, limit) {
     return axios
-      .get(URL)
+      .get(`${URL}?${all && 'all=true&'}${limit && `limit=${limit}`}`)
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }

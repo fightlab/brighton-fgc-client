@@ -4,7 +4,8 @@ import { Typography, Paper } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { Route } from 'react-router-dom'
 
-import Player from './Player/Player'
+import Player from './Player'
+import Root from './Root'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -24,11 +25,7 @@ const Players = ({match, classes}) => (
       Players
     </Typography>
     <Route path={`${match.url}/:playerId`} component={Player} />
-    <Route exact path={match.url} render={() => (
-      <Typography variant='body2' component='p'>
-        Please Select A Player
-      </Typography>
-    )} />
+    <Route exact path={match.url} component={Root} />
   </Paper>
 )
 
