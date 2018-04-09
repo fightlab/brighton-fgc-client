@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { CircularProgress } from 'material-ui/Progress'
+import { orderBy } from 'lodash'
 
 import { playerActions } from '../../_actions'
 
@@ -33,7 +34,9 @@ class Root extends React.Component {
 
   render () {
     const { classes, player = {} } = this.props
-    const { players = [] } = player
+    let { players = [] } = player
+
+    players = orderBy(players, ['isStaff', 'tournaments', 'handle'], ['asc', 'desc', 'asc'])
 
     return (
       <div>
@@ -58,8 +61,8 @@ class Root extends React.Component {
             </Grid>
             {
               players.map(player => (
-                <Grid item xs={6} sm={4} lg={2} key={player.id}>
-                  <PlayerCard key={player.id} player={player} />
+                <Grid item xs={6} sm={4} lg={3} key={player._id}>
+                  <PlayerCard player={player} />
                 </Grid>
               ))
             }

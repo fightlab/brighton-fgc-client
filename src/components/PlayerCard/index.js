@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 // import Grid from 'material-ui/Grid'
-import Card, { CardActions, /* CardContent, */ CardHeader } from 'material-ui/Card'
-// import { Typography } from 'material-ui'
+import Card, { CardActions, CardContent } from 'material-ui/Card'
+import { Typography } from 'material-ui'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
 import Avatar from 'material-ui/Avatar'
@@ -25,6 +25,11 @@ const styles = theme => ({
   },
   cardActions: {
     flexGrow: 1
+  },
+  center: {
+    marginBottom: 12,
+    marginLeft: 'auto',
+    marginRight: 'auto'
   }
 })
 
@@ -33,17 +38,25 @@ class PlayerCard extends React.Component {
     const { player, classes } = this.props
     return (
       <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar
-              alt={player.handle}
-              src={`https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`}
-            />
-          }
-          className={classes.cardHeader}
-          title={player.handle}
-          subheader={player.isStaff ? 'Habrewken Staff' : ''}
-        />
+        <CardContent>
+          <Typography variant='headline' component='h2' align='center'>
+            {player.handle}
+          </Typography>
+          <Typography component='p' align='center' variant='caption'>
+            {player.isStaff ? 'Habrewken Staff' : <span>&nbsp;</span>}
+          </Typography>
+          <Avatar
+            className={classes.center}
+            alt={player.handle}
+            src={`https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`}
+          />
+          <Typography component='p' align='center' variant='caption'>
+            Tournaments:
+          </Typography>
+          <Typography component='p' align='center' gutterBottom>
+            {player.tournaments}
+          </Typography>
+        </CardContent>
         <CardActions className={classes.cardActions}>
           <Button dense='true' color='primary' component={Link} to={`/players/${player.id}`}>
             View Player
