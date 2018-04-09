@@ -58,7 +58,7 @@ class PlayerCard extends React.Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.cardActions}>
-          <Button dense='true' color='primary' component={Link} to={`/players/${player.id}`}>
+          <Button dense='true' color='primary' component={Link} to={`/players/${player._id}`}>
             View Player
           </Button>
         </CardActions>
