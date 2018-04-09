@@ -7,7 +7,7 @@ const URL = `${API_URL}/players`
 export class PlayerService {
   static getAll (all, limit) {
     return axios
-      .get(`${URL}?${all && 'all=true&'}${limit && `limit=${limit}`}`)
+      .get(`${URL}/index?${all && 'all=true&'}${limit && `limit=${limit}`}`)
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }

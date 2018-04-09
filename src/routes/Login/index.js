@@ -69,7 +69,7 @@ class Login extends React.Component {
                 name='email'
                 id='email'
                 label='Email'
-                variant='text'
+                type='text'
                 autoComplete='username email'
                 margin='normal'
                 onChange={this.handleChange}
@@ -79,13 +79,13 @@ class Login extends React.Component {
                 name='password'
                 id='password'
                 label='Password'
-                variant='password'
+                type='password'
                 autoComplete='current-password'
                 margin='normal'
                 onChange={this.handleChange}
               />
               <br />
-              <Button raised='true' color='primary' variant='submit'>
+              <Button raised='true' color='primary' type='submit'>
               Login
               </Button>
             </form>
