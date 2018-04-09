@@ -38,6 +38,43 @@ const getAll = (all, limit) => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const get = id => dispatch => {
+  const request = id => {
+    return {
+      type: playerConstants.GET_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = player => {
+    return {
+      type: playerConstants.GET_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      player
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: playerConstants.GET_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      status: error.status,
+      statusText: error.statusText
+    }
+  }
+
+  dispatch(request({ id }))
+
+  PlayerService
+    .get(id)
+    .then(players => dispatch(success(players)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const playerActions = {
-  getAll
+  getAll,
+  get
 }

@@ -20,6 +20,9 @@ const styles = theme => ({
   },
   card: {
     width: '100%'
+  },
+  item: {
+    textAlign: 'center'
   }
 })
 
@@ -31,26 +34,24 @@ class Event extends React.Component {
   }
 
   render () {
-    const { classes, event } = this.props
-    const { tournaments = [] } = event
+    const { classes, event: _event } = this.props
+    const { tournaments = [], event } = _event
 
     return (
       <Grid container className={classes.container}>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.item}>
           <Typography variant='display1' component='h2'>
-            {event.event && event.event.name}
+            {event && event.name}
           </Typography>
           <Typography variant='subheading' component='h4'>
-            {event.event && DateService.format(event.event.date)}
+            {event && DateService.format(event.date)}
           </Typography>
           <Typography variant='subheading' component='h4'>
-            {event.event && event.event.venue}
+            {event && event.venue}
           </Typography>
-          <a href={event.event && event.event.url} target='_blank' className='no-decor'>
-            <Button dense='true' raised='true' color='primary'>
-              Event page
-            </Button>
-          </a>
+          <Button dense='true' raised='true' color='primary' href={event && event.url} target='_blank'>
+            Event page
+          </Button>
         </Grid>
         {
           tournaments.length && <Grid item xs={12}>

@@ -24,6 +24,9 @@ const styles = theme => ({
     flexGrow: 1,
     marginTop: 30
   },
+  item: {
+    textAlign: 'center'
+  },
   card: {
     width: '100%',
     display: 'flex'
@@ -93,7 +96,7 @@ class Tournament extends React.Component {
         container
         className={classes.container}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.item}>
           <Typography variant='display1' component='h2'>
             {name && name}
           </Typography>
