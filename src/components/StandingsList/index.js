@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { map, isNumber } from 'lodash'
 import deepOrange from 'material-ui/colors/deepOrange'
@@ -73,7 +73,7 @@ class StandingsList extends React.Component {
       <List className={classes.list} dense data-simplebar>
         {
           standings.length && map(standings, (standing, index) => (
-            <ListItem button key={standing.id} >
+            <ListItem button key={standing.id} component={Link} to={`/players/${standing._playerId.id}`}>
               <ListItemAvatar>
                 <Avatar
                   alt={standing._playerId.handle}

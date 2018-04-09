@@ -11,7 +11,7 @@ import Avatar from 'material-ui/Avatar'
 import { orderBy, map } from 'lodash'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import AppBar from 'material-ui/AppBar'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   card: {
@@ -68,7 +68,7 @@ class PlayersCard extends React.Component {
                 <List className={classes.list} dense>
                   {
                     players && map(orderBy(players, p => p.handle.toLowerCase(), 'asc'), player => (
-                      <ListItem button key={player.id}>
+                      <ListItem button key={player.id} component={Link} to={`/players/${player.id}`}>
                         <ListItemAvatar>
                           <Avatar
                             alt={player.handle}
