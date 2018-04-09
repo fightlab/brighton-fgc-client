@@ -39,7 +39,7 @@ class PlayerCard extends React.Component {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Typography variant='headline' component='h2' align='center'>
+          <Typography variant='headline' component='h2' align='center' noWrap>
             {player.handle}
           </Typography>
           <Typography component='p' align='center' variant='caption'>

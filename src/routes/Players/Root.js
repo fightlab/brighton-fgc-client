@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -42,11 +41,6 @@ class Root extends React.Component {
       <div>
         {
           player.isFetching && <Grid container className={classes.container}>
-            <Grid item xs={12}>
-              <Typography variant='display1' component='h2'>
-                Players
-              </Typography>
-            </Grid>
             {
               <CircularProgress className={classes.progress} size={50} />
             }
@@ -54,11 +48,6 @@ class Root extends React.Component {
         }
         {
           !!players.length && <Grid container className={classes.container}>
-            <Grid item xs={12}>
-              <Typography variant='display1' component='h2'>
-                Players
-              </Typography>
-            </Grid>
             {
               players.map(player => (
                 <Grid item xs={6} sm={4} lg={3} key={player._id}>
