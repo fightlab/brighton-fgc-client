@@ -70,7 +70,7 @@ class StandingsList extends React.Component {
     }
 
     return (
-      <List className={classes.list} dense data-simplebar>
+      <List className={classes.list} dense>
         {
           standings.length && map(standings, (standing, index) => (
             <ListItem button key={standing.id} component={Link} to={`/players/${standing._playerId.id}`}>

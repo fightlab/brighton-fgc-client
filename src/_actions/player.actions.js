@@ -74,7 +74,44 @@ const get = id => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getStatistics = id => dispatch => {
+  const request = id => {
+    return {
+      type: playerConstants.GETSTATISTICS_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = statistics => {
+    return {
+      type: playerConstants.GETSTATISTICS_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      statistics
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: playerConstants.GETSTATISTICS_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      status: error.status,
+      statusText: error.statusText
+    }
+  }
+
+  dispatch(request({ id }))
+
+  PlayerService
+    .getStatistics(id)
+    .then(players => dispatch(success(players)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const playerActions = {
   getAll,
-  get
+  get,
+  getStatistics
 }

@@ -5,7 +5,8 @@ import { playerConstants } from '../_constants'
 const init = {
   isFetching: false,
   players: [],
-  player: {}
+  player: {},
+  statistics: {}
 }
 
 export const player = (state = init, action) => {
@@ -27,6 +28,24 @@ export const player = (state = init, action) => {
         errorMessage: action.statusText,
         errorCode: action.status,
         players: action.players
+      })
+    case playerConstants.GETSTATISTICS_REQUEST:
+      state.statistics = {}
+      return merge({}, state, {
+        isFetching: true,
+        statistics: action.statistics
+      })
+    case playerConstants.GETSTATISTICS_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        statistics: action.statistics
+      })
+    case playerConstants.GETSTATISTICS_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        statistics: action.statistics
       })
     case playerConstants.GET_REQUEST:
       state.player = {}
