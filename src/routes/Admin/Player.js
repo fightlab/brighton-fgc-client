@@ -285,7 +285,7 @@ class AdminPlayer extends React.Component {
 
   componentWillMount () {
     PlayerService
-      .getAll()
+      .all()
       .then(players => this.setState({ players }))
       .catch(error => this.setState({ error }))
   }

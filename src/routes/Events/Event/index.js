@@ -49,7 +49,7 @@ class Event extends React.Component {
           <Typography variant='subheading' component='h4'>
             {event && event.venue}
           </Typography>
-          <Button dense='true' raised='true' color='primary' href={event && event.url} target='_blank'>
+          <Button dense='true' color='primary' href={event && event.url} target='_blank'>
             Event page
           </Button>
         </Grid>

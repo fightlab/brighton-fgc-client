@@ -46,9 +46,6 @@ const styles = theme => ({
   },
   standingsCardContent: {
     flexGrow: 1
-  },
-  box: {
-    display: 'flex'
   }
 })
 
@@ -111,20 +108,14 @@ class Tournament extends React.Component {
             }
           </Typography>
           <br />
-          <div className={classes.box}>
-            <a style={{paddingRight: '4px'}} href={bracket && bracket} target='_blank' className='no-decor'>
-              <Button dense='true' raised='true' color='primary'>
-                Challonge Page
-              </Button>
-            </a>
-            {
-              dateStart && DateService.compareDates(dateStart, new Date().toISOString()) && <a style={{paddingLeft: '4px'}} href={signUpUrl && signUpUrl} target='_blank' className='no-decor'>
-                <Button dense='true' raised='true' color='primary'>
-                  Sign Up Page
-                </Button>
-              </a>
-            }
-          </div>
+          <Button style={{marginRight: 4}} color='primary' href={bracket && bracket} target='_blank'>
+            Challonge Page
+          </Button>
+          {
+            dateStart && DateService.compareDates(dateStart, new Date().toISOString()) && <Button style={{marginLeft: 4}} variant='raised' color='secondary' href={signUpUrl && signUpUrl} target='_blank'>
+              Sign Up Page
+            </Button>
+          }
         </Grid>
         <Grid item sm={6} xs={12}>
           { event && <EventCard event={event} /> }

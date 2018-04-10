@@ -75,8 +75,6 @@ class Player extends React.Component {
     const { classes, player: _player } = this.props
     const { player = {}, statistics = {} } = _player
 
-    console.log(statistics)
-
     return (
       <Grid container className={classes.container}>
         <Grid item xs={12} className={classes.item}>
@@ -91,7 +89,7 @@ class Player extends React.Component {
           <Typography variant='subheading' component='h4' align='center'>
             {player.isStaff ? 'Habrewken Staff' : <span>&nbsp;</span>}
           </Typography>
-          <Button dense='true' raised='true' color='primary' href={`https://challonge.com/users/${player.challongeUsername}`} target='_blank'>
+          <Button color='primary' href={`https://challonge.com/users/${player.challongeUsername}`} target='_blank'>
               User Challonge Page
           </Button>
         </Grid>

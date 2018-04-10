@@ -5,6 +5,13 @@ import { API_URL, getAuthHeader } from '../_constants'
 const URL = `${API_URL}/players`
 
 export class PlayerService {
+  static all () {
+    return axios
+      .get(`${URL}`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
   static getAll (all, limit) {
     return axios
       .get(`${URL}/index?${all && 'all=true&'}${limit && `limit=${limit}`}`)
