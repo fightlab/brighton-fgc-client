@@ -90,6 +90,7 @@ class Tournament extends React.Component {
 
     return (
       <Grid
+        spacing={16}
         container
         className={classes.container}
       >

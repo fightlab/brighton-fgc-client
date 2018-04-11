@@ -41,7 +41,7 @@ class Root extends React.Component {
     return (
       <div>
         {
-          event.isFetching && <Grid container className={classes.container}>
+          event.isFetching && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
               Upcoming Events
@@ -53,7 +53,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          !!upcoming.length && <Grid container className={classes.container}>
+          !!upcoming.length && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
                 Upcoming Events
@@ -69,7 +69,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          event.isFetching && <Grid container className={classes.container}>
+          event.isFetching && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
               Past Events
@@ -81,7 +81,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          !!past.length && <Grid container className={classes.container}>
+          !!past.length && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
                 Past Events

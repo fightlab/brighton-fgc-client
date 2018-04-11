@@ -9,12 +9,12 @@
     "start": "razzle build && NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@material-ui/icons": "^1.0.0-beta.42",
     "axios": "^0.18.0",
     "express": "^4.16.3",
     "lodash": "^4.17.5",
     "luxon": "^0.5.6",
-    "material-ui": "^1.0.0-beta.38",
-    "material-ui-icons": "^1.0.0-beta.36",
+    "material-ui": "^1.0.0-beta.41",
     "mdi-material-ui": "^3.1.0",
     "raf": "^3.4.0",
     "razzle": "^0.8.12",

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Typography, AppBar, Toolbar, IconButton } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
-import MenuIcon from 'material-ui-icons/Menu'
+import MenuIcon from '@material-ui/icons/Menu'
 import { Link } from 'react-router-dom'
 
 const drawerWidth = 240

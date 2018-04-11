@@ -40,7 +40,7 @@ class Root extends React.Component {
     return (
       <div>
         {
-          series.isFetching && <Grid container className={classes.container}>
+          series.isFetching && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
                 Current Series
@@ -52,7 +52,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          !!current.length && <Grid container className={classes.container}>
+          !!current.length && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
                Current Series
@@ -66,7 +66,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          series.isFetching && <Grid container className={classes.container}>
+          series.isFetching && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
                 Past Series
@@ -78,7 +78,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          !!past.length && <Grid container className={classes.container}>
+          !!past.length && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
                 Past Series

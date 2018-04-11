@@ -33,7 +33,7 @@ class Game extends React.Component {
     const { tournaments = [] } = game
 
     return (
-      <Grid container className={classes.container}>
+      <Grid spacing={16} container className={classes.container}>
         <Grid item xs={12}>
           <Typography variant='display1' component='h2'>
             {game.game && game.game.name}

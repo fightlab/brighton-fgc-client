@@ -44,7 +44,7 @@ class Series extends React.Component {
     tournaments = orderBy(tournaments, 'dateStart', 'desc')
 
     return (
-      <Grid container className={classes.container}>
+      <Grid spacing={16} container className={classes.container}>
         <Grid item xs={12}>
           <Typography variant='display1' component='h2'>
             { name }
@@ -66,7 +66,7 @@ class Series extends React.Component {
           { game && <GameCard game={game} /> }
         </Grid>
         {
-          !!tournaments.length && <Grid container className={classes.container}>
+          !!tournaments.length && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='display1' component='h2'>
                 Tournaments

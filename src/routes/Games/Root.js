@@ -29,7 +29,7 @@ class Root extends React.Component {
     const games = orderBy(game.games, 'name', 'asc')
 
     return (
-      <Grid container className={classes.container}>
+      <Grid spacing={16} container className={classes.container}>
         {
           game.isFetching && <CircularProgress className={classes.progress} size={50} />
         }

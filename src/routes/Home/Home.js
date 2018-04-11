@@ -82,7 +82,7 @@ class Home extends React.Component {
             Brighton Fighting Game Community - Website and Resource
           </Typography>
         </Hidden>
-        <Grid container className={classes.container}>
+        <Grid spacing={16} container className={classes.container}>
           <Grid item md={6} sm={12} xs={12}>
             <AppBar position='static' color='default'>
               <Tabs
@@ -96,7 +96,7 @@ class Home extends React.Component {
               </Tabs>
             </AppBar>
             <Paper className={classes.paper} elevation={4}>
-              <Grid container>
+              <Grid spacing={16} container>
                 {
                   events.map(event => (
                     <Grid item sm={6} xs={12} key={event.id}>
@@ -120,7 +120,7 @@ class Home extends React.Component {
               </Tabs>
             </AppBar>
             <Paper className={classes.paper} elevation={4}>
-              <Grid container>
+              <Grid spacing={16} container>
                 {
                   tournaments.map(tournament => (
                     <Grid item sm={6} xs={12} key={tournament.id}>
