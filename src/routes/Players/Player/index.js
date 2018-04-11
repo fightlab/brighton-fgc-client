@@ -173,7 +173,7 @@ class Player extends React.Component {
               }
             />
             {
-              statistics.matches && <CardContent
+              statistics.matches && statistics.rounds && <CardContent
                 className={classes.standingsCardContent}
               >
                 <Grid container>
@@ -212,6 +212,43 @@ class Player extends React.Component {
                     </Typography>
                     <Typography variant='display1' gutterBottom align='center'>
                       { this.calculateWinRatio(get(statistics.matches, `${selectedGame}.w`, 0), get(statistics.matches, `${selectedGame}.t`, 0)) }%
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant='headline' gutterBottom align='center'>
+                      Rounds
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Total
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(statistics.rounds, `${selectedGame}.t`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Wins
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(statistics.rounds, `${selectedGame}.w`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Loss
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(statistics.rounds, `${selectedGame}.l`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Win%
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { this.calculateWinRatio(get(statistics.rounds, `${selectedGame}.w`, 0), get(statistics.rounds, `${selectedGame}.t`, 0)) }%
                     </Typography>
                   </Grid>
                 </Grid>
