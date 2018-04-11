@@ -10,7 +10,7 @@ import { InputLabel } from 'material-ui/Input'
 import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 import { FormControl } from 'material-ui/Form'
-import { find, get } from 'lodash'
+import { get } from 'lodash'
 
 import { playerActions } from '../../../_actions'
 import TournamentList from '../../../components/TournamentList'
@@ -60,7 +60,7 @@ class Player extends React.Component {
 
     this.state = {
       selectedTab: 0,
-      game: 'all'
+      game: 'total'
     }
 
     this.handleTabChange = this.handleTabChange.bind(this)
@@ -75,6 +75,11 @@ class Player extends React.Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
+  calculateWinRatio (wins = 0, games = 0) {
+    if (!games) return '∞'
+    return ((wins / games) * 100).toFixed(2)
+  }
+
   componentWillMount () {
     const { dispatch, match } = this.props
     dispatch(playerActions.get(match.params.playerId))
@@ -82,7 +87,7 @@ class Player extends React.Component {
   }
 
   render () {
-    const { selectedTab } = this.state
+    const { selectedTab, game: selectedGame } = this.state
     const { classes, player: _player } = this.props
     const { player = {}, statistics = {} } = _player
 
@@ -104,7 +109,7 @@ class Player extends React.Component {
               User Challonge Page
           </Button>
         </Grid>
-        <Grid item lg={6} sm={12} className={classes.cardGrid}>
+        <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
           <AppBar position='static' color='default'>
             <Tabs
               value={selectedTab}
@@ -142,23 +147,22 @@ class Player extends React.Component {
             </Card>
           }
         </Grid>
-        <Grid item sm={12} lg={6} className={classes.cardGrid}>
+        <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
           <Card className={classes.standingsCard} elevation={10}>
             <CardHeader
               title='Statistics'
-              subheader={statistics.games && get(find(statistics.games, g => g._id === this.state.game), 'name', 'All Games')}
               action={
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor='game-simple'>Game</InputLabel>
                   <Select
-                    value={this.state.game}
+                    value={selectedGame}
                     onChange={this.handleChange}
                     inputProps={{
                       name: 'game',
                       id: 'game-simple'
                     }}
                   >
-                    <MenuItem value='all'>All Games</MenuItem>
+                    <MenuItem value='total'>All Games</MenuItem>
                     {
                       statistics.games && statistics.games.map(game => (
                         <MenuItem key={game._id} value={game._id}>{game.name}</MenuItem>
@@ -168,13 +172,51 @@ class Player extends React.Component {
                 </FormControl>
               }
             />
-            <CardContent
-              className={classes.standingsCardContent}
-            >
-              <Typography variant='headline' gutterBottom>
-                Soon...
-              </Typography>
-            </CardContent>
+            {
+              statistics.matches && <CardContent
+                className={classes.standingsCardContent}
+              >
+                <Grid container>
+                  <Grid item xs={12}>
+                    <Typography variant='headline' gutterBottom align='center'>
+                      Matches
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Total
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(statistics.matches, `${selectedGame}.t`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Wins
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(statistics.matches, `${selectedGame}.w`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Loss
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(statistics.matches, `${selectedGame}.l`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Win%
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { this.calculateWinRatio(get(statistics.matches, `${selectedGame}.w`, 0), get(statistics.matches, `${selectedGame}.t`, 0)) }%
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            }
           </Card>
         </Grid>
       </Grid>
