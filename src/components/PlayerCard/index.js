@@ -34,6 +34,11 @@ const styles = theme => ({
 })
 
 class PlayerCard extends React.Component {
+  getImage (player) {
+    if (player.imageUrl) return player.imageUrl
+    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  }
+
   render () {
     const { player, classes } = this.props
     return (
@@ -48,7 +53,7 @@ class PlayerCard extends React.Component {
           <Avatar
             className={classes.center}
             alt={player.handle}
-            src={`https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`}
+            src={this.getImage(player)}
           />
           <Typography component='p' align='center' variant='caption'>
             Tournaments:

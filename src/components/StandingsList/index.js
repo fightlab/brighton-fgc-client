@@ -32,6 +32,11 @@ const styles = theme => ({
 })
 
 class StandingsList extends React.Component {
+  getImage (player) {
+    if (player.imageUrl) return player.imageUrl
+    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  }
+
   componentWillMount () {
     const { variant = '', id = '', dispatch, limit } = this.props
     if (id) {
@@ -77,7 +82,7 @@ class StandingsList extends React.Component {
               <ListItemAvatar>
                 <Avatar
                   alt={standing._playerId.handle}
-                  src={`https://www.gravatar.com/avatar/${standing._playerId.emailHash}?d=robohash`}
+                  src={this.getImage(standing._playerId)}
                 />
               </ListItemAvatar>
               <ListItemText

@@ -80,6 +80,11 @@ class Player extends React.Component {
     return ((wins / games) * 100).toFixed(2)
   }
 
+  getImage (player) {
+    if (player.imageUrl) return player.imageUrl
+    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  }
+
   componentWillMount () {
     const { dispatch, match } = this.props
     dispatch(playerActions.get(match.params.playerId))
@@ -100,7 +105,7 @@ class Player extends React.Component {
           <Avatar
             className={classes.bigAvatar}
             alt={player.handle}
-            src={`https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`}
+            src={this.getImage(player)}
           />
           <Typography variant='subheading' component='h4' align='center'>
             {player.isStaff ? 'Habrewken Staff' : <span>&nbsp;</span>}

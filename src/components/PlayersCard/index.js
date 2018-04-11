@@ -44,6 +44,12 @@ class PlayersCard extends React.Component {
       selectedTab: 0
     }
   }
+
+  getImage (player) {
+    if (player.imageUrl) return player.imageUrl
+    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  }
+
   render () {
     const { players, classes } = this.props
     const { selectedTab } = this.state
@@ -72,7 +78,7 @@ class PlayersCard extends React.Component {
                         <ListItemAvatar>
                           <Avatar
                             alt={player.handle}
-                            src={`https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`}
+                            src={this.getImage(player)}
                           />
                         </ListItemAvatar>
                         <ListItemText
