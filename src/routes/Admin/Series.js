@@ -260,7 +260,12 @@ class AdminSeries extends React.Component {
   componentWillMount () {
     SeriesService
       .getAll()
-      .then(serieses => this.setState({ serieses: orderBy(serieses, 'isCurrent', 'asc') }))
+      .then(serieses => this.setState({ serieses: orderBy(serieses.map(s => {
+        const gId = s._gameId.id
+        delete s._gameId
+        s._gameId = gId
+        return s
+      }), 'isCurrent', 'asc') }))
       .catch(error => this.setState({ error }))
   }
 

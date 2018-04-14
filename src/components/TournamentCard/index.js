@@ -6,6 +6,7 @@ import Card, { CardActions, CardContent, CardHeader } from 'material-ui/Card'
 import { Typography } from 'material-ui'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
 
 import { DateService, MetaService } from '../../_services'
 
@@ -76,6 +77,11 @@ class TournamentCard extends React.Component {
               </Typography>
             </Grid>
           </Grid>
+          {
+            tournament.youtube && <Typography component='p' variant='caption' align='center'>
+              <VideoLibraryIcon />
+            </Typography>
+          }
         </CardContent>
         <CardActions className={classes.cardActions}>
           <Button dense='true' color='primary' component={Link} to={`/tournaments/${tournament.id}`}>

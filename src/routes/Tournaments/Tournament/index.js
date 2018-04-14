@@ -10,12 +10,13 @@ import Card, { CardContent } from 'material-ui/Card'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import AppBar from 'material-ui/AppBar'
 
-import { DateService } from '../../../_services'
+import { DateService, MetaService } from '../../../_services'
 import { tournamentActions } from '../../../_actions'
 
 import EventCard from '../../../components/EventCard'
 import GameCard from '../../../components/GameCard'
 import PlayersCard from '../../../components/PlayersCard'
+import YoutubeCard from '../../../components/YoutubeCard'
 
 import StandingList from '../../../components/StandingsList'
 
@@ -85,7 +86,8 @@ class Tournament extends React.Component {
       dateEnd = null,
       signUpUrl = '',
       id = '',
-      series = null
+      series = null,
+      youtube = ''
     } = tournament || {}
 
     return (
@@ -107,6 +109,11 @@ class Tournament extends React.Component {
             {dateStart && DateService.format(dateStart)} {
               dateEnd && <span> - {DateService.format(dateEnd)}</span>
             }
+          </Typography>
+          <Typography variant='subheading' component='h4'>
+            <b>Type:</b>
+            <br />
+            {MetaService.toTitleCase(tournament.type || '')}
           </Typography>
           <br />
           <Button style={{marginRight: 4}} color='primary' href={bracket && bracket} target='_blank'>
@@ -178,6 +185,11 @@ class Tournament extends React.Component {
             }
           </Card>
         </Grid>
+        {
+          youtube && <Grid item xs={12}>
+            <YoutubeCard youtube={youtube} />
+          </Grid>
+        }
       </Grid>
     )
   }

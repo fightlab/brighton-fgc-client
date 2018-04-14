@@ -96,6 +96,17 @@ class TournamentRow extends React.Component {
         </TableCell>
         <TableCell style={{padding: '5px'}}>
           <TextField
+            id='youtube'
+            name='youtube'
+            value={tournament.youtube || ''}
+            placeholder='YouTube URL'
+            fullWidth
+            margin='normal'
+            onChange={this.handleChange}
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
             id='series'
             name='series'
             placeholder='Series ID'
@@ -214,6 +225,17 @@ class NewTournamentRow extends React.Component {
             value={tournament.signUpUrl || ''}
             fullWidth
             margin='normal'
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='youtube'
+            name='youtube'
+            value={tournament.youtube || ''}
+            placeholder='YouTube URL'
+            fullWidth
+            margin='normal'
+            onChange={this.handleChange}
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
@@ -350,6 +372,7 @@ class AdminTournament extends React.Component {
               <TableCell style={{padding: '5px'}}>End</TableCell>
               <TableCell style={{padding: '5px'}}>Bracket</TableCell>
               <TableCell style={{padding: '5px'}}>Sign Up</TableCell>
+              <TableCell style={{padding: '5px'}}>YouTube</TableCell>
               <TableCell style={{padding: '5px'}}>Series</TableCell>
               <TableCell style={{padding: '5px'}}>Event</TableCell>
               <TableCell style={{padding: '5px'}}>Game</TableCell>

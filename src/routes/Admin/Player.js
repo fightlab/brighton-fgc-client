@@ -10,7 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import { get, set } from 'lodash'
 import Chip from 'material-ui/Chip'
 import { withStyles } from 'material-ui/styles'
 import Switch from 'material-ui/Switch'
@@ -47,7 +47,7 @@ class PlayerRow extends React.Component {
 
   handleChange (event) {
     const { player } = this.state
-    player[event.target.name] = event.target.value
+    set(player, event.target.name, event.target.value)
     this.setState({ player })
   }
 
@@ -155,6 +155,116 @@ class PlayerRow extends React.Component {
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.facebook'
+            name='profile.facebook'
+            value={player.profile.facebook || ''}
+            onChange={this.handleChange}
+            placeholder='Facebook'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.twitter'
+            name='profile.twitter'
+            value={player.profile.twitter || ''}
+            onChange={this.handleChange}
+            placeholder='Twitter'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.instagram'
+            name='profile.instagram'
+            value={player.profile.instagram || ''}
+            onChange={this.handleChange}
+            placeholder='Instagram'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.web'
+            name='profile.web'
+            value={player.profile.web || ''}
+            onChange={this.handleChange}
+            placeholder='Website'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.playstation'
+            name='profile.playstation'
+            value={player.profile.playstation || ''}
+            onChange={this.handleChange}
+            placeholder='Playstation'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.xbox'
+            name='profile.xbox'
+            value={player.profile.xbox || ''}
+            onChange={this.handleChange}
+            placeholder='Xbox'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.steam'
+            name='profile.steam'
+            value={player.profile.steam || ''}
+            onChange={this.handleChange}
+            placeholder='Steam'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.discord'
+            name='profile.discord'
+            value={player.profile.discord || ''}
+            onChange={this.handleChange}
+            placeholder='Discord'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.twitch'
+            name='profile.twitch'
+            value={player.profile.twitch || ''}
+            onChange={this.handleChange}
+            placeholder='Twitch'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.github'
+            name='profile.github'
+            value={player.profile.github || ''}
+            onChange={this.handleChange}
+            placeholder='Github'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
           <IconButton onClick={this.savePlayer} aria-label='Save'>
             <SaveIcon />
           </IconButton>
@@ -203,7 +313,7 @@ class NewPlayerRow extends React.Component {
 
   handleChange (event) {
     const { player } = this.state
-    player[event.target.name] = event.target.value
+    set(player, event.target.name, event.target.value)
     this.setState({ player })
   }
 
@@ -254,6 +364,116 @@ class NewPlayerRow extends React.Component {
             value={player.emailHash || ''}
             onChange={this.handleChange}
             placeholder='Email Hash'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.facebook'
+            name='profile.facebook'
+            value={player.profile.facebook || ''}
+            onChange={this.handleChange}
+            placeholder='Facebook'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.twitter'
+            name='profile.twitter'
+            value={player.profile.twitter || ''}
+            onChange={this.handleChange}
+            placeholder='Twitter'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.instagram'
+            name='profile.instagram'
+            value={player.profile.instagram || ''}
+            onChange={this.handleChange}
+            placeholder='Instagram'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.web'
+            name='profile.web'
+            value={player.profile.web || ''}
+            onChange={this.handleChange}
+            placeholder='Website'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.playstation'
+            name='profile.playstation'
+            value={player.profile.playstation || ''}
+            onChange={this.handleChange}
+            placeholder='Playstation'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.xbox'
+            name='profile.xbox'
+            value={player.profile.xbox || ''}
+            onChange={this.handleChange}
+            placeholder='Xbox'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.steam'
+            name='profile.steam'
+            value={player.profile.steam || ''}
+            onChange={this.handleChange}
+            placeholder='Steam'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.discord'
+            name='profile.discord'
+            value={player.profile.discord || ''}
+            onChange={this.handleChange}
+            placeholder='Discord'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.twitch'
+            name='profile.twitch'
+            value={player.profile.twitch || ''}
+            onChange={this.handleChange}
+            placeholder='Twitch'
+            margin='normal'
+            fullWidth
+          />
+        </TableCell>
+        <TableCell style={{padding: '5px'}}>
+          <TextField
+            id='profile.github'
+            name='profile.github'
+            value={player.profile.github || ''}
+            onChange={this.handleChange}
+            placeholder='Github'
             margin='normal'
             fullWidth
           />
@@ -357,6 +577,16 @@ class AdminPlayer extends React.Component {
               <TableCell style={{padding: '5px'}}>Challonge Username</TableCell>
               <TableCell style={{padding: '5px'}}>Challonge Names</TableCell>
               <TableCell style={{padding: '5px'}}>Email Hash</TableCell>
+              <TableCell style={{padding: '5px'}}>Facebook</TableCell>
+              <TableCell style={{padding: '5px'}}>Twitter</TableCell>
+              <TableCell style={{padding: '5px'}}>Instagram</TableCell>
+              <TableCell style={{padding: '5px'}}>Website</TableCell>
+              <TableCell style={{padding: '5px'}}>Playstation</TableCell>
+              <TableCell style={{padding: '5px'}}>Xbox</TableCell>
+              <TableCell style={{padding: '5px'}}>Steam</TableCell>
+              <TableCell style={{padding: '5px'}}>Discord</TableCell>
+              <TableCell style={{padding: '5px'}}>Twitch</TableCell>
+              <TableCell style={{padding: '5px'}}>Github</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

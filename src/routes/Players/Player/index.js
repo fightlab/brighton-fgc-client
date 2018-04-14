@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography, Grid, Button, Avatar, AppBar } from 'material-ui'
+import { Typography, Grid, Button, Avatar, AppBar, Tooltip } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -11,6 +11,7 @@ import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 import { FormControl } from 'material-ui/Form'
 import { get } from 'lodash'
+import { Facebook, Twitter, Instagram, Web, Playstation, Xbox, Steam, Twitch, Discord } from 'mdi-material-ui'
 
 import { playerActions } from '../../../_actions'
 import TournamentList from '../../../components/TournamentList'
@@ -95,6 +96,7 @@ class Player extends React.Component {
     const { selectedTab, game: selectedGame } = this.state
     const { classes, player: _player } = this.props
     const { player = {}, statistics = {} } = _player
+    const { profile } = player
 
     return (
       <Grid spacing={16} container className={classes.container}>
@@ -110,6 +112,63 @@ class Player extends React.Component {
           <Typography variant='subheading' component='h4' align='center'>
             {player.isStaff ? 'Habrewken Staff' : <span>&nbsp;</span>}
           </Typography>
+          {
+            profile && <Typography component='p' align='center' gutterBottom>
+              {
+                profile.web && <Button size='small' href={profile.web}>
+                  <Web />
+                </Button>
+              }
+              {
+                profile.facebook && <Button size='small' href={`https://facebook.com/${profile.facebook}`}>
+                  <Facebook />
+                </Button>
+              }
+              {
+                profile.twitter && <Button size='small' href={`https://twitter.com/${profile.twitter}`}>
+                  <Twitter />
+                </Button>
+              }
+              {
+                profile.instagram && <Button size='small' href={`https://instagram.com/${profile.instagram}`}>
+                  <Instagram />
+                </Button>
+              }
+              {
+                profile.playstation && <Tooltip title={profile.playstation} placement='bottom'>
+                  <Button size='small' href={`https://my.playstation.com/profile/${profile.playstation}`}>
+                    <Playstation />
+                  </Button>
+                </Tooltip>
+              }
+              {
+                profile.xbox && <Tooltip title={profile.xbox} placement='bottom'>
+                  <Button size='small' href={`https://account.xbox.com/en-gb/Profile?GamerTag=${profile.xbox}`}>
+                    <Xbox />
+                  </Button>
+                </Tooltip>
+              }
+              {
+                profile.steam && <Tooltip title={profile.steam} placement='bottom'>
+                  <Button size='small' href={`https://steamcommunity.com/id/${profile.steam}`}>
+                    <Steam />
+                  </Button>
+                </Tooltip>
+              }
+              {
+                profile.twitch && <Button size='small' href={`https://twitch.tv/${profile.twitch}`}>
+                  <Twitch />
+                </Button>
+              }
+              {
+                profile.discord && <Tooltip title={profile.discord} placement='bottom'>
+                  <Button size='small' className={classes.iconButton}>
+                    <Discord />
+                  </Button>
+                </Tooltip>
+              }
+            </Typography>
+          }
           <Button color='primary' href={`https://challonge.com/users/${player.challongeUsername}`} target='_blank'>
               User Challonge Page
           </Button>
@@ -221,7 +280,7 @@ class Player extends React.Component {
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant='headline' gutterBottom align='center'>
-                      Rounds
+                      Games/Rounds
                     </Typography>
                   </Grid>
                   <Grid item xs={3}>

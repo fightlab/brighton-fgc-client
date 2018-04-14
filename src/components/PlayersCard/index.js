@@ -53,7 +53,7 @@ class PlayersCard extends React.Component {
   render () {
     const { players, classes } = this.props
     const { selectedTab } = this.state
-    console.log(players)
+
     return (
       <div style={{width: 'inherit', height: 'inherit'}}>
         <AppBar position='static' color='default'>
