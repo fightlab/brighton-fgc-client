@@ -78,7 +78,7 @@ class StandingsList extends React.Component {
       <List className={classes.list} dense>
         {
           standings.length && map(standings, (standing, index) => (
-            <ListItem button key={standing.id} component={Link} to={`/players/${standing.id}`}>
+            <ListItem button key={standing.id} component={Link} to={`/players/${standing._playerId.id}`}>
               <ListItemAvatar>
                 <Avatar
                   alt={standing._playerId.handle}
