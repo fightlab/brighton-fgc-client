@@ -115,48 +115,48 @@ class Player extends React.Component {
           {
             profile && <Typography component='p' align='center' gutterBottom>
               {
-                profile.web && <Button size='small' href={profile.web}>
+                profile.web && <Button size='small' target='_blank' href={profile.web}>
                   <Web />
                 </Button>
               }
               {
-                profile.facebook && <Button size='small' href={`https://facebook.com/${profile.facebook}`}>
+                profile.facebook && <Button size='small' target='_blank' href={`https://facebook.com/${profile.facebook}`}>
                   <Facebook />
                 </Button>
               }
               {
-                profile.twitter && <Button size='small' href={`https://twitter.com/${profile.twitter}`}>
+                profile.twitter && <Button size='small' target='_blank' href={`https://twitter.com/${profile.twitter}`}>
                   <Twitter />
                 </Button>
               }
               {
-                profile.instagram && <Button size='small' href={`https://instagram.com/${profile.instagram}`}>
+                profile.instagram && <Button size='small' target='_blank' href={`https://instagram.com/${profile.instagram}`}>
                   <Instagram />
                 </Button>
               }
               {
                 profile.playstation && <Tooltip title={profile.playstation} placement='bottom'>
-                  <Button size='small' href={`https://my.playstation.com/profile/${profile.playstation}`}>
+                  <Button size='small' target='_blank' href={`https://my.playstation.com/profile/${profile.playstation}`}>
                     <Playstation />
                   </Button>
                 </Tooltip>
               }
               {
                 profile.xbox && <Tooltip title={profile.xbox} placement='bottom'>
-                  <Button size='small' href={`https://account.xbox.com/en-gb/Profile?GamerTag=${profile.xbox}`}>
+                  <Button size='small' target='_blank' href={`https://account.xbox.com/en-gb/Profile?GamerTag=${profile.xbox}`}>
                     <Xbox />
                   </Button>
                 </Tooltip>
               }
               {
                 profile.steam && <Tooltip title={profile.steam} placement='bottom'>
-                  <Button size='small' href={`https://steamcommunity.com/id/${profile.steam}`}>
+                  <Button size='small' target='_blank' href={`https://steamcommunity.com/id/${profile.steam}`}>
                     <Steam />
                   </Button>
                 </Tooltip>
               }
               {
-                profile.twitch && <Button size='small' href={`https://twitch.tv/${profile.twitch}`}>
+                profile.twitch && <Button size='small' target='_blank' href={`https://twitch.tv/${profile.twitch}`}>
                   <Twitch />
                 </Button>
               }
@@ -168,13 +168,13 @@ class Player extends React.Component {
                 </Tooltip>
               }
               {
-                profile.github && <Button size='small' href={`https://github.com/${profile.github}`}>
+                profile.github && <Button size='small' target='_blank' href={`https://github.com/${profile.github}`}>
                   <GithubCircle />
                 </Button>
               }
             </Typography>
           }
-          <Button color='primary' href={`https://challonge.com/users/${player.challongeUsername}`} target='_blank'>
+          <Button color='primary' target='_blank' href={`https://challonge.com/users/${player.challongeUsername}`} target='_blank'>
               User Challonge Page
           </Button>
         </Grid>
