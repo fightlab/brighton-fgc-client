@@ -174,7 +174,7 @@ class Player extends React.Component {
               }
             </Typography>
           }
-          <Button color='primary' target='_blank' href={`https://challonge.com/users/${player.challongeUsername}`} target='_blank'>
+          <Button color='primary' target='_blank' href={`https://challonge.com/users/${player.challongeUsername}`}>
               User Challonge Page
           </Button>
         </Grid>
