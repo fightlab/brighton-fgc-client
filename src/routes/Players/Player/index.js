@@ -11,7 +11,7 @@ import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 import { FormControl } from 'material-ui/Form'
 import { get } from 'lodash'
-import { Facebook, Twitter, Instagram, Web, Playstation, Xbox, Steam, Twitch, Discord } from 'mdi-material-ui'
+import { Facebook, Twitter, Instagram, Web, Playstation, Xbox, Steam, Twitch, Discord, GithubCircle } from 'mdi-material-ui'
 
 import { playerActions } from '../../../_actions'
 import TournamentList from '../../../components/TournamentList'
@@ -166,6 +166,11 @@ class Player extends React.Component {
                     <Discord />
                   </Button>
                 </Tooltip>
+              }
+              {
+                profile.github && <Button size='small' href={`https://github.com/${profile.github}`}>
+                  <GithubCircle />
+                </Button>
               }
             </Typography>
           }

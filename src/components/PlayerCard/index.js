@@ -7,7 +7,7 @@ import { Typography, Tooltip } from 'material-ui'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
 import Avatar from 'material-ui/Avatar'
-import { Facebook, Twitter, Instagram, Web, Playstation, Xbox, Steam, Twitch, Discord } from 'mdi-material-ui'
+import { Facebook, Twitter, Instagram, Web, Playstation, Xbox, Steam, Twitch, Discord, GithubCircle } from 'mdi-material-ui'
 
 // import { MetaService } from '../../_services'
 
@@ -126,6 +126,11 @@ class PlayerCard extends React.Component {
                     <Discord />
                   </Button>
                 </Tooltip>
+              }
+              {
+                profile.github && <Button size='small' href={`https://github.com/${profile.github}`}>
+                  <GithubCircle />
+                </Button>
               }
             </Typography>
           }
