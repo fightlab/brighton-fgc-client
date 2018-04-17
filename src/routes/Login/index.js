@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography, Paper, Card, Button } from 'material-ui'
-import { CardContent } from 'material-ui/Card'
+import { Paper } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
-import TextField from 'material-ui/TextField'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
-
+import qs from 'qs'
 import { userActions } from '../../_actions'
 
 const styles = theme => ({
@@ -19,78 +17,26 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       marginTop: 64
     }
-  }),
-  card: {
-    maxWidth: 345,
-    textAlign: 'center'
-  }
+  })
 })
 
 class Login extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      user: {
-        email: '',
-        password: ''
-      }
+  componentWillMount () {
+    console.log(this.props)
+    const { dispatch, history } = this.props
+    const { location } = history
+    const { hash = '' } = location
+    const query = qs.parse(hash.replace('#', ''))
+    console.log(query)
+    if (/access_token|id_token|error/.test(hash)) {
+      dispatch(userActions.handleAuth(history))
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.processForm = this.processForm.bind(this)
-  }
-
-  handleChange (event) {
-    const field = event.target.name
-    const user = this.state.user
-    user[field] = event.target.value
-    this.setState({ user })
-  }
-
-  processForm (event) {
-    event.preventDefault()
-    const { dispatch } = this.props
-    dispatch(userActions.login(this.state.user))
   }
 
   render () {
-    const { isAuthenticated, errorCode, errorMessage, classes } = this.props
-    console.log(errorCode)
-    console.log(errorMessage)
+    const { isAuthenticated, classes } = this.props
     return (
       <Paper className={classes.root} elevation={0}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant='title' component='h1'>
-              Login
-            </Typography>
-            <form name='form' onSubmit={this.processForm} noValidate>
-              <br />
-              <TextField
-                name='email'
-                id='email'
-                label='Email'
-                type='text'
-                autoComplete='username email'
-                margin='normal'
-                onChange={this.handleChange}
-              />
-              <br />
-              <TextField
-                name='password'
-                id='password'
-                label='Password'
-                type='password'
-                autoComplete='current-password'
-                margin='normal'
-                onChange={this.handleChange}
-              />
-              <br />
-              <Button raised='true' color='primary' type='submit'>
-              Login
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
         {isAuthenticated && (
           <Redirect to={'/'} />
         )}
@@ -102,17 +48,15 @@ class Login extends React.Component {
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.bool,
-  errorMessage: PropTypes.any,
-  errorCode: PropTypes.any
+  history: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   const { auth } = state
   return {
-    isAuthenticated: auth.isAuthenticated,
-    errorMessage: auth.errorMessage,
-    errorCode: auth.errorCode
+    isAuthenticated: auth.isAuthenticated
   }
 }
 

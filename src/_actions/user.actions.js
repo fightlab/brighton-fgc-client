@@ -1,5 +1,7 @@
 import { userConstants } from '../_constants'
-import { UserService } from '../_services'
+import { UserService, AuthService } from '../_services'
+
+const auth = new AuthService()
 
 const login = creds => dispatch => {
   const request = creds => {
@@ -46,7 +48,56 @@ const logout = () => {
   }
 }
 
+const newLogin = () => dispatch => {
+  const request = () => {
+    return {
+      type: userConstants.LOGIN_REQUEST,
+      isFetching: true,
+      isAuthenticated: false
+    }
+  }
+
+  dispatch(request())
+  auth.login()
+}
+
+const handleAuth = history => dispatch => {
+  const request = () => {
+    return {
+      type: userConstants.LOGIN_REQUEST,
+      isFetching: true,
+      isAuthenticated: false
+    }
+  }
+  const success = authResult => {
+    return {
+      type: userConstants.LOGIN_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      authResult
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: userConstants.LOGIN_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      error
+    }
+  }
+
+  dispatch(request())
+
+  auth
+    .handleAuthentication(history)
+    .then(authResult => dispatch(success(authResult)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const userActions = {
   login,
-  logout
+  logout,
+  newLogin,
+  handleAuth
 }

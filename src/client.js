@@ -7,13 +7,19 @@ import { MuiThemeProvider } from 'material-ui/styles'
 import { CookiesProvider } from 'react-cookie'
 import App from './App'
 
-import { store } from './_store'
+import { createstore } from './_store'
+
+// Grab the state from a global variable injected into the server-generated HTML
+const preloadedState = window.__PRELOADED_STATE__
+
+// Allow the passed state to be garbage-collected
+delete window.__PRELOADED_STATE__
 
 // This is needed in order to deduplicate the injection of CSS in the page.
 const sheetsManager = new WeakMap()
 
 const app = (
-  <Provider store={store}>
+  <Provider store={createstore(preloadedState)}>
     <CookiesProvider>
       <BrowserRouter>
         <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
