@@ -78,9 +78,12 @@ class App extends React.Component {
   }
 
   componentWillMount () {
-    const { dispatch } = this.props
+    const { dispatch, isAuthenticated } = this.props
     dispatch(userActions.checkIfAuthenticated())
-    dispatch(userActions.checkIfAdmin())
+
+    if (isAuthenticated) {
+      dispatch(userActions.checkIfAdmin())
+    }
   }
 
   handleDrawerToggle () {

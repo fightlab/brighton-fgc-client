@@ -26,9 +26,6 @@ export class AuthService {
 
   getAccessToken () {
     const accessToken = this.cookies.get('access_token')
-    if (!accessToken) {
-      throw new Error('No Access Token Found')
-    }
     return accessToken
   }
 
@@ -36,11 +33,15 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       const accessToken = this.getAccessToken()
 
-      this.auth0.client.userInfo(accessToken, (err, profile) => {
-        if (err) return reject(err)
-        this.profile = profile
-        return resolve(profile)
-      })
+      if (accessToken) {
+        this.auth0.client.userInfo(accessToken, (err, profile) => {
+          if (err) return reject(err)
+          this.profile = profile
+          return resolve(profile)
+        })
+      } else {
+        return resolve()
+      }
     })
   }
 
@@ -86,6 +87,11 @@ export class AuthService {
     if (!this.profile) {
       await this.getProfile()
     }
+
+    if (!this.profile) {
+      return false
+    }
+
     const keys = Object.keys(this.profile)
     const key = find(keys, v => v.indexOf('roles') !== -1) || ''
     const roles = get(this.profile, key, ['user'])
