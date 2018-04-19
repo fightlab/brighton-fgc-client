@@ -10,7 +10,7 @@ export class AuthService {
       redirectUri: 'http://localhost:3000/login',
       audience: 'https://api.hbk.gg',
       responseType: 'token id_token',
-      scope: 'openid profile'
+      scope: 'openid profile email'
     })
 
     this.cookies = new Cookies()
