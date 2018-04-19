@@ -1,5 +1,6 @@
 import auth0 from 'auth0-js'
 import Cookies from 'universal-cookie'
+import { get, find } from 'lodash'
 
 export class AuthService {
   constructor () {
@@ -9,14 +10,38 @@ export class AuthService {
       redirectUri: 'http://localhost:3000/login',
       audience: 'https://api.hbk.gg',
       responseType: 'token id_token',
-      scope: 'openid'
+      scope: 'openid profile'
     })
+
     this.cookies = new Cookies()
+    this.profile = null
 
     this.login = this.login.bind(this)
     this.logout = this.logout.bind(this)
     this.handleAuthentication = this.handleAuthentication.bind(this)
     this.setSession = this.setSession.bind(this)
+    this.getAccessToken = this.getAccessToken.bind(this)
+    this.getProfile = this.getProfile.bind(this)
+  }
+
+  getAccessToken () {
+    const accessToken = this.cookies.get('access_token')
+    if (!accessToken) {
+      throw new Error('No Access Token Found')
+    }
+    return accessToken
+  }
+
+  getProfile () {
+    return new Promise((resolve, reject) => {
+      const accessToken = this.getAccessToken()
+
+      this.auth0.client.userInfo(accessToken, (err, profile) => {
+        if (err) return reject(err)
+        this.profile = profile
+        return resolve(profile)
+      })
+    })
   }
 
   handleAuthentication () {
@@ -46,7 +71,8 @@ export class AuthService {
     this.cookies.remove('access_token')
     this.cookies.remove('id_token')
     this.cookies.remove('expires_at')
-    history.replace('/')
+    this.profile = null
+    history && history.replace('/')
   }
 
   isAuthenticated () {
@@ -54,5 +80,15 @@ export class AuthService {
     // Access Token's expiry time
     const expiresAt = this.cookies.get('expires_at')
     return (new Date().getTime() < Number(expiresAt)) || false
+  }
+
+  async isAdmin () {
+    if (!this.profile) {
+      await this.getProfile()
+    }
+    const keys = Object.keys(this.profile)
+    const key = find(keys, v => v.indexOf('roles') !== -1) || ''
+    const roles = get(this.profile, key, ['user'])
+    return !!find(roles, role => role === 'admin', false)
   }
 }

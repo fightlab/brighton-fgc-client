@@ -34,6 +34,7 @@ const handleAuth = history => dispatch => {
       isAuthenticated: false
     }
   }
+
   const success = authResult => {
     return {
       type: userConstants.LOGIN_SUCCESS,
@@ -70,9 +71,56 @@ const checkIfAuthenticated = () => dispatch => {
   dispatch(success(auth.isAuthenticated()))
 }
 
+const checkIfAdmin = () => async dispatch => {
+  const success = isAdmin => ({
+    type: userConstants.ISADMIN_SUCCESS,
+    isFetching: false,
+    isAdmin
+  })
+
+  dispatch(success(await auth.isAdmin()))
+}
+
+const getProfile = () => dispatch => {
+  const request = () => {
+    return {
+      type: userConstants.GETPROFILE_REQUEST,
+      isFetching: true,
+      isAuthenticated: false
+    }
+  }
+
+  const success = profile => {
+    return {
+      type: userConstants.GETPROFILE_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      profile
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: userConstants.GETPROFILE_FAILURE,
+      isFetching: false,
+      isAuthenticated: false,
+      error
+    }
+  }
+
+  dispatch(request())
+
+  auth
+    .getProfile()
+    .then(profile => dispatch(success(profile)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const userActions = {
   logout,
   login,
   handleAuth,
-  checkIfAuthenticated
+  checkIfAuthenticated,
+  getProfile,
+  checkIfAdmin
 }
