@@ -17,7 +17,7 @@ class Login extends React.Component {
   handleClick (event) {
     event.preventDefault()
     const { dispatch } = this.props
-    dispatch(userActions.newLogin())
+    dispatch(userActions.login())
   }
 
   render () {

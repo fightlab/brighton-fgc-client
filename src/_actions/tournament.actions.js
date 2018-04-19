@@ -14,7 +14,6 @@ const getAll = limit => dispatch => {
     return {
       type: tournamentConstants.GETALL_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       tournaments
     }
   }
@@ -23,7 +22,6 @@ const getAll = limit => dispatch => {
     return {
       type: tournamentConstants.GETALL_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }
@@ -50,7 +48,6 @@ const getStandings = id => dispatch => {
     return {
       type: tournamentConstants.GETSTANDINGS_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       standings
     }
   }
@@ -59,7 +56,6 @@ const getStandings = id => dispatch => {
     return {
       type: tournamentConstants.GETSTANDINGS_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }
@@ -86,7 +82,6 @@ const get = id => dispatch => {
     return {
       type: tournamentConstants.GET_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       tournament
     }
   }
@@ -95,7 +90,6 @@ const get = id => dispatch => {
     return {
       type: tournamentConstants.GET_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText,
       tournament: null

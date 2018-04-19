@@ -79,9 +79,8 @@ class App extends React.Component {
   }
 
   componentWillMount () {
-    const { cookies } = this.props
-    const token = cookies.get('token')
-    this.setState({ token })
+    const { dispatch } = this.props
+    dispatch(userActions.checkIfAuthenticated())
   }
 
   handleDrawerToggle () {
@@ -197,8 +196,7 @@ App.propTypes = {
   theme: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  cookies: PropTypes.any.isRequired
+  dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {

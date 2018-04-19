@@ -14,7 +14,6 @@ const getStandings = (id, limit) => dispatch => {
     return {
       type: seriesConstans.GETSTANDINGS_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       standings
     }
   }
@@ -23,7 +22,6 @@ const getStandings = (id, limit) => dispatch => {
     return {
       type: seriesConstans.GETSTANDINGS_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }
@@ -50,7 +48,6 @@ const getTournaments = (id, limit) => dispatch => {
     return {
       type: seriesConstans.GETTOURNAMENTS_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       tournaments
     }
   }
@@ -59,7 +56,6 @@ const getTournaments = (id, limit) => dispatch => {
     return {
       type: seriesConstans.GETTOURNAMENTS_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }
@@ -86,7 +82,6 @@ const getAll = (id, limit) => dispatch => {
     return {
       type: seriesConstans.GETALL_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       series
     }
   }
@@ -95,7 +90,6 @@ const getAll = (id, limit) => dispatch => {
     return {
       type: seriesConstans.GETALL_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }
@@ -122,7 +116,6 @@ const get = (id) => dispatch => {
     return {
       type: seriesConstans.GET_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       _series: series
     }
   }
@@ -131,7 +124,6 @@ const get = (id) => dispatch => {
     return {
       type: seriesConstans.GET_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }

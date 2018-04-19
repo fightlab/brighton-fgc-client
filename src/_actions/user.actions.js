@@ -1,54 +1,9 @@
 import { userConstants } from '../_constants'
-import { UserService, AuthService } from '../_services'
+import { AuthService } from '../_services'
 
 const auth = new AuthService()
 
-const login = creds => dispatch => {
-  const request = creds => {
-    return {
-      type: userConstants.LOGIN_REQUEST,
-      isFetching: true,
-      isAuthenticated: false,
-      creds
-    }
-  }
-
-  const success = user => {
-    return {
-      type: userConstants.LOGIN_SUCCESS,
-      isFetching: false,
-      isAuthenticated: true,
-      user
-    }
-  }
-
-  const failure = error => {
-    return {
-      type: userConstants.LOGIN_FAILURE,
-      isFetching: false,
-      isAuthenticated: false,
-      status: error.status,
-      statusText: error.statusText
-    }
-  }
-
-  dispatch(request({ creds }))
-
-  UserService.login(creds.email, creds.password)
-    .then(user => dispatch(success(user)))
-    .catch(error => dispatch(failure(error)))
-}
-
-const logout = () => {
-  UserService.logout()
-  return {
-    type: userConstants.LOGOUT,
-    isFetching: false,
-    isAuthenticated: false
-  }
-}
-
-const newLogin = () => dispatch => {
+const login = () => dispatch => {
   const request = () => {
     return {
       type: userConstants.LOGIN_REQUEST,
@@ -59,6 +14,16 @@ const newLogin = () => dispatch => {
 
   dispatch(request())
   auth.login()
+}
+
+const logout = history => dispatch => {
+  const success = () => ({
+    type: userConstants.LOGOUT,
+    isAuthenticated: false
+  })
+
+  dispatch(success())
+  auth.logout(history)
 }
 
 const handleAuth = history => dispatch => {
@@ -95,9 +60,19 @@ const handleAuth = history => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const checkIfAuthenticated = () => dispatch => {
+  const success = isAuthenticated => ({
+    type: userConstants.ISAUTHENTICATED_SUCCESS,
+    isFetching: false,
+    isAuthenticated
+  })
+
+  dispatch(success(auth.isAuthenticated()))
+}
+
 export const userActions = {
-  login,
   logout,
-  newLogin,
-  handleAuth
+  login,
+  handleAuth,
+  checkIfAuthenticated
 }

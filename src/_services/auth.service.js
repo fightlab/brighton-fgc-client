@@ -14,21 +14,22 @@ export class AuthService {
     this.cookies = new Cookies()
 
     this.login = this.login.bind(this)
+    this.logout = this.logout.bind(this)
     this.handleAuthentication = this.handleAuthentication.bind(this)
     this.setSession = this.setSession.bind(this)
   }
 
-  handleAuthentication (history) {
+  handleAuthentication () {
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
         if (err) return reject(err)
-        this.setSession(authResult, history)
+        this.setSession(authResult)
         return resolve(authResult)
       })
     })
   }
 
-  setSession (authResult, history) {
+  setSession (authResult) {
     console.log(authResult)
     // Set the time that the Access Token will expire at
     const expiresAt = (authResult.expiresIn * 1000) + new Date().getTime()
@@ -39,6 +40,13 @@ export class AuthService {
 
   login () {
     this.auth0.authorize()
+  }
+
+  logout (history) {
+    this.cookies.remove('access_token')
+    this.cookies.remove('id_token')
+    this.cookies.remove('expires_at')
+    history.replace('/')
   }
 
   isAuthenticated () {

@@ -5,7 +5,6 @@ import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import qs from 'qs'
 import { userActions } from '../../_actions'
 
 const styles = theme => ({
@@ -22,14 +21,12 @@ const styles = theme => ({
 
 class Login extends React.Component {
   componentWillMount () {
-    console.log(this.props)
     const { dispatch, history } = this.props
     const { location } = history
     const { hash = '' } = location
-    const query = qs.parse(hash.replace('#', ''))
-    console.log(query)
+
     if (/access_token|id_token|error/.test(hash)) {
-      dispatch(userActions.handleAuth(history))
+      dispatch(userActions.handleAuth())
     }
   }
 
@@ -53,7 +50,6 @@ Login.propTypes = {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   const { auth } = state
   return {
     isAuthenticated: auth.isAuthenticated
