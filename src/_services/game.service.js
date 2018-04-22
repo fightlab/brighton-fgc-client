@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-import { API_URL, getAuthHeader } from '../_constants'
+import { API_URL, API_URL_VER, getAuthHeader } from '../_constants'
 
-const URL = `${API_URL}/games`
+const URL = `${API_URL}/${API_URL_VER}/games`
 
 export class GameService {
   static getAll () {
