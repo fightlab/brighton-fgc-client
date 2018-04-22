@@ -80,7 +80,18 @@ export class AuthService {
     // Check whether the current time is past the
     // Access Token's expiry time
     const expiresAt = this.cookies.get('expires_at')
-    return (new Date().getTime() < Number(expiresAt)) || false
+
+    if (new Date().getTime() < Number(expiresAt)) {
+      return {
+        valid: true,
+        access_token: this.cookies.get('access_token'),
+        id_token: this.cookies.get('id_token'),
+        expires_at: this.cookies.get('expires_at')
+      }
+    }
+    return {
+      valid: false
+    }
   }
 
   async isAdmin () {

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get, orderBy } from 'lodash'
+import { orderBy } from 'lodash'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import TextField from 'material-ui/TextField'
 import IconButton from 'material-ui/IconButton'
@@ -485,8 +485,7 @@ NewTournamentRow.propTypes = {
 
 const mapStateToProps = state => {
   const { auth } = state
-  const { user } = auth
-  const token = get(user, 'token')
+  const { access_token: token } = auth
 
   return {
     token

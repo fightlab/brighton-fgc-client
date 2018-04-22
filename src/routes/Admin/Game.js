@@ -10,7 +10,6 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
 
 import { GameService } from '../../_services'
 
@@ -415,8 +414,7 @@ NewGameRow.propTypes = {
 
 const mapStateToProps = state => {
   const { auth } = state
-  const { user } = auth
-  const token = get(user, 'token')
+  const { access_token: token } = auth
 
   return {
     token

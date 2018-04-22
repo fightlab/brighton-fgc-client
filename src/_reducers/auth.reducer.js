@@ -48,7 +48,10 @@ export const auth = (state = init, action) => {
       })
     case userConstants.ISAUTHENTICATED_SUCCESS:
       return merge({}, state, {
-        isAuthenticated: action.isAuthenticated
+        isAuthenticated: action.isAuthenticated.valid,
+        access_token: action.isAuthenticated.access_token || '',
+        id_token: action.isAuthenticated.id_token || '',
+        expires_at: action.isAuthenticated.expires_at || ''
       })
     case userConstants.ISADMIN_SUCCESS:
       return merge({}, state, {
