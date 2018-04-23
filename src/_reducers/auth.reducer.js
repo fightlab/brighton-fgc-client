@@ -21,15 +21,16 @@ export const auth = (state = init, action) => {
       return merge({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        user: action.user
+        profile: action.profile,
+        authResult: action.authResult,
+        isAdmin: action.isAdmin
       })
     case userConstants.LOGIN_FAILURE:
       return merge({}, state, {
         isFetching: false,
         isAuthenticated: false,
         errorMessage: action.statusText,
-        errorCode: action.status,
-        user: null
+        errorCode: action.status
       })
     case userConstants.GETPROFILE_REQUEST:
       return merge({}, state, {

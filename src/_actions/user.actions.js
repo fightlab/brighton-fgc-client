@@ -31,16 +31,21 @@ const handleAuth = history => dispatch => {
     return {
       type: userConstants.LOGIN_REQUEST,
       isFetching: true,
-      isAuthenticated: false
+      isAuthenticated: false,
+      isAdmin: false,
+      authResult: null,
+      profile: null
     }
   }
 
-  const success = authResult => {
+  const success = ({ authResult, profile, isAdmin }) => {
     return {
       type: userConstants.LOGIN_SUCCESS,
       isFetching: false,
       isAuthenticated: true,
-      authResult
+      authResult,
+      profile,
+      isAdmin
     }
   }
 

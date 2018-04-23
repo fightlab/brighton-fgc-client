@@ -47,16 +47,17 @@ export class AuthService {
 
   handleAuthentication () {
     return new Promise((resolve, reject) => {
-      this.auth0.parseHash((err, authResult) => {
+      this.auth0.parseHash(async (err, authResult) => {
         if (err) return reject(err)
         this.setSession(authResult)
-        return resolve(authResult)
+        const profile = await this.getProfile()
+        const isAdmin = await this.isAdmin()
+        return resolve({ authResult, profile, isAdmin })
       })
     })
   }
 
   setSession (authResult) {
-    console.log(authResult)
     // Set the time that the Access Token will expire at
     const expiresAt = (authResult.expiresIn * 1000) + new Date().getTime()
     this.cookies.set('access_token', authResult.accessToken)
