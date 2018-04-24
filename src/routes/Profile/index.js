@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Typography, Paper, Grid, Avatar } from 'material-ui'
 import { userActions } from '../../_actions'
-import { DateService } from '../../_services'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
