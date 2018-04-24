@@ -52,7 +52,14 @@ export class AuthService {
         this.setSession(authResult)
         const profile = await this.getProfile()
         const isAdmin = await this.isAdmin()
-        return resolve({ authResult, profile, isAdmin })
+        return resolve({
+          valid: true,
+          access_token: this.cookies.get('access_token'),
+          id_token: this.cookies.get('id_token'),
+          expires_at: this.cookies.get('expires_at'),
+          profile,
+          isAdmin
+        })
       })
     })
   }

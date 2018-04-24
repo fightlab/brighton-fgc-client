@@ -53,4 +53,11 @@ export class PlayerService {
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }
+
+  static me (token) {
+    return axios
+      .get(`${URL}/me`, getAuthHeader(token))
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
 }

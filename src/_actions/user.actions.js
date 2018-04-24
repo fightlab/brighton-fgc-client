@@ -1,5 +1,5 @@
 import { userConstants } from '../_constants'
-import { AuthService } from '../_services'
+import { AuthService, PlayerService } from '../_services'
 
 const auth = new AuthService()
 
@@ -121,11 +121,42 @@ const getProfile = () => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getPlayer = () => dispatch => {
+  const request = () => ({
+    type: userConstants.GETPLAYER_REQUEST,
+    isFetching: true,
+    player: null
+  })
+
+  const success = player => ({
+    type: userConstants.GETPLAYER_SUCCESS,
+    isFetching: false,
+    player
+  })
+
+  const failure = error => ({
+    type: userConstants.GETPLAYER_FAILURE,
+    isFetching: false,
+    error
+  })
+
+  dispatch(request())
+
+  // check if authenticated
+  const { access_token: token = '' } = auth.isAuthenticated()
+
+  PlayerService
+    .me(token)
+    .then(player => dispatch(success(player)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const userActions = {
   logout,
   login,
   handleAuth,
   checkIfAuthenticated,
   getProfile,
-  checkIfAdmin
+  checkIfAdmin,
+  getPlayer
 }

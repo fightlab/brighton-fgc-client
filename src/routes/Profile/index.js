@@ -31,6 +31,9 @@ const styles = theme => ({
     marginRight: 'auto',
     width: 75,
     height: 75
+  },
+  link: {
+    color: theme.palette.text.primary
   }
 })
 
@@ -38,12 +41,13 @@ class Profile extends React.Component {
   componentWillMount () {
     const { dispatch } = this.props
     dispatch(userActions.getProfile())
+    dispatch(userActions.getPlayer())
   }
 
   render () {
     const { classes, auth } = this.props
-    const { profile = {} } = auth
-    console.log(auth)
+    const { profile = {}, player = null, USERS_GETPLAYER_FAILURE = null } = auth
+
     return (
       <Paper className={classes.root} elevation={0}>
         <Typography variant='display2' component='h1'>
@@ -58,9 +62,6 @@ class Profile extends React.Component {
             <Typography variant='display1' component='h2'>
               {profile.name}
             </Typography>
-            <Typography variant='caption' gutterBottom>
-            Last Updated - {profile.updated_at && DateService.format(profile.updated_at)}
-            </Typography>
             <Avatar
               className={classes.bigAvatar}
               alt={profile.name}
@@ -73,6 +74,37 @@ class Profile extends React.Component {
               {profile.nickname}
             </Typography>
           </Grid>
+        </Grid>
+        <Typography variant='display2' component='h1'>
+          Player
+        </Typography>
+        <Grid
+          spacing={16}
+          container
+          className={classes.container}
+        >
+          {
+            USERS_GETPLAYER_FAILURE &&
+            <Typography>
+              {
+                USERS_GETPLAYER_FAILURE.statusCode === 404 && <span>
+                  No player found for your email. Contact <a className={classes.link} href='/players/5a5b943433e9a91eb8a6b993'>ColdLink</a> to attach a player to your user profile.
+                </span>
+              }
+            </Typography>
+          }
+          {
+            player && <Grid item xs={12} className={classes.item}>
+              <Typography variant='display1' component='h2'>
+                {player.handle}
+              </Typography>
+              <Avatar
+                className={classes.bigAvatar}
+                alt={player.handle}
+                src={player.imageUrl}
+              />
+            </Grid>
+          }
         </Grid>
       </Paper>
     )

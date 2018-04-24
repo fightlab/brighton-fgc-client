@@ -1,12 +1,11 @@
-import { merge } from 'lodash'
+import { merge, get } from 'lodash'
 
 import { userConstants } from '../_constants'
 
 const init = {
   isFetching: false,
   isAuthenticated: false,
-  isAdmin: false,
-  user: null
+  isAdmin: false
 }
 
 export const auth = (state = init, action) => {
@@ -46,6 +45,20 @@ export const auth = (state = init, action) => {
         isFetching: false,
         isAuthenticated: false,
         error: action.error
+      })
+    case userConstants.GETPLAYER_REQUEST:
+      return merge({}, state, {
+        isFetching: true
+      })
+    case userConstants.GETPLAYER_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        player: action.player
+      })
+    case userConstants.GETPLAYER_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        [userConstants.GETPLAYER_FAILURE]: get(action.error, 'data.output.payload', action.error)
       })
     case userConstants.ISAUTHENTICATED_SUCCESS:
       return merge({}, state, {
