@@ -7,7 +7,7 @@ export class AuthService {
     this.auth0 = new auth0.WebAuth({
       domain: 'mkn-sh.eu.auth0.com',
       clientID: '7cfMMfmUiD4AZean1vz9ln9pT2Y7qRUG',
-      redirectUri: 'http://localhost:3000/login',
+      redirectUri: process.env.RAZZLE_AUTH0_REDIRECT_URI || 'http://localhost:3000/login',
       audience: 'https://api.hbk.gg',
       responseType: 'token id_token',
       scope: 'openid profile email'
