@@ -10,7 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get, orderBy } from 'lodash'
+import { orderBy } from 'lodash'
 import Switch from 'material-ui/Switch'
 
 import { SeriesService } from '../../_services'
@@ -446,8 +446,7 @@ NewSeriesRow.propTypes = {
 
 const mapStateToProps = state => {
   const { auth } = state
-  const { user } = auth
-  const token = get(user, 'token')
+  const { access_token: token } = auth
 
   return {
     token

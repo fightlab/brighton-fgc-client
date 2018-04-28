@@ -1,6 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
 import AdminRoute from '../components/AdminRoute'
+import LoggedInRoute from '../components/LoggedInRoute'
 
 import Home from './Home/Home'
 import Games from './Games'
@@ -11,8 +13,9 @@ import Standings from './Standings'
 import About from './About/About'
 import Login from './Login'
 import Admin from './Admin'
+import Profile from './Profile'
 
-const Main = () => (
+const Main = ({ isAuthenticated, isAdmin }) => (
   <Switch>
     <Route exact path='/' component={Home} />
     <Route path='/games' component={Games} />
@@ -22,8 +25,14 @@ const Main = () => (
     <Route path='/standings' component={Standings} />
     <Route path='/about' component={About} />
     <Route path='/login' component={Login} />
-    <AdminRoute path='/admin' component={Admin} />
+    <LoggedInRoute path='/profile' component={Profile} isAuthenticated={isAuthenticated} />
+    <AdminRoute path='/admin' isAdmin={isAdmin} component={Admin} />
   </Switch>
 )
+
+Main.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired
+}
 
 export default Main

@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-import { API_URL, getAuthHeader } from '../_constants'
+import { API_URL, API_URL_VER, getAuthHeader } from '../_constants'
 
-const URL = `${API_URL}/players`
+const URL = `${API_URL}/${API_URL_VER}/players`
 
 export class PlayerService {
   static all () {
@@ -50,6 +50,20 @@ export class PlayerService {
   static getStatistics (id) {
     return axios
       .get(`${URL}/${id}/statistics`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
+  static me (token) {
+    return axios
+      .get(`${URL}/me`, getAuthHeader(token))
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
+  static meUpdate (token, body) {
+    return axios
+      .put(`${URL}/me`, body, getAuthHeader(token))
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }

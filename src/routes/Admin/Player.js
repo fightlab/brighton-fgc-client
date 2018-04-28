@@ -10,7 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get, set } from 'lodash'
+import { set } from 'lodash'
 import Chip from 'material-ui/Chip'
 import { withStyles } from 'material-ui/styles'
 import Switch from 'material-ui/Switch'
@@ -698,8 +698,7 @@ NewPlayerRow.propTypes = {
 
 const mapStateToProps = state => {
   const { auth } = state
-  const { user } = auth
-  const token = get(user, 'token')
+  const { access_token: token } = auth
 
   return {
     token

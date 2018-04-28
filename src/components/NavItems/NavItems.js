@@ -9,6 +9,7 @@ import InfoOutlineIcon from '@material-ui/icons/InfoOutline'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import WebIcon from '@material-ui/icons/Web'
+import PersonOutline from '@material-ui/icons/PersonOutline'
 
 export const topListItems = (
   <div>
@@ -69,6 +70,17 @@ export const adminItem = (
         <WebIcon />
       </ListItemIcon>
       <ListItemText primary='Admin' />
+    </ListItem>
+  </div>
+)
+
+export const loggedInItems = (
+  <div>
+    <ListItem button component={Link} to='/profile'>
+      <ListItemIcon>
+        <PersonOutline />
+      </ListItemIcon>
+      <ListItemText primary='Profile' />
     </ListItem>
   </div>
 )

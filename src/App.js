@@ -7,7 +7,6 @@ import List from 'material-ui/List'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
 import IconButton from 'material-ui/IconButton'
 import Facebook from 'mdi-material-ui/Facebook'
 import Twitter from 'mdi-material-ui/Twitter'
@@ -19,7 +18,7 @@ import CssBaseline from 'material-ui/CssBaseline'
 import { userActions } from './_actions'
 
 // components
-import { topListItems, otherListItems, adminItem } from './components/NavItems/NavItems'
+import { topListItems, otherListItems, adminItem, loggedInItems } from './components/NavItems/NavItems'
 import Header from './components/Header/Header'
 import Logout from './components/Logout'
 import Login from './components/Login'
@@ -79,9 +78,9 @@ class App extends React.Component {
   }
 
   componentWillMount () {
-    const { cookies } = this.props
-    const token = cookies.get('token')
-    this.setState({ token })
+    const { dispatch } = this.props
+    dispatch(userActions.checkIfAuthenticated())
+    dispatch(userActions.checkIfAdmin())
   }
 
   handleDrawerToggle () {
@@ -124,6 +123,9 @@ class App extends React.Component {
           <List>{adminItem}</List>
         }
         <List>
+          {
+            isAuthenticated && loggedInItems
+          }
           {
             isAuthenticated
               ? <Logout dispatch={dispatch} onLogoutClick={userActions.logout} />
@@ -185,7 +187,7 @@ class App extends React.Component {
               {drawer}
             </Drawer>
           </Hidden>
-          <Main />
+          <Main isAuthenticated={isAuthenticated} isAdmin={isAdmin} />
         </div>
       </div>
     )
@@ -197,14 +199,12 @@ App.propTypes = {
   theme: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  cookies: PropTypes.any.isRequired
+  dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
   const { auth } = state
-  const { isAuthenticated, user } = auth
-  const isAdmin = get(user, 'role') === 'admin'
+  const { isAuthenticated, isAdmin } = auth
 
   return {
     isAuthenticated,

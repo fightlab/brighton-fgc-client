@@ -5,6 +5,7 @@ import { game } from './game.reducer'
 import { tournament } from './tournament.reducer'
 import { series } from './series.reducer'
 import { player } from './player.reducer'
+import { query } from './query.reducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   game,
   tournament,
   series,
-  player
+  player,
+  query
 })
 
 export default rootReducer

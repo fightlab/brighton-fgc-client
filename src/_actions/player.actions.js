@@ -15,7 +15,6 @@ const getAll = (all, limit) => dispatch => {
     return {
       type: playerConstants.GETALL_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       players
     }
   }
@@ -24,7 +23,6 @@ const getAll = (all, limit) => dispatch => {
     return {
       type: playerConstants.GETALL_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }
@@ -51,7 +49,6 @@ const get = id => dispatch => {
     return {
       type: playerConstants.GET_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       player
     }
   }
@@ -60,7 +57,6 @@ const get = id => dispatch => {
     return {
       type: playerConstants.GET_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }
@@ -87,7 +83,6 @@ const getStatistics = id => dispatch => {
     return {
       type: playerConstants.GETSTATISTICS_SUCCESS,
       isFetching: false,
-      isAuthenticated: true,
       statistics
     }
   }
@@ -96,7 +91,6 @@ const getStatistics = id => dispatch => {
     return {
       type: playerConstants.GETSTATISTICS_FAILURE,
       isFetching: false,
-      isAuthenticated: false,
       status: error.status,
       statusText: error.statusText
     }
