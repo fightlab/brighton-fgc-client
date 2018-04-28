@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Typography, Paper, Grid, Avatar, TextField, Button, Tooltip } from 'material-ui'
+import { Typography, Paper, Grid, Avatar, TextField, Button, Tooltip, Snackbar, IconButton } from 'material-ui'
 import { set, get } from 'lodash'
+import CloseIcon from '@material-ui/icons/Close'
 
 import { userActions } from '../../_actions'
 import { PlayerService } from '../../_services'
@@ -41,6 +42,10 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 200
+  },
+  close: {
+    width: theme.spacing.unit * 4,
+    height: theme.spacing.unit * 4
   }
 })
 
@@ -49,11 +54,21 @@ class Profile extends React.Component {
     super(props)
 
     this.state = {
-      player: {}
+      player: {},
+      updated: false,
+      updatedError: false
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.savePlayer = this.savePlayer.bind(this)
+    this.handleCloseSnackbar = this.handleCloseSnackbar.bind(this)
+  }
+
+  handleCloseSnackbar (event, reason) {
+    this.setState({
+      updated: false,
+      updatedError: false
+    })
   }
 
   handleChange (event) {
@@ -75,9 +90,9 @@ class Profile extends React.Component {
 
     try {
       await PlayerService.meUpdate(token, player)
-      console.log('updated')
+      this.setState({ updated: true })
     } catch (error) {
-      console.log(error)
+      this.setState({ updatedError: true })
     }
   }
 
@@ -249,7 +264,7 @@ class Profile extends React.Component {
                 <Tooltip title='twitch.tv/{profile}' placement='top'>
                   <TextField
                     id='profile.twitch'
-                    name=' .twitch'
+                    name='profile.twitch'
                     label='Twitch'
                     placeholder='Twitch'
                     value={get(player, 'profile.twitch', get(_player, 'profile.twitch', ''))}
@@ -267,6 +282,54 @@ class Profile extends React.Component {
             </Grid>
           }
         </Grid>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={this.state.updated}
+          autoHideDuration={6000}
+          onClose={this.handleCloseSnackbar}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id='message-id'>Profile Updated!</span>}
+          action={[
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              className={classes.close}
+              onClick={this.handleCloseSnackbar}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={this.state.updatedError}
+          autoHideDuration={6000}
+          onClose={this.handleCloseSnackbar}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id='message-id'>Uh oh! Something went wrong. :(</span>}
+          action={[
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              className={classes.close}
+              onClick={this.handleCloseSnackbar}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
       </Paper>
     )
   }

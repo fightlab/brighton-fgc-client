@@ -63,7 +63,7 @@ export class PlayerService {
 
   static meUpdate (token, body) {
     return axios
-      .put(`${URL}/me`, getAuthHeader(token))
+      .put(`${URL}/me`, body, getAuthHeader(token))
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }
