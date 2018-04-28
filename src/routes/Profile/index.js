@@ -4,8 +4,10 @@ import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Typography, Paper, Grid, Avatar, TextField, Button, Tooltip } from 'material-ui'
-import { userActions } from '../../_actions'
 import { set, get } from 'lodash'
+
+import { userActions } from '../../_actions'
+import { PlayerService } from '../../_services'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -66,9 +68,17 @@ class Profile extends React.Component {
     this.setState({ player })
   }
 
-  savePlayer () {
+  async savePlayer () {
     const { player } = this.state
-    console.log(player)
+    const { auth } = this.props
+    const { access_token: token } = auth
+
+    try {
+      await PlayerService.meUpdate(token, player)
+      console.log('updated')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   componentWillMount () {
