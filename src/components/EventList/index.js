@@ -27,12 +27,12 @@ const styles = theme => ({
   }
 })
 
-class TournamentList extends React.Component {
+class EventList extends React.Component {
   render () {
     const { classes, subheader, dense = false } = this.props
-    let { tournaments = [] } = this.props
-    tournaments = orderBy(tournaments, ['dateStart'], ['desc'])
-    console.log(dense)
+    let { events = [] } = this.props
+    events = orderBy(events, ['date'], ['desc'])
+
     return (
       <List
         className={classes.list}
@@ -40,11 +40,11 @@ class TournamentList extends React.Component {
         dense={dense}
       >
         {
-          tournaments.length && map(tournaments, (tournament, index) => (
-            <ListItem button key={tournament._id || tournament.id} component={Link} to={`/tournaments/${tournament._id || tournament.id}`}>
+          events.length && map(events, (event, index) => (
+            <ListItem button key={event._id || event.id} component={Link} to={`/events/${event._id || event.id}`}>
               <ListItemText
-                primary={`${tournament.name}`}
-                secondary={`${!!tournament._gameId && `${tournament._gameId.name} - `}${tournament.dateStart && DateService.format(tournament.dateStart, 'DATE_HUGE')}`}
+                primary={event.name}
+                secondary={event.date && DateService.format(event.date, 'DATE_HUGE')}
               />
             </ListItem>
           ))
@@ -54,11 +54,11 @@ class TournamentList extends React.Component {
   }
 }
 
-TournamentList.propTypes = {
+EventList.propTypes = {
   dense: PropTypes.bool,
   subheader: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  tournaments: PropTypes.array
+  events: PropTypes.array
 }
 
-export default withStyles(styles)(TournamentList)
+export default withStyles(styles)(EventList)

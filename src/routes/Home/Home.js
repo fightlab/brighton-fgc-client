@@ -4,15 +4,17 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import AppBar from 'material-ui/AppBar'
+import { filter, orderBy } from 'lodash'
+
+// import Tabs, { Tab } from 'material-ui/Tabs'
+// import AppBar from 'material-ui/AppBar'
 
 import { eventActions, tournamentActions } from '../../_actions'
+import { DateService } from '../../_services'
 
-import EventCard from '../../components/EventCard'
-import TournamentCard from '../../components/TournamentCard'
-
-import './Home.css'
+import BaseHomeCard from '../../components/BaseHomeCard'
+import TournamentList from '../../components/TournamentList'
+import EventList from '../../components/EventList'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -61,8 +63,14 @@ class Home extends React.Component {
 
   render () {
     const { classes, event, tournament } = this.props
-    const { events } = event
-    const { tournaments } = tournament
+    const { events = [] } = event
+    const { tournaments = [] } = tournament
+
+    const nextEvents = orderBy(filter(events, event => DateService.compareDates(event.date, new Date().toISOString())), 'date', 'desc')
+    const pastEvents = orderBy(filter(events, event => DateService.compareDates(new Date().toISOString(), event.date)), 'date', 'desc')
+
+    const nextTournaments = orderBy(filter(tournaments, tournament => DateService.compareDates(tournament.dateStart, new Date().toISOString())), 'date', 'desc')
+    const pastTournaments = orderBy(filter(tournaments, tournament => DateService.compareDates(new Date().toISOString(), tournament.dateStart)), 'date', 'desc')
 
     return (
       <Paper className={classes.root} elevation={0}>
@@ -83,53 +91,41 @@ class Home extends React.Component {
           </Typography>
         </Hidden>
         <Grid spacing={16} container className={classes.container}>
-          <Grid item md={6} sm={12} xs={12}>
-            <AppBar position='static' color='default'>
-              <Tabs
-                value={0}
-                // onChange={this.handleTabChange}
-                indicatorColor='primary'
-                textColor='primary'
-                fullWidth
-              >
-                <Tab label='Latest Events' disabled />
-              </Tabs>
-            </AppBar>
-            <Paper className={classes.paper} elevation={4}>
-              <Grid spacing={16} container>
-                {
-                  events.map(event => (
-                    <Grid item sm={6} xs={12} key={event.id}>
-                      <EventCard event={event} />
-                    </Grid>
-                  ))
-                }
-              </Grid>
-            </Paper>
+          <Grid item md={6} sm={6} xs={12}>
+            <BaseHomeCard title='Tournaments'>
+              {
+                !!nextTournaments.length && <TournamentList
+                  subheader='Upcoming'
+                  tournaments={nextTournaments}
+                  dense
+                />
+              }
+              {
+                !!pastTournaments.length && <TournamentList
+                  subheader='Past'
+                  tournaments={pastTournaments}
+                  dense
+                />
+              }
+            </BaseHomeCard>
           </Grid>
-          <Grid item md={6} sm={12} xs={12}>
-            <AppBar position='static' color='default'>
-              <Tabs
-                value={0}
-                // onChange={this.handleTabChange}
-                indicatorColor='primary'
-                textColor='primary'
-                fullWidth
-              >
-                <Tab label='Latest Tournaments' disabled />
-              </Tabs>
-            </AppBar>
-            <Paper className={classes.paper} elevation={4}>
-              <Grid spacing={16} container>
-                {
-                  tournaments.map(tournament => (
-                    <Grid item sm={6} xs={12} key={tournament.id}>
-                      <TournamentCard key={tournament.id} tournament={tournament} />
-                    </Grid>
-                  ))
-                }
-              </Grid>
-            </Paper>
+          <Grid item md={6} sm={6} xs={12}>
+            <BaseHomeCard title='Events'>
+              {
+                !!nextEvents.length && <EventList
+                  subheader='Upcoming'
+                  events={nextEvents}
+                  dense
+                />
+              }
+              {
+                !!pastEvents.length && <EventList
+                  subheader='Past'
+                  events={pastEvents}
+                  dense
+                />
+              }
+            </BaseHomeCard>
           </Grid>
         </Grid>
       </Paper>
