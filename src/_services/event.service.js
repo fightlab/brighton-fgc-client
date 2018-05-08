@@ -12,6 +12,13 @@ export class EventService {
       .catch(err => Promise.reject(err.response))
   }
 
+  static count () {
+    return axios
+      .get(`${URL}/count`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
   static get (id) {
     return axios
       .get(`${URL}/${id}`)

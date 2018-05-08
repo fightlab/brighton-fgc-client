@@ -57,13 +57,17 @@ class Home extends React.Component {
 
   componentWillMount () {
     const { dispatch } = this.props
+    // get events and tournaments
     dispatch(eventActions.getAll(4))
     dispatch(tournamentActions.getAll(4))
+
+    // get global stats
+    dispatch(eventActions.getCount())
   }
 
   render () {
     const { classes, event, tournament } = this.props
-    const { events = [] } = event
+    const { events = [], count: eventCount = 0 } = event
     const { tournaments = [] } = tournament
 
     const nextEvents = orderBy(filter(events, event => DateService.compareDates(event.date, new Date().toISOString())), 'date', 'desc')
@@ -125,6 +129,44 @@ class Home extends React.Component {
                   dense
                 />
               }
+            </BaseHomeCard>
+          </Grid>
+          <Grid item xs={12}>
+            <BaseHomeCard title='Global Statistics'>
+              <Grid spacing={16} container className={classes.container}>
+                <Grid item sm={3} xs={6}>
+                  <Typography variant='title' gutterBottom align='center'>
+                    Events
+                  </Typography>
+                  <Typography variant='display1' gutterBottom align='center'>
+                    {eventCount}
+                  </Typography>
+                </Grid>
+                <Grid item sm={3} xs={6}>
+                  <Typography variant='title' gutterBottom align='center'>
+                    Tournaments
+                  </Typography>
+                  <Typography variant='display1' gutterBottom align='center'>
+                    9999
+                  </Typography>
+                </Grid>
+                <Grid item sm={3} xs={6}>
+                  <Typography variant='title' gutterBottom align='center'>
+                    Matches
+                  </Typography>
+                  <Typography variant='display1' gutterBottom align='center'>
+                    9999
+                  </Typography>
+                </Grid>
+                <Grid item sm={3} xs={6}>
+                  <Typography variant='title' gutterBottom align='center'>
+                   Match Games
+                  </Typography>
+                  <Typography variant='display1' gutterBottom align='center'>
+                    9999
+                  </Typography>
+                </Grid>
+              </Grid>
             </BaseHomeCard>
           </Grid>
         </Grid>

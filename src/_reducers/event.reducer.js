@@ -6,7 +6,8 @@ const init = {
   isFetching: false,
   events: [],
   event: null,
-  tournaments: []
+  tournaments: [],
+  count: 0
 }
 
 export const event = (state = init, action) => {
@@ -63,6 +64,23 @@ export const event = (state = init, action) => {
         errorMessage: action.statusText,
         errorCode: action.status,
         tournaments: action.tournaments
+      })
+    case eventConstants.GETCOUNT_REQUEST:
+      return merge({}, state, {
+        isFetching: true,
+        count: 0
+      })
+    case eventConstants.GETCOUNT_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        count: action.count
+      })
+    case eventConstants.GETCOUNT_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        count: 0
       })
     default:
       return state

@@ -105,8 +105,40 @@ const getTournaments = id => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getCount = () => dispatch => {
+  const request = () => ({
+    type: eventConstants.GETCOUNT_REQUEST,
+    isFetching: true,
+    count: 0
+  })
+
+  const success = count => ({
+    type: eventConstants.GETCOUNT_SUCCESS,
+    isFetching: false,
+    count
+  })
+
+  const failure = error => {
+    return {
+      type: eventConstants.GETCOUNT_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText,
+      count: 0
+    }
+  }
+
+  dispatch(request())
+
+  EventService
+    .count()
+    .then(count => dispatch(success(count)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const eventActions = {
   getAll,
   get,
-  getTournaments
+  getTournaments,
+  getCount
 }
