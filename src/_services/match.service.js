@@ -4,7 +4,7 @@ import { API_URL, API_URL_VER } from '../_constants'
 
 const URL = `${API_URL}/${API_URL_VER}/matches`
 
-export class TournamentService {
+export class MatchService {
   static count () {
     return axios
       .get(`${URL}/count`)

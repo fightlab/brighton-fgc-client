@@ -6,10 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { filter, orderBy } from 'lodash'
 
-// import Tabs, { Tab } from 'material-ui/Tabs'
-// import AppBar from 'material-ui/AppBar'
-
-import { eventActions, tournamentActions } from '../../_actions'
+import { eventActions, tournamentActions, matchActions } from '../../_actions'
 import { DateService } from '../../_services'
 
 import BaseHomeCard from '../../components/BaseHomeCard'
@@ -63,12 +60,16 @@ class Home extends React.Component {
 
     // get global stats
     dispatch(eventActions.getCount())
+    dispatch(tournamentActions.getCount())
+    dispatch(matchActions.getCount())
+    dispatch(matchActions.getCountGames())
   }
 
   render () {
-    const { classes, event, tournament } = this.props
+    const { classes, event, tournament, match } = this.props
     const { events = [], count: eventCount = 0 } = event
-    const { tournaments = [] } = tournament
+    const { tournaments = [], count: tournamentCount = 0 } = tournament
+    const { count: matchCount = 0, countGames: matchCountGames = 0 } = match
 
     const nextEvents = orderBy(filter(events, event => DateService.compareDates(event.date, new Date().toISOString())), 'date', 'desc')
     const pastEvents = orderBy(filter(events, event => DateService.compareDates(new Date().toISOString(), event.date)), 'date', 'desc')
@@ -147,7 +148,7 @@ class Home extends React.Component {
                     Tournaments
                   </Typography>
                   <Typography variant='display1' gutterBottom align='center'>
-                    9999
+                    {tournamentCount}
                   </Typography>
                 </Grid>
                 <Grid item sm={3} xs={6}>
@@ -155,7 +156,7 @@ class Home extends React.Component {
                     Matches
                   </Typography>
                   <Typography variant='display1' gutterBottom align='center'>
-                    9999
+                    {matchCount}
                   </Typography>
                 </Grid>
                 <Grid item sm={3} xs={6}>
@@ -163,7 +164,7 @@ class Home extends React.Component {
                    Match Games
                   </Typography>
                   <Typography variant='display1' gutterBottom align='center'>
-                    9999
+                    {matchCountGames}
                   </Typography>
                 </Grid>
               </Grid>
@@ -179,18 +180,21 @@ Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   event: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   tournament: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
   const {
     event,
-    tournament
+    tournament,
+    match
   } = state
 
   return {
     event,
-    tournament
+    tournament,
+    match
   }
 }
 
