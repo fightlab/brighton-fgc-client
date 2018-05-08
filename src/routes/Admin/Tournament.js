@@ -156,7 +156,7 @@ class TournamentRow extends React.Component {
             open={this.state.saved}
             autoHideDuration={6000}
             onClose={this.closeSnackbar}
-            SnackbarContentProps={{
+            ContentProps={{
               'aria-describedby': 'message-id'
             }}
             message={<span id='message-id'>Saved</span>}
@@ -396,7 +396,7 @@ class AdminTournament extends React.Component {
           open={this.state.added}
           autoHideDuration={6000}
           onClose={this.closeSnackbar}
-          SnackbarContentProps={{
+          ContentProps={{
             'aria-describedby': 'message-id'
           }}
           message={<span id='message-id'>Added</span>}
@@ -419,7 +419,7 @@ class AdminTournament extends React.Component {
           open={this.state.deleteStart}
           autoHideDuration={6000}
           onClose={this.closeSnackbar}
-          SnackbarContentProps={{
+          ContentProps={{
             'aria-describedby': 'message-id'
           }}
           message={<span id='message-id'>Confirm Delete (This will also delete any results/matches in this tournament)</span>}
@@ -450,7 +450,7 @@ class AdminTournament extends React.Component {
           open={this.state.deleted}
           autoHideDuration={6000}
           onClose={this.closeDeleted}
-          SnackbarContentProps={{
+          ContentProps={{
             'aria-describedby': 'message-id'
           }}
           message={<span id='message-id'>Deleted</span>}

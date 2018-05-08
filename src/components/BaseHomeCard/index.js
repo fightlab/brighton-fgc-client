@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import Card, { CardContent, CardHeader } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
+import AppBar from 'material-ui/AppBar'
+import Tabs, { Tab } from 'material-ui/Tabs'
 
 const styles = theme => ({
   card: {
@@ -9,10 +11,6 @@ const styles = theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column'
-  },
-  cardHeader: {
-    flexGrow: 0,
-    padding: 8
   },
   cardContent: {
     flexGrow: 1,
@@ -24,17 +22,23 @@ class BaseHomeCard extends React.Component {
   render () {
     const { classes, children, title } = this.props
     return (
-      <Card className={classes.card}>
-        <CardHeader
-          className={classes.cardHeader}
-          title={title}
-        />
-        <CardContent
-          className={classes.cardContent}
+      <AppBar position='static' color='default'>
+        <Tabs
+          value={0}
+          indicatorColor='primary'
+          textColor='primary'
+          fullWidth
         >
-          {children}
-        </CardContent>
-      </Card>
+          <Tab label={title} />
+        </Tabs>
+        <Card className={classes.card}>
+          <CardContent
+            className={classes.cardContent}
+          >
+            {children}
+          </CardContent>
+        </Card>
+      </AppBar>
     )
   }
 }

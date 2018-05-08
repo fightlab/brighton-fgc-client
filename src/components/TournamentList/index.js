@@ -32,7 +32,7 @@ class TournamentList extends React.Component {
     const { classes, subheader, dense = false } = this.props
     let { tournaments = [] } = this.props
     tournaments = orderBy(tournaments, ['dateStart'], ['desc'])
-    console.log(dense)
+
     return (
       <List
         className={classes.list}

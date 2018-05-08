@@ -290,7 +290,7 @@ class Profile extends React.Component {
           open={this.state.updated}
           autoHideDuration={6000}
           onClose={this.handleCloseSnackbar}
-          SnackbarContentProps={{
+          ContentProps={{
             'aria-describedby': 'message-id'
           }}
           message={<span id='message-id'>Profile Updated!</span>}
@@ -314,7 +314,7 @@ class Profile extends React.Component {
           open={this.state.updatedError}
           autoHideDuration={6000}
           onClose={this.handleCloseSnackbar}
-          SnackbarContentProps={{
+          ContentProps={{
             'aria-describedby': 'message-id'
           }}
           message={<span id='message-id'>Uh oh! Something went wrong. :(</span>}

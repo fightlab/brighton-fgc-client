@@ -279,7 +279,7 @@ class PlayerRow extends React.Component {
             open={this.state.saved}
             autoHideDuration={6000}
             onClose={this.closeSnackbar}
-            SnackbarContentProps={{
+            ContentProps={{
               'aria-describedby': 'message-id'
             }}
             message={<span id='message-id'>Saved</span>}
@@ -606,7 +606,7 @@ class AdminPlayer extends React.Component {
           open={this.state.added}
           autoHideDuration={6000}
           onClose={this.closeSnackbar}
-          SnackbarContentProps={{
+          ContentProps={{
             'aria-describedby': 'message-id'
           }}
           message={<span id='message-id'>Added</span>}
@@ -629,7 +629,7 @@ class AdminPlayer extends React.Component {
           open={this.state.deleteStart}
           autoHideDuration={6000}
           onClose={this.closeSnackbar}
-          SnackbarContentProps={{
+          ContentProps={{
             'aria-describedby': 'message-id'
           }}
           message={<span id='message-id'>Confirm Delete</span>}
@@ -660,7 +660,7 @@ class AdminPlayer extends React.Component {
           open={this.state.deleted}
           autoHideDuration={6000}
           onClose={this.closeDeleted}
-          SnackbarContentProps={{
+          ContentProps={{
             'aria-describedby': 'message-id'
           }}
           message={<span id='message-id'>Deleted</span>}

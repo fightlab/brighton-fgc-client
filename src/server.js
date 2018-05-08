@@ -19,7 +19,6 @@ const server = express()
 
 const handleRender = (req, res) => {
   const params = qs.parse(req.query)
-  console.log(params)
 
   const query = params || {}
 
@@ -46,7 +45,7 @@ const handleRender = (req, res) => {
   )
   const css = sheetsRegistry.toString()
   const preloadedState = store.getState()
-  console.log(preloadedState)
+
   res.send(
     `<!doctype html>
 <html lang="">
