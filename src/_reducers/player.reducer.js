@@ -47,6 +47,22 @@ export const player = (state = init, action) => {
         errorCode: action.status,
         statistics: action.statistics
       })
+    case playerConstants.GETOPPONENTS_REQUEST:
+      state.opponents = []
+      return merge({}, state, {
+        isFetching: true
+      })
+    case playerConstants.GETOPPONENTS_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        opponents: action.opponents
+      })
+    case playerConstants.GETOPPONENTS_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status
+      })
     case playerConstants.GETSTATISTICSH2H_REQUEST:
       state.headToHead = {}
       return merge({}, state, {

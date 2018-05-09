@@ -104,6 +104,40 @@ const getStatistics = id => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getOpponents = id => dispatch => {
+  const request = id => {
+    return {
+      type: playerConstants.GETSTATISTICS_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = opponents => {
+    return {
+      type: playerConstants.GETSTATISTICS_SUCCESS,
+      isFetching: false,
+      opponents
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: playerConstants.GETSTATISTICS_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText
+    }
+  }
+
+  dispatch(request({ id }))
+
+  PlayerService
+    .getOpponents(id)
+    .then(opponents => dispatch(success(opponents)))
+    .catch(error => dispatch(failure(error)))
+}
+
 const getStatisticsHeadToHead = (p1id, p2id) => dispatch => {
   const request = (p1id, p2id) => {
     return {
@@ -144,5 +178,6 @@ export const playerActions = {
   getAll,
   get,
   getStatistics,
-  getStatisticsHeadToHead
+  getStatisticsHeadToHead,
+  getOpponents
 }
