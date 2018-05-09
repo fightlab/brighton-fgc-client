@@ -44,7 +44,7 @@ class TournamentList extends React.Component {
             <ListItem button key={tournament._id || tournament.id} component={Link} to={`/tournaments/${tournament._id || tournament.id}`}>
               <ListItemText
                 primary={`${tournament.name}`}
-                secondary={`${!!tournament._gameId && `${tournament._gameId.name} - `}${tournament.dateStart && DateService.format(tournament.dateStart, 'DATE_HUGE')}`}
+                secondary={`${tournament.game ? `${tournament.game.name} - ` : ''}${tournament._gameId ? `${tournament._gameId.name} - ` : ''}${tournament.dateStart && DateService.format(tournament.dateStart, 'DATE_HUGE')}`}
               />
             </ListItem>
           ))

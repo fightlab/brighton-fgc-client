@@ -285,7 +285,7 @@ class Player extends React.Component {
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant='headline' gutterBottom align='center'>
-                      Games/Rounds
+                      Match Games
                     </Typography>
                   </Grid>
                   <Grid item xs={3}>
