@@ -100,12 +100,49 @@ const getStatistics = id => dispatch => {
 
   PlayerService
     .getStatistics(id)
-    .then(players => dispatch(success(players)))
+    .then(statistics => dispatch(success(statistics)))
+    .catch(error => dispatch(failure(error)))
+}
+
+const getStatisticsHeadToHead = (p1id, p2id) => dispatch => {
+  const request = (p1id, p2id) => {
+    return {
+      type: playerConstants.GETSTATISTICSH2H_REQUEST,
+      isFetching: true,
+      p1id,
+      p2id
+    }
+  }
+
+  const success = headToHead => {
+    return {
+      type: playerConstants.GETSTATISTICSH2H_SUCCESS,
+      isFetching: false,
+      headToHead
+    }
+  }
+
+  const failure = error => {
+    console.log(error)
+    return {
+      type: playerConstants.GETSTATISTICSH2H_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText
+    }
+  }
+
+  dispatch(request({ p1id, p2id }))
+
+  PlayerService
+    .getStatisticsHeadToHead(p1id, p2id)
+    .then(headToHead => dispatch(success(headToHead)))
     .catch(error => dispatch(failure(error)))
 }
 
 export const playerActions = {
   getAll,
   get,
-  getStatistics
+  getStatistics,
+  getStatisticsHeadToHead
 }

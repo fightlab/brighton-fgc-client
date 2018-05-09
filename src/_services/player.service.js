@@ -54,6 +54,13 @@ export class PlayerService {
       .catch(err => Promise.reject(err.response))
   }
 
+  static getHeadToHead (p1id, p2id) {
+    return axios
+      .get(`${URL}/${p1id}/statistics/${p2id}`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
   static me (token) {
     return axios
       .get(`${URL}/me`, getAuthHeader(token))
