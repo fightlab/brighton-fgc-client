@@ -107,7 +107,7 @@ const getStatistics = id => dispatch => {
 const getOpponents = id => dispatch => {
   const request = id => {
     return {
-      type: playerConstants.GETSTATISTICS_REQUEST,
+      type: playerConstants.GETOPPONENTS_REQUEST,
       isFetching: true,
       id
     }
@@ -115,7 +115,7 @@ const getOpponents = id => dispatch => {
 
   const success = opponents => {
     return {
-      type: playerConstants.GETSTATISTICS_SUCCESS,
+      type: playerConstants.GETOPPONENTS_SUCCESS,
       isFetching: false,
       opponents
     }
@@ -123,7 +123,7 @@ const getOpponents = id => dispatch => {
 
   const failure = error => {
     return {
-      type: playerConstants.GETSTATISTICS_FAILURE,
+      type: playerConstants.GETOPPONENTS_FAILURE,
       isFetching: false,
       status: error.status,
       statusText: error.statusText

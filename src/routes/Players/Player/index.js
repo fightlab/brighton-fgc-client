@@ -61,7 +61,8 @@ class Player extends React.Component {
 
     this.state = {
       selectedTab: 0,
-      game: 'total'
+      game: 'total',
+      opponent: 'none'
     }
 
     this.handleTabChange = this.handleTabChange.bind(this)
@@ -90,12 +91,13 @@ class Player extends React.Component {
     const { dispatch, match } = this.props
     dispatch(playerActions.get(match.params.playerId))
     dispatch(playerActions.getStatistics(match.params.playerId))
+    dispatch(playerActions.getOpponents(match.params.playerId))
   }
 
   render () {
-    const { selectedTab, game: selectedGame } = this.state
+    const { selectedTab, game: selectedGame, opponent: selectedOpponent } = this.state
     const { classes, player: _player } = this.props
-    const { player = {}, statistics = {} } = _player
+    const { player = {}, statistics = {}, opponents = [] } = _player
     const { profile } = player
 
     return (
@@ -219,7 +221,7 @@ class Player extends React.Component {
         <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
           <Card className={classes.standingsCard} elevation={10}>
             <CardHeader
-              title='Statistics'
+              title='Overall Statistics'
               action={
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor='game-simple'>Game</InputLabel>
@@ -323,6 +325,33 @@ class Player extends React.Component {
                 </Grid>
               </CardContent>
             }
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
+          <Card className={classes.standingsCard} elevation={10}>
+            <CardHeader
+              title='Head To Head'
+              action={
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor='opponent-simple'>Opponent</InputLabel>
+                  <Select
+                    value={selectedOpponent}
+                    onChange={this.handleChange}
+                    inputProps={{
+                      name: 'opponent',
+                      id: 'opponent-simple'
+                    }}
+                  >
+                    <MenuItem selected value='none'>Select an Opponent...</MenuItem>
+                    {
+                      opponents.length && opponents.map(opponent => (
+                        <MenuItem key={opponent.id} value={opponent.id}>{opponent.handle}</MenuItem>
+                      ))
+                    }
+                  </Select>
+                </FormControl>
+              }
+            />
           </Card>
         </Grid>
       </Grid>
