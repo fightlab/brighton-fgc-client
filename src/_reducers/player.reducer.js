@@ -6,7 +6,8 @@ const init = {
   isFetching: false,
   players: [],
   player: {},
-  statistics: {}
+  statistics: {},
+  headToHead: {}
 }
 
 export const player = (state = init, action) => {

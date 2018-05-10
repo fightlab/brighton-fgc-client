@@ -62,7 +62,8 @@ class Player extends React.Component {
     this.state = {
       selectedTab: 0,
       game: 'total',
-      opponent: 'none'
+      opponent: 'none',
+      gameH2H: 'total'
     }
 
     this.handleTabChange = this.handleTabChange.bind(this)
@@ -75,6 +76,12 @@ class Player extends React.Component {
 
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value })
+
+    if (event.target.name === 'opponent' && event.target.value !== 'none') {
+      const { dispatch, match } = this.props
+      this.setState({ gameH2H: 'total' })
+      dispatch(playerActions.getStatisticsHeadToHead(match.params.playerId, event.target.value))
+    }
   }
 
   calculateWinRatio (wins = 0, games = 0) {
@@ -91,13 +98,13 @@ class Player extends React.Component {
     const { dispatch, match } = this.props
     dispatch(playerActions.get(match.params.playerId))
     dispatch(playerActions.getStatistics(match.params.playerId))
-    dispatch(playerActions.getOpponents(match.params.playerId))
+    dispatch(playerActions.getOpponents(match.params.playerId, true))
   }
 
   render () {
-    const { selectedTab, game: selectedGame, opponent: selectedOpponent } = this.state
-    const { classes, player: _player } = this.props
-    const { player = {}, statistics = {}, opponents = [] } = _player
+    const { selectedTab, game: selectedGame, opponent: selectedOpponent, gameH2H } = this.state
+    const { classes, player: _player, match } = this.props
+    const { player = {}, statistics = {}, opponents = [], headToHead = {} } = _player
     const { profile } = player
 
     return (
@@ -199,7 +206,7 @@ class Player extends React.Component {
                 className={classes.standingsCardContent}
               >
                 <Typography variant='headline' gutterBottom>
-                  { statistics.tournaments && statistics.tournaments.length } {statistics.tournaments && statistics.tournaments.length === '1' ? 'Tournament' : 'Tournaments'}
+                  { statistics.tournaments && statistics.tournaments.lplayer2winsngth } {statistics.tournaments && statistics.tournaments.length === '1' ? 'Tournament' : 'Tournaments'}
                 </Typography>
                 <TournamentList tournaments={statistics.tournaments} />
               </CardContent>
@@ -332,26 +339,130 @@ class Player extends React.Component {
             <CardHeader
               title='Head To Head'
               action={
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor='opponent-simple'>Opponent</InputLabel>
-                  <Select
-                    value={selectedOpponent}
-                    onChange={this.handleChange}
-                    inputProps={{
-                      name: 'opponent',
-                      id: 'opponent-simple'
-                    }}
-                  >
-                    <MenuItem selected value='none'>Select an Opponent...</MenuItem>
-                    {
-                      opponents.length && opponents.map(opponent => (
-                        <MenuItem key={opponent.id} value={opponent.id}>{opponent.handle}</MenuItem>
-                      ))
-                    }
-                  </Select>
-                </FormControl>
+                <div>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor='opponent-simple'>Opponent</InputLabel>
+                    <Select
+                      value={selectedOpponent}
+                      onChange={this.handleChange}
+                      inputProps={{
+                        name: 'opponent',
+                        id: 'opponent-simple'
+                      }}
+                    >
+                      <MenuItem selected value='none'>Select Opponent</MenuItem>
+                      {
+                        opponents.length && opponents.map(opponent => (
+                          <MenuItem key={opponent.id} value={opponent.id}>{opponent.handle}</MenuItem>
+                        ))
+                      }
+                    </Select>
+                  </FormControl>
+                  {
+                    get(headToHead, 'player1.id') === match.params.playerId && <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor='game-simple'>Game</InputLabel>
+                      <Select
+                        value={gameH2H}
+                        onChange={this.handleChange}
+                        inputProps={{
+                          name: 'gameH2H',
+                          id: 'gameH2H-simple'
+                        }}
+                      >
+                        <MenuItem value='total'>All Games</MenuItem>
+                        {
+                          headToHead.games.map(game => (
+                            <MenuItem key={game._id} value={game._id}>{game.name}</MenuItem>
+                          ))
+                        }
+                      </Select>
+                    </FormControl>
+                  }
+                </div>
               }
             />
+            <CardContent
+              className={classes.standingsCardContent}
+            >
+              {
+                get(headToHead, 'player1.id') === match.params.playerId && <Grid container>
+                  <Grid item xs={12}>
+                    <Typography variant='headline' gutterBottom align='center'>
+                      Matches
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Total
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(headToHead, `statistics.matches.${gameH2H}.total`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Wins VS
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Loss VS
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(headToHead, `statistics.matches.${gameH2H}.player2wins`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Win%
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { this.calculateWinRatio(get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.matches.${gameH2H}.total`, 0)) }%
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant='headline' gutterBottom align='center'>
+                      Match Games
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Total
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(headToHead, `statistics.games.${gameH2H}.total`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Wins VS
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Loss VS
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { get(headToHead, `statistics.games.${gameH2H}.player2wins`, 0) }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Typography variant='title' gutterBottom align='center'>
+                      Win%
+                    </Typography>
+                    <Typography variant='display1' gutterBottom align='center'>
+                      { this.calculateWinRatio(get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.games.${gameH2H}.total`, 0)) }%
+                    </Typography>
+                  </Grid>
+                </Grid>
+              }
+            </CardContent>
           </Card>
         </Grid>
       </Grid>

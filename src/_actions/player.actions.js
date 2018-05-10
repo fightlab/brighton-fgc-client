@@ -157,7 +157,6 @@ const getStatisticsHeadToHead = (p1id, p2id) => dispatch => {
   }
 
   const failure = error => {
-    console.log(error)
     return {
       type: playerConstants.GETSTATISTICSH2H_FAILURE,
       isFetching: false,
@@ -169,7 +168,7 @@ const getStatisticsHeadToHead = (p1id, p2id) => dispatch => {
   dispatch(request({ p1id, p2id }))
 
   PlayerService
-    .getStatisticsHeadToHead(p1id, p2id)
+    .getHeadToHead(p1id, p2id)
     .then(headToHead => dispatch(success(headToHead)))
     .catch(error => dispatch(failure(error)))
 }

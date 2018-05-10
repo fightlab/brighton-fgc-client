@@ -54,9 +54,9 @@ export class PlayerService {
       .catch(err => Promise.reject(err.response))
   }
 
-  static getOpponents (id) {
+  static getOpponents (id, all) {
     return axios
-      .get(`${URL}/${id}/opponents`)
+      .get(`${URL}/${id}/opponents${all ? '?all=true' : ''}`)
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }
