@@ -33,6 +33,13 @@ export class TournamentService {
       .catch(err => Promise.reject(err.response))
   }
 
+  static getMatches (id) {
+    return axios
+      .get(`${URL}/${id}/matches`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
+
   static get (id) {
     return axios
       .get(`${URL}/${id}`)

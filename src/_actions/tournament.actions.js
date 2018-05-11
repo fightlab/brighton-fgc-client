@@ -135,9 +135,44 @@ const getCount = () => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getMatches = id => dispatch => {
+  const request = id => {
+    return {
+      type: tournamentConstants.GETMATCHES_REQUEST,
+      isFetching: true,
+      id
+    }
+  }
+
+  const success = matches => {
+    return {
+      type: tournamentConstants.GETMATCHES_SUCCESS,
+      isFetching: false,
+      matches
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: tournamentConstants.GETMATCHES_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText
+    }
+  }
+
+  dispatch(request({ id }))
+
+  TournamentService
+    .getMatches(id)
+    .then(matches => dispatch(success(matches)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const tournamentActions = {
   getAll,
   get,
   getStandings,
-  getCount
+  getCount,
+  getMatches
 }
