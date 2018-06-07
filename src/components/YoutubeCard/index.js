@@ -41,7 +41,7 @@ class YoutubeCard extends React.Component {
           className={classes.cardContent}
         >
           <div className={classes.embedContainer}>
-            <iframe className={classes.embedContainerIframe} src={youtube} frameBorder='0' allowFullScreen />
+            <iframe title='youtube' className={classes.embedContainerIframe} src={youtube} frameBorder='0' allowFullScreen />
           </div>
         </CardContent>
       </Card>

@@ -1,26 +1,56 @@
-import app from './server'
-import http from 'http'
+import React from 'react'
+import { Provider } from 'react-redux'
+import { hydrate } from 'react-dom'
+import BrowserRouter from 'react-router-dom/BrowserRouter'
+import theme from './theme'
+import { MuiThemeProvider } from 'material-ui/styles'
+import { CookiesProvider } from 'react-cookie'
+import App from './App'
 
-const server = http.createServer(app)
+import { createstore } from './_store'
 
-let currentApp = app
+// Grab the state from a global variable injected into the server-generated HTML
+const preloadedState = window.__PRELOADED_STATE__
 
-server.listen(process.env.PORT || 3000, (error) => {
-  if (error) {
-    console.log(error)
+// Allow the passed state to be garbage-collected
+delete window.__PRELOADED_STATE__
+
+// This is needed in order to deduplicate the injection of CSS in the page.
+const sheetsManager = new WeakMap()
+
+const app = (
+  <Provider store={createstore(preloadedState)}>
+    <CookiesProvider>
+      <BrowserRouter>
+        <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+          <App />
+        </MuiThemeProvider>
+      </BrowserRouter>
+    </CookiesProvider>
+  </Provider>
+)
+
+hydrate(
+  app,
+  document.getElementById('root'),
+  () => {
+    // [ReHydratation](https://github.com/cssinjs/jss/blob/master/docs/ssr.md)
+    const jssStyles = document.getElementById('jss-ssr')
+    if (jssStyles && jssStyles.parentNode) { jssStyles.parentNode.removeChild(jssStyles) }
   }
-
-  console.log('🚀 started')
-})
+)
 
 if (module.hot) {
-  console.log('✅  Server-side HMR Enabled!')
-
-  module.hot.accept('./server', () => {
-    console.log('🔁  HMR Reloading `./server`...')
-    server.removeListener('request', currentApp)
-    const newApp = require('./server').default
-    server.on('request', newApp)
-    currentApp = newApp
+  module.hot.accept()
+  module.hot.accept('./App', () => {
+    hydrate(
+      app,
+      document.getElementById('root'),
+      () => {
+        // [ReHydratation](https://github.com/cssinjs/jss/blob/master/docs/ssr.md)
+        const jssStyles = document.getElementById('jss-ssr')
+        if (jssStyles && jssStyles.parentNode) { jssStyles.parentNode.removeChild(jssStyles) }
+      }
+    )
   })
 }

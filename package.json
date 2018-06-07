@@ -6,7 +6,10 @@
     "dev": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
-    "start": "razzle build && NODE_ENV=production node build/server.js"
+    "start": "razzle build && NODE_ENV=production node build/server.js",
+    "react-scripts-dev": "react-scripts start",
+    "react-scripts-build": "react-scripts build",
+    "react-scripts-test": "react-scripts test --env=jsdom"
   },
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.43",
@@ -25,6 +28,7 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "react-scripts": "^1.1.4",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",

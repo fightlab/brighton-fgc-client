@@ -181,7 +181,7 @@ class Tournament extends React.Component {
             className={classes.card}
           >
             {
-              bracket && <iframe src={`${bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{minHeight: '500px', width: '100%'}} frameBorder='0' scrolling='yes' />
+              bracket && <iframe title='bracket' src={`${bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{minHeight: '500px', width: '100%'}} frameBorder='0' scrolling='yes' />
             }
           </Card>
         </Grid>

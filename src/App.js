@@ -92,22 +92,22 @@ class App extends React.Component {
     const drawer = (
       <div>
         <div className={classes.drawerHeader}>
-          <a href='https://www.facebook.com/FightLabBrighton/' target='_blank' className='no-decor'>
+          <a href='https://www.facebook.com/FightLabBrighton/' target='_blank' rel='noopener noreferrer' className='no-decor'>
             <IconButton>
               <Facebook />
             </IconButton>
           </a>
-          <a href='https://twitter.com/Fight_Lab/' target='_blank' className='no-decor'>
+          <a href='https://twitter.com/Fight_Lab/' target='_blank' rel='noopener noreferrer' className='no-decor'>
             <IconButton>
               <Twitter />
             </IconButton>
           </a>
-          <a href='https://www.twitch.tv/fightlab' target='_blank' className='no-decor'>
+          <a href='https://www.twitch.tv/fightlab' target='_blank' rel='noopener noreferrer' className='no-decor'>
             <IconButton>
               <Twitch />
             </IconButton>
           </a>
-          <a href='https://discord.gg/9kZAXTT' target='_blank' className='no-decor'>
+          <a href='https://discord.gg/9kZAXTT' target='_blank' rel='noopener noreferrer' className='no-decor'>
             <IconButton>
               <Discord />
             </IconButton>
@@ -138,14 +138,14 @@ class App extends React.Component {
             <br />
             Brighton FGC Site by
             <br />
-            <a href='http://mkn.sh' target='_blank' className='no-decor'>
+            <a href='http://mkn.sh' target='_blank' rel='noopener noreferrer' className='no-decor'>
               Mahesh Makani (ColdLink)
             </a>
             <br />
             <br />
-            <a href='https://github.com/coldlink/brighton-fgc-client' target='_blank' className='no-decor'>Client</a>: {process.env.RAZZLE_ENV_CLIENT_VERSION || 'dev'}
+            <a href='https://github.com/coldlink/brighton-fgc-client' target='_blank' rel='noopener noreferrer' className='no-decor'>Client</a>: {process.env.RAZZLE_ENV_CLIENT_VERSION || 'dev'}
             <br />
-            <a href='https://github.com/coldlink/brighton-fgc-api' target='_blank' className='no-decor'>API</a>: {process.env.RAZZLE_ENV_API_VERSION || 'dev'}
+            <a href='https://github.com/coldlink/brighton-fgc-api' target='_blank' rel='noopener noreferrer' className='no-decor'>API</a>: {process.env.RAZZLE_ENV_API_VERSION || 'dev'}
             <br />
             <br />
           </Typography>

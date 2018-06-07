@@ -57,10 +57,10 @@ const About = ({classes}) => (
     <br />
     <Grid container className={classes.container}>
       <Grid item md={7} sm={12}>
-        <iframe src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2520.358867349505!2d-0.1376912838888517!3d50.82451637952868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4875859f85f1209d%3A0x34e8561b881ac235!2sBrewDog+Brighton!5e0!3m2!1sen!2suk!4v1481479563024' width='100%' height='500' frameBorder='0' allowFullScreen='allowfullscreen' />
+        <iframe title='map' src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2520.358867349505!2d-0.1376912838888517!3d50.82451637952868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4875859f85f1209d%3A0x34e8561b881ac235!2sBrewDog+Brighton!5e0!3m2!1sen!2suk!4v1481479563024' width='100%' height='500' frameBorder='0' allowFullScreen='allowfullscreen' />
       </Grid>
       <Grid item md={5} sm={12}>
-        <iframe src='https://discordapp.com/widget?id=255761898379804682&theme=dark' width='350' height='500' allowTransparency='true' frameBorder='0' />
+        <iframe title='discord' src='https://discordapp.com/widget?id=255761898379804682&theme=dark' width='350' height='500' allowTransparency='true' frameBorder='0' />
       </Grid>
     </Grid>
   </Paper>
