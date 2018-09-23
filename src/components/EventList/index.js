@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { Link } from 'react-router-dom'
-import { map, orderBy } from 'lodash'
+import map from 'lodash/map'
+import orderBy from 'lodash/orderBy'
 import deepOrange from 'material-ui/colors/deepOrange'
 
 import List, {

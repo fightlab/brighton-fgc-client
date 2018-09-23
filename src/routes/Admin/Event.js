@@ -10,8 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from 'material-ui/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { orderBy } from 'lodash'
-
+import orderBy from 'lodash/orderBy'
 import { EventService } from '../../_services'
 
 class EventRow extends React.Component {

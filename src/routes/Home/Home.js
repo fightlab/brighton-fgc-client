@@ -7,8 +7,8 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { filter, orderBy } from 'lodash'
-
+import orderBy from 'lodash/orderBy'
+import filter from 'lodash/filter'
 import { eventActions, tournamentActions, matchActions } from '../../_actions'
 import { DateService } from '../../_services'
 

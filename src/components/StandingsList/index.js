@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { map, isNumber } from 'lodash'
+import map from 'lodash/map'
+import isNumber from 'lodash/isNumber'
 import deepOrange from 'material-ui/colors/deepOrange'
 
 import List, {

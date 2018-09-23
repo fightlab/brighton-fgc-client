@@ -1,4 +1,5 @@
-import { merge, get } from 'lodash'
+import merge from 'lodash/merge'
+import get from 'lodash/get'
 
 import { userConstants } from '../_constants'
 

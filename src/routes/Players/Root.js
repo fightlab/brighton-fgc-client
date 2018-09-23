@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { CircularProgress } from 'material-ui/Progress'
-import { orderBy } from 'lodash'
+import orderBy from 'lodash/orderBy'
 
 import { playerActions } from '../../_actions'
 

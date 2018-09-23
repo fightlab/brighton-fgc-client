@@ -8,7 +8,8 @@ import List, {
   ListItemText
 } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-import { orderBy, map } from 'lodash'
+import map from 'lodash/map'
+import orderBy from 'lodash/orderBy'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import AppBar from 'material-ui/AppBar'
 import { Link } from 'react-router-dom'

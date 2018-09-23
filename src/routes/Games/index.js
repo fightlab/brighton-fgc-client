@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper'
 import { withStyles } from 'material-ui/styles'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import get from 'lodash/get'
 
 import Root from './Root'
 import Game from './Game'

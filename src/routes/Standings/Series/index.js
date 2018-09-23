@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { seriesActions } from '../../../_actions'
 import { DateService } from '../../../_services'
 import Card, { CardContent } from 'material-ui/Card'
-import { orderBy } from 'lodash'
+import orderBy from 'lodash/orderBy'
 
 import GameCard from '../../../components/GameCard'
 import TournamentCard from '../../../components/TournamentCard'

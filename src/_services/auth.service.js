@@ -1,6 +1,7 @@
 import auth0 from 'auth0-js'
 import Cookies from 'universal-cookie'
-import { get, find } from 'lodash'
+import find from 'lodash/find'
+import get from 'lodash/get'
 
 export class AuthService {
   constructor () {
