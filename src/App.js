@@ -143,9 +143,9 @@ class App extends React.Component {
             </a>
             <br />
             <br />
-            <a href='https://github.com/coldlink/brighton-fgc-client' target='_blank' rel='noopener noreferrer' className='no-decor'>Client</a>: {process.env.RAZZLE_ENV_CLIENT_VERSION || 'dev'}
+            <a href='https://github.com/coldlink/brighton-fgc-client' target='_blank' rel='noopener noreferrer' className='no-decor'>Client</a>: {process.env.REACT_APP_ENV_CLIENT_VERSION || 'dev'}
             <br />
-            <a href='https://github.com/coldlink/brighton-fgc-api' target='_blank' rel='noopener noreferrer' className='no-decor'>API</a>: {process.env.RAZZLE_ENV_API_VERSION || 'dev'}
+            <a href='https://github.com/coldlink/brighton-fgc-api' target='_blank' rel='noopener noreferrer' className='no-decor'>API</a>: {process.env.REACT_APP_ENV_API_VERSION || 'dev'}
             <br />
             <br />
           </Typography>
