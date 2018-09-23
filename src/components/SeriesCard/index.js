@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Grid from 'material-ui/Grid'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
 

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardHeader } from 'material-ui/Card'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
 

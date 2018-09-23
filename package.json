@@ -7,6 +7,7 @@
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start": "razzle build && NODE_ENV=production node build/server.js",
+    "analyze": "source-map-explorer build/static/js/main.*",
     "react-scripts-dev": "react-scripts start",
     "react-scripts-build": "react-scripts build",
     "react-scripts-test": "react-scripts test --env=jsdom"
@@ -32,6 +33,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "source-map-explorer": "^1.6.0",
     "universal-cookie-express": "^2.1.2"
   },
   "devDependencies": {

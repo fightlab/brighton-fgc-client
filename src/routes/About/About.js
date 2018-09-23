@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography, Paper } from 'material-ui'
+import Typography from 'material-ui/Typography'
+import Paper from 'material-ui/Paper'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 

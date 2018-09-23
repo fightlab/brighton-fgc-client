@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Paper, Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
+import Paper from 'material-ui/Paper'
 import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation'
 import { withStyles } from 'material-ui/styles'
 import DateRangeIcon from '@material-ui/icons/DateRange'

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import { withRouter } from 'react-router-dom'
