@@ -61,6 +61,7 @@ class EloList extends React.Component {
               </ListItemAvatar>
               <ListItemText
                 primary={e.player.handle}
+                secondary={`Matches Ranked: ${e.matches}`}
               />
               {
                 isNumber(e.elo) && <ListItemSecondaryAction>
