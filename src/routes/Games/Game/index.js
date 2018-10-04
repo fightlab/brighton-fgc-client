@@ -6,8 +6,10 @@ import Grid from 'material-ui/Grid'
 import orderBy from 'lodash/orderBy'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import BaseHomeCard from '../../../components/BaseHomeCard'
 
 import TournamentCard from '../../../components/TournamentCard'
+import EloList from '../../../components/EloList'
 
 import { gameActions } from '../../../_actions'
 
@@ -29,7 +31,7 @@ class Game extends React.Component {
   }
 
   render () {
-    const { classes, game } = this.props
+    const { classes, game, match } = this.props
     const { tournaments = [] } = game
 
     return (
@@ -38,6 +40,11 @@ class Game extends React.Component {
           <Typography variant='display1' component='h2'>
             {game.game && game.game.name}
           </Typography>
+        </Grid>
+        <Grid item sm={6} xs={12}>
+          <BaseHomeCard title='Elo Ranking'>
+            <EloList id={match.params.gameId} />
+          </BaseHomeCard>
         </Grid>
         {
           tournaments.length && <Grid item xs={12}>

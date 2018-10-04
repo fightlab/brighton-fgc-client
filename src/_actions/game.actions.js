@@ -140,9 +140,46 @@ const getStandings = id => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getElo = id => dispatch => {
+  const request = id => {
+    return {
+      type: gameConstants.GETELO_REQUEST,
+      isFetching: true,
+      id,
+      elo: []
+    }
+  }
+
+  const success = elo => {
+    return {
+      type: gameConstants.GETELO_SUCCESS,
+      isFetching: false,
+      elo
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: gameConstants.GETELO_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText,
+      elo: []
+    }
+  }
+
+  dispatch(request({ id }))
+
+  GameService
+    .getElo(id)
+    .then(elo => dispatch(success(elo)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const gameActions = {
   getAll,
   get,
   getTournaments,
-  getStandings
+  getStandings,
+  getElo
 }

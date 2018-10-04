@@ -35,6 +35,12 @@ export const game = (state = init, action) => {
         isFetching: true,
         tournaments: action.tournaments
       })
+    case gameConstants.GETELO_REQUEST:
+      state.elo = []
+      return merge({}, state, {
+        isFetching: true,
+        elo: action.elo
+      })
     case gameConstants.GETALL_SUCCESS:
       return merge({}, state, {
         isFetching: false,
@@ -64,12 +70,24 @@ export const game = (state = init, action) => {
         isFetching: false,
         tournaments: action.tournaments
       })
+    case gameConstants.GETELO_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        elo: action.elo
+      })
     case gameConstants.GETTOURNAMENTS_FAILURE:
       return merge({}, state, {
         isFetching: false,
         errorMessage: action.statusText,
         errorCode: action.status,
         tournaments: action.tournaments
+      })
+    case gameConstants.GETELO_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        elo: action.elo
       })
     case gameConstants.GETSTANDINGS_SUCCESS:
       return merge({}, state, {
