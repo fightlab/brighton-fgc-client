@@ -53,7 +53,7 @@ class PlayersCard extends React.Component {
 
   render () {
     const { players, classes } = this.props
-    console.log(players)
+
     const { selectedTab } = this.state
 
     return (
