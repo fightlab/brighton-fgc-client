@@ -74,17 +74,23 @@ class Player extends React.Component {
 
     this.state = {
       selectedTab: 0,
+      selectedTabStats: 0,
       game: 'total',
       opponent: 'none',
       gameH2H: 'total'
     }
 
     this.handleTabChange = this.handleTabChange.bind(this)
+    this.handleTabChangeStats = this.handleTabChangeStats.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleTabChange (event, index) {
     this.setState({ selectedTab: index })
+  }
+
+  handleTabChangeStats (event, index) {
+    this.setState({ selectedTabStats: index })
   }
 
   handleChange (event) {
@@ -115,7 +121,7 @@ class Player extends React.Component {
   }
 
   render () {
-    const { selectedTab, game: selectedGame, opponent: selectedOpponent, gameH2H } = this.state
+    const { selectedTab, selectedTabStats, game: selectedGame, opponent: selectedOpponent, gameH2H } = this.state
     const { classes, player: _player, match } = this.props
     const { player = {}, statistics = {}, opponents = [], headToHead = {} } = _player
     const { profile } = player
@@ -239,244 +245,256 @@ class Player extends React.Component {
           }
         </Grid>
         <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
-          <Card className={classes.standingsCard} elevation={10}>
-            <CardHeader
-              title='Overall Statistics'
-              action={
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor='game-simple'>Game</InputLabel>
-                  <Select
-                    value={selectedGame}
-                    onChange={this.handleChange}
-                    inputProps={{
-                      name: 'game',
-                      id: 'game-simple'
-                    }}
-                  >
-                    <MenuItem value='total'>All Games</MenuItem>
-                    {
-                      statistics.games && statistics.games.map(game => (
-                        <MenuItem key={game._id} value={game._id}>{game.name}</MenuItem>
-                      ))
-                    }
-                  </Select>
-                </FormControl>
-              }
-            />
-            {
-              statistics.matches && statistics.rounds && <CardContent
-                className={classes.standingsCardContent}
-              >
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Typography variant='headline' gutterBottom align='center'>
-                      Matches
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
-                      Total
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(statistics.matches, `${selectedGame}.t`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
-                      Wins
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(statistics.matches, `${selectedGame}.w`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
-                      Loss
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(statistics.matches, `${selectedGame}.l`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
-                      Win%
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { this.calculateWinRatio(get(statistics.matches, `${selectedGame}.w`, 0), get(statistics.matches, `${selectedGame}.t`, 0)) }%
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant='headline' gutterBottom align='center'>
-                      Match Games
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
-                      Total
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(statistics.rounds, `${selectedGame}.t`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
-                      Wins
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(statistics.rounds, `${selectedGame}.w`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
-                      Loss
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(statistics.rounds, `${selectedGame}.l`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
-                      Win%
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { this.calculateWinRatio(get(statistics.rounds, `${selectedGame}.w`, 0), get(statistics.rounds, `${selectedGame}.t`, 0)) }%
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            }
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
-          <Card className={classes.standingsCard} elevation={10}>
-            <CardHeader
-              title='Head To Head'
-              action={
-                <div>
+          <AppBar position='static' color='default'>
+            <Tabs
+              value={selectedTabStats}
+              onChange={this.handleTabChangeStats}
+              indicatorColor='primary'
+              textColor='primary'
+              fullWidth
+            >
+              <Tab label='Overall Statistics' />
+              <Tab label='Head to Head Statistics' />
+            </Tabs>
+          </AppBar>
+          {
+            selectedTabStats === 0 && <Card className={classes.standingsCard} elevation={10}>
+              <CardHeader
+                action={
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor='opponent-simple'>Opponent</InputLabel>
+                    <InputLabel htmlFor='game-simple'>Game</InputLabel>
                     <Select
-                      value={selectedOpponent}
+                      value={selectedGame}
                       onChange={this.handleChange}
                       inputProps={{
-                        name: 'opponent',
-                        id: 'opponent-simple'
+                        name: 'game',
+                        id: 'game-simple'
                       }}
                     >
-                      <MenuItem selected value='none'>Select Opponent</MenuItem>
+                      <MenuItem value='total'>All Games</MenuItem>
                       {
-                        opponents.length && opponents.map(opponent => (
-                          <MenuItem key={opponent.id} value={opponent.id}>{opponent.handle}</MenuItem>
+                        statistics.games && statistics.games.map(game => (
+                          <MenuItem key={game._id} value={game._id}>{game.name}</MenuItem>
                         ))
                       }
                     </Select>
                   </FormControl>
-                  {
-                    get(headToHead, 'player1.id') === match.params.playerId && <FormControl className={classes.formControl}>
-                      <InputLabel htmlFor='game-simple'>Game</InputLabel>
+                }
+              />
+              {
+                statistics.matches && statistics.rounds && <CardContent
+                  className={classes.standingsCardContent}
+                >
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <Typography variant='headline' gutterBottom align='center'>
+                      Matches
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
+                      Total
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(statistics.matches, `${selectedGame}.t`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
+                      Wins
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(statistics.matches, `${selectedGame}.w`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
+                      Loss
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(statistics.matches, `${selectedGame}.l`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
+                      Win%
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { this.calculateWinRatio(get(statistics.matches, `${selectedGame}.w`, 0), get(statistics.matches, `${selectedGame}.t`, 0)) }%
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant='headline' gutterBottom align='center'>
+                      Match Games
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
+                      Total
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(statistics.rounds, `${selectedGame}.t`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
+                      Wins
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(statistics.rounds, `${selectedGame}.w`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
+                      Loss
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(statistics.rounds, `${selectedGame}.l`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
+                      Win%
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { this.calculateWinRatio(get(statistics.rounds, `${selectedGame}.w`, 0), get(statistics.rounds, `${selectedGame}.t`, 0)) }%
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              }
+            </Card>
+          }
+          {
+            selectedTabStats === 1 && <Card className={classes.standingsCard} elevation={10}>
+              <CardHeader
+                action={
+                  <div>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor='opponent-simple'>Opponent</InputLabel>
                       <Select
-                        value={gameH2H}
+                        value={selectedOpponent}
                         onChange={this.handleChange}
                         inputProps={{
-                          name: 'gameH2H',
-                          id: 'gameH2H-simple'
+                          name: 'opponent',
+                          id: 'opponent-simple'
                         }}
                       >
-                        <MenuItem value='total'>All Games</MenuItem>
+                        <MenuItem selected value='none'>Select Opponent</MenuItem>
                         {
-                          headToHead.games.map(game => (
-                            <MenuItem key={game._id} value={game._id}>{game.name}</MenuItem>
+                          opponents.length && opponents.map(opponent => (
+                            <MenuItem key={opponent.id} value={opponent.id}>{opponent.handle}</MenuItem>
                           ))
                         }
                       </Select>
                     </FormControl>
-                  }
-                </div>
-              }
-            />
-            <CardContent
-              className={classes.standingsCardContent}
-            >
-              {
-                get(headToHead, 'player1.id') === match.params.playerId && <Grid container>
-                  <Grid item xs={12}>
-                    <Typography variant='headline' gutterBottom align='center'>
+                    {
+                      get(headToHead, 'player1.id') === match.params.playerId && <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor='game-simple'>Game</InputLabel>
+                        <Select
+                          value={gameH2H}
+                          onChange={this.handleChange}
+                          inputProps={{
+                            name: 'gameH2H',
+                            id: 'gameH2H-simple'
+                          }}
+                        >
+                          <MenuItem value='total'>All Games</MenuItem>
+                          {
+                            headToHead.games.map(game => (
+                              <MenuItem key={game._id} value={game._id}>{game.name}</MenuItem>
+                            ))
+                          }
+                        </Select>
+                      </FormControl>
+                    }
+                  </div>
+                }
+              />
+              <CardContent
+                className={classes.standingsCardContent}
+              >
+                {
+                  get(headToHead, 'player1.id') === match.params.playerId && <Grid container>
+                    <Grid item xs={12}>
+                      <Typography variant='headline' gutterBottom align='center'>
                       Matches
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
                       Total
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(headToHead, `statistics.matches.${gameH2H}.total`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(headToHead, `statistics.matches.${gameH2H}.total`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
                       Wins VS
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
                       Loss VS
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(headToHead, `statistics.matches.${gameH2H}.player2wins`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(headToHead, `statistics.matches.${gameH2H}.player2wins`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
                       Win%
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { this.calculateWinRatio(get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.matches.${gameH2H}.total`, 0)) }%
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant='headline' gutterBottom align='center'>
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { this.calculateWinRatio(get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.matches.${gameH2H}.total`, 0)) }%
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant='headline' gutterBottom align='center'>
                       Match Games
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
                       Total
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(headToHead, `statistics.games.${gameH2H}.total`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(headToHead, `statistics.games.${gameH2H}.total`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
                       Wins VS
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
                       Loss VS
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { get(headToHead, `statistics.games.${gameH2H}.player2wins`, 0) }
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant='title' gutterBottom align='center'>
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { get(headToHead, `statistics.games.${gameH2H}.player2wins`, 0) }
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography variant='title' gutterBottom align='center'>
                       Win%
-                    </Typography>
-                    <Typography variant='display1' gutterBottom align='center'>
-                      { this.calculateWinRatio(get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.games.${gameH2H}.total`, 0)) }%
-                    </Typography>
+                      </Typography>
+                      <Typography variant='display1' gutterBottom align='center'>
+                        { this.calculateWinRatio(get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.games.${gameH2H}.total`, 0)) }%
+                      </Typography>
+                    </Grid>
                   </Grid>
-                </Grid>
-              }
-            </CardContent>
-          </Card>
+                }
+              </CardContent>
+            </Card>
+          }
         </Grid>
       </Grid>
     )
