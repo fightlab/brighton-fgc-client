@@ -64,6 +64,24 @@ const About = ({classes}) => (
         <iframe title='discord' src='https://discordapp.com/widget?id=255761898379804682&theme=dark' width='350' height='500' allowTransparency='true' frameBorder='0' />
       </Grid>
     </Grid>
+    <Typography variant='display1' component='h2'>
+      Elo Rating
+    </Typography>
+    <Typography variant='body1' component='p'>
+      We use the <a style={{ color: 'white' }} href='https://en.wikipedia.org/wiki/Elo_rating_system'>Elo Rating</a> system to calculate player's skill level at our events in each game, inspired by the system used at <a style={{ color: 'white' }} href='https://hbk.challonge.com/docs/challonge_ratings'>Challonge</a>.
+    </Typography>
+    <Typography variant='body1' component='p'>
+      A new player starts with 1000 and will go up and down with wins and losses. If you're expected to win and you do, you and your opponents ratings won't change much. If you're expected to win but you don't, your rating will drop considerably and your opponent's will rise considerably. If your rating is similar to your opponent's, any outcome will moderately affect both players.
+    </Typography>
+    <Typography variant='body1' component='p'>
+      We use the following K-Factor values:
+      <br />
+      Default K-Factor: 30
+      <br />
+      Elo > 1400: 20
+      <br />
+      Less than 30 Matches: 60
+    </Typography>
   </Paper>
 )
 
