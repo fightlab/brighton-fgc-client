@@ -224,9 +224,6 @@ class Player extends React.Component {
               <CardContent
                 className={classes.standingsCardContent}
               >
-                <Typography variant='headline' gutterBottom>
-                  { statistics.tournaments && statistics.tournaments.lplayer2winsngth } {statistics.tournaments && statistics.tournaments.length === '1' ? 'Tournament' : 'Tournaments'}
-                </Typography>
                 <TournamentList tournaments={statistics.tournaments} />
               </CardContent>
             </Card>
@@ -236,9 +233,6 @@ class Player extends React.Component {
               <CardContent
                 className={classes.standingsCardContent}
               >
-                <Typography variant='headline' gutterBottom>
-                  { statistics.games && statistics.games.length } {statistics.tournaments && statistics.tournaments.length === '1' ? 'Game' : 'Games'}
-                </Typography>
                 <GameList games={statistics.games} />
               </CardContent>
             </Card>
