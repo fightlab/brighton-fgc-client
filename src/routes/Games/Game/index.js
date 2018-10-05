@@ -58,6 +58,8 @@ class Game extends React.Component {
                 subheader='Upcoming'
                 tournaments={nextTournaments}
                 dense
+                showGame={false}
+                detailed
               />
             }
             {
@@ -65,6 +67,8 @@ class Game extends React.Component {
                 subheader='Past'
                 tournaments={pastTournaments}
                 dense
+                showGame={false}
+                detailed
               />
             }
           </BaseHomeCard>

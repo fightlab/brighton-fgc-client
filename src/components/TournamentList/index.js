@@ -11,7 +11,7 @@ import List, {
   ListItemText,
   ListSubheader
 } from 'material-ui/List'
-import { DateService } from '../../_services'
+import { DateService, MetaService } from '../../_services'
 
 const styles = theme => ({
   list: {
@@ -29,8 +29,16 @@ const styles = theme => ({
 })
 
 class TournamentList extends React.Component {
+  getSecondary (tournament, showGame, detailed) {
+    if (!detailed) {
+      return `${tournament.game && showGame ? `${tournament.game.name} - ` : ''}${tournament._gameId && showGame ? `${tournament._gameId.name} - ` : ''}${tournament.dateStart && DateService.format(tournament.dateStart, 'DATE_HUGE')}`
+    }
+
+    return `${tournament.game && showGame ? `${tournament.game.name} | ` : ''}${tournament._gameId && showGame ? `${tournament._gameId.name} | ` : ''}${tournament.dateStart && DateService.format(tournament.dateStart, 'DATE_MED')} | ${DateService.format(tournament.dateStart, 'TIME_SIMPLE')} - ${tournament.dateEnd ? DateService.format(tournament.dateEnd, 'TIME_SIMPLE') : 'N/A'} | ${tournament.players.length} Players | ${MetaService.toTitleCase(tournament.type)}${tournament.youtube ? ' | VOD' : ''}`
+  }
+
   render () {
-    const { classes, subheader, dense = false } = this.props
+    const { classes, subheader, dense = false, showGame = true, detailed = false } = this.props
     let { tournaments = [] } = this.props
     tournaments = orderBy(tournaments, ['dateStart'], ['desc'])
 
@@ -45,7 +53,7 @@ class TournamentList extends React.Component {
             <ListItem button key={tournament._id || tournament.id} component={Link} to={`/tournaments/${tournament._id || tournament.id}`}>
               <ListItemText
                 primary={`${tournament.name}`}
-                secondary={`${tournament.game ? `${tournament.game.name} - ` : ''}${tournament._gameId ? `${tournament._gameId.name} - ` : ''}${tournament.dateStart && DateService.format(tournament.dateStart, 'DATE_HUGE')}`}
+                secondary={this.getSecondary(tournament, showGame, detailed)}
               />
             </ListItem>
           ))
@@ -56,6 +64,8 @@ class TournamentList extends React.Component {
 }
 
 TournamentList.propTypes = {
+  showGame: PropTypes.bool,
+  detailed: PropTypes.bool,
   dense: PropTypes.bool,
   subheader: PropTypes.string,
   classes: PropTypes.object.isRequired,
