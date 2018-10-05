@@ -73,6 +73,15 @@ class EloList extends React.Component {
             </ListItem>
           ))
         }
+        {
+          !elo.length && (
+            <ListItem>
+              <ListItemText
+                primary='No Ranked Players'
+              />
+            </ListItem>
+          )
+        }
       </List>
     )
   }
@@ -86,12 +95,10 @@ EloList.propTypes = {
 }
 
 const mapStateToProps = state => {
-  const { tournament, game, series } = state
+  const { game } = state
 
   return {
-    tournament,
-    game,
-    series
+    game
   }
 }
 

@@ -6,10 +6,12 @@ import Grid from 'material-ui/Grid'
 import orderBy from 'lodash/orderBy'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import BaseHomeCard from '../../../components/BaseHomeCard'
+import filter from 'lodash/filter'
 
-import TournamentCard from '../../../components/TournamentCard'
+import BaseHomeCard from '../../../components/BaseHomeCard'
 import EloList from '../../../components/EloList'
+import TournamentList from '../../../components/TournamentList'
+import { DateService } from '../../../_services'
 
 import { gameActions } from '../../../_actions'
 
@@ -34,6 +36,9 @@ class Game extends React.Component {
     const { classes, game, match } = this.props
     const { tournaments = [] } = game
 
+    const nextTournaments = orderBy(filter(tournaments, tournament => DateService.compareDates(tournament.dateStart, new Date().toISOString())), 'date', 'desc')
+    const pastTournaments = orderBy(filter(tournaments, tournament => DateService.compareDates(new Date().toISOString(), tournament.dateStart)), 'date', 'desc')
+
     return (
       <Grid spacing={16} container className={classes.container}>
         <Grid item xs={12}>
@@ -46,20 +51,24 @@ class Game extends React.Component {
             <EloList id={match.params.gameId} />
           </BaseHomeCard>
         </Grid>
-        {
-          tournaments.length && <Grid item xs={12}>
-            <Typography variant='title' component='h3'>
-                Tournaments
-            </Typography>
-          </Grid>
-        }
-        {
-          tournaments.length && orderBy(tournaments, 'dateStart', 'desc').map(tournament => (
-            <Grid item xs={12} sm={4} lg={3} key={tournament.id}>
-              <TournamentCard tournament={tournament} key={tournament.id} />
-            </Grid>
-          ))
-        }
+        <Grid item sm={6} xs={12}>
+          <BaseHomeCard title='Tournaments'>
+            {
+              !!nextTournaments.length && <TournamentList
+                subheader='Upcoming'
+                tournaments={nextTournaments}
+                dense
+              />
+            }
+            {
+              !!pastTournaments.length && <TournamentList
+                subheader='Past'
+                tournaments={pastTournaments}
+                dense
+              />
+            }
+          </BaseHomeCard>
+        </Grid>
       </Grid>
     )
   }
