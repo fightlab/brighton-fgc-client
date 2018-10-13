@@ -87,7 +87,7 @@ class Tournament extends React.Component {
       dateEnd = null,
       signUpUrl = '',
       id = '',
-      series = null,
+      // series = null,
       youtube = ''
     } = tournament || {}
 
@@ -146,7 +146,7 @@ class Tournament extends React.Component {
             >
               <Tab label='Tournament Standings' />
               {/* <Tab label='Game' /> */}
-              {!!series && <Tab label='Series Standings' />}
+              {/* {!!series && <Tab label='Series Standings' />} */}
             </Tabs>
           </AppBar>
           {
@@ -167,15 +167,6 @@ class Tournament extends React.Component {
               </CardContent>
             </Card>
           } */}
-          {
-            !!series && selectedTab === 1 && <Card className={classes.standingsCard} elevation={10}>
-              <CardContent
-                className={classes.standingsCardContent}
-              >
-                <StandingList variant='series' id={series.id} limit={16} />
-              </CardContent>
-            </Card>
-          }
         </Grid>
         <Grid item xs={12}>
           <Card

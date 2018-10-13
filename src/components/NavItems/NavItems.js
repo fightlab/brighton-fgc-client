@@ -7,7 +7,7 @@ import StarsIcon from '@material-ui/icons/Stars'
 import PeopleIcon from '@material-ui/icons/People'
 import InfoOutlineIcon from '@material-ui/icons/InfoOutline'
 import DateRangeIcon from '@material-ui/icons/DateRange'
-import AssessmentIcon from '@material-ui/icons/Assessment'
+// import AssessmentIcon from '@material-ui/icons/Assessment'
 import WebIcon from '@material-ui/icons/Web'
 import PersonOutline from '@material-ui/icons/PersonOutline'
 
@@ -42,12 +42,12 @@ export const otherListItems = (
       </ListItemIcon>
       <ListItemText primary='Tournaments' />
     </ListItem>
-    <ListItem button component={Link} to='/standings'>
+    {/* <ListItem button component={Link} to='/standings'>
       <ListItemIcon>
         <AssessmentIcon />
       </ListItemIcon>
       <ListItemText primary='Standings' />
-    </ListItem>
+    </ListItem> */}
     <ListItem button component={Link} to='/players'>
       <ListItemIcon>
         <PeopleIcon />
