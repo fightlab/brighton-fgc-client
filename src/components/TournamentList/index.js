@@ -53,7 +53,7 @@ class TournamentList extends React.Component {
           dense={dense}
         >
           {
-            tournaments.length && map(tournaments, (tournament, index) => (
+            !!tournaments.length && map(tournaments, (tournament, index) => (
               <ListItem button key={tournament._id || tournament.id} component={Link} to={`/tournaments/${tournament._id || tournament.id}`}>
                 <ListItemText
                   primary={`${tournament.name}`}

@@ -54,14 +54,14 @@ class Event extends React.Component {
           </Button>
         </Grid>
         {
-          tournaments.length && <Grid item xs={12}>
+          !!tournaments.length && <Grid item xs={12}>
             <Typography variant='title' component='h3'>
                 Tournaments
             </Typography>
           </Grid>
         }
         {
-          tournaments.length && orderBy(tournaments, 'dateStart', 'desc').map(tournament => (
+          !!tournaments.length && orderBy(tournaments, 'dateStart', 'desc').map(tournament => (
             <Grid item xs={12} sm={4} lg={3} key={tournament.id}>
               <TournamentCard tournament={tournament} key={tournament.id} />
             </Grid>

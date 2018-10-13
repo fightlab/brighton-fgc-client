@@ -55,7 +55,7 @@ class EloList extends React.Component {
       <Scrollbar className={classes.scroll}>
         <List className={classes.list} dense>
           {
-            elo.length && map(elo, (e, index) => (
+            !!elo.length && map(elo, (e, index) => (
               <ListItem button key={e.id} component={Link} to={`/players/${e.player.id}`}>
                 <ListItemAvatar>
                   <Avatar

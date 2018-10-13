@@ -82,7 +82,7 @@ class StandingsList extends React.Component {
       <Scrollbar className={classes.scroll}>
         <List className={classes.list} dense>
           {
-            standings.length && map(standings, (standing, index) => (
+            !!standings.length && map(standings, (standing, index) => (
               <ListItem button key={standing.id} component={Link} to={`/players/${standing._playerId.id}`}>
                 <ListItemAvatar>
                   <Avatar

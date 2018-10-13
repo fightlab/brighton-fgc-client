@@ -41,7 +41,7 @@ class GameList extends React.Component {
       <Scrollbar className={classes.scroll}>
         <List className={classes.list} >
           {
-            games.length && map(games, (game, index) => (
+            !!games.length && map(games, (game, index) => (
               <ListItem button key={game._id} component={Link} to={`/games/${game._id}`}>
                 <ListItemAvatar>
                   <Avatar

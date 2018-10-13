@@ -377,7 +377,7 @@ class Player extends React.Component {
                       >
                         <MenuItem selected value='none'>Select Opponent</MenuItem>
                         {
-                          opponents.length && opponents.map(opponent => (
+                          !!opponents.length && opponents.map(opponent => (
                             <MenuItem key={opponent.id} value={opponent.id}>{opponent.handle}</MenuItem>
                           ))
                         }

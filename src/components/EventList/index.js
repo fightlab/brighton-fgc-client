@@ -45,7 +45,7 @@ class EventList extends React.Component {
           dense={dense}
         >
           {
-            events.length && map(events, (event, index) => (
+            !!events.length && map(events, (event, index) => (
               <ListItem button key={event._id || event.id} component={Link} to={`/events/${event._id || event.id}`}>
                 <ListItemText
                   primary={event.name}
