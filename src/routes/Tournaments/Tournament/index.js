@@ -46,7 +46,8 @@ const styles = theme => ({
     // flexGrow: 1
   },
   standingsCardContent: {
-    flexGrow: 1
+    flexGrow: 1,
+    padding: '0 !important'
   }
 })
 

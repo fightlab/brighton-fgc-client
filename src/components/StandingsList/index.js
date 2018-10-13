@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import map from 'lodash/map'
 import isNumber from 'lodash/isNumber'
 import deepOrange from 'material-ui/colors/deepOrange'
+import Scrollbar from 'react-scrollbars-custom'
 
 import List, {
   ListItem,
@@ -19,16 +20,18 @@ import { tournamentActions, gameActions, seriesActions } from '../../_actions'
 
 const styles = theme => ({
   list: {
-    width: '100%',
-    maxWidth: '100%',
     backgroundColor: theme.palette.background.paper,
     position: 'relative',
     overflow: 'auto',
-    maxHeight: 460,
     padding: 0
   },
   orange: {
     backgroundColor: deepOrange[400]
+  },
+  scroll: {
+    width: '100%',
+    maxWidth: '100%',
+    minHeight: 400
   }
 })
 
@@ -76,30 +79,32 @@ class StandingsList extends React.Component {
     }
 
     return (
-      <List className={classes.list} dense>
-        {
-          standings.length && map(standings, (standing, index) => (
-            <ListItem button key={standing.id} component={Link} to={`/players/${standing._playerId.id}`}>
-              <ListItemAvatar>
-                <Avatar
-                  alt={standing._playerId.handle}
-                  src={this.getImage(standing._playerId)}
+      <Scrollbar className={classes.scroll}>
+        <List className={classes.list} dense>
+          {
+            standings.length && map(standings, (standing, index) => (
+              <ListItem button key={standing.id} component={Link} to={`/players/${standing._playerId.id}`}>
+                <ListItemAvatar>
+                  <Avatar
+                    alt={standing._playerId.handle}
+                    src={this.getImage(standing._playerId)}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={standing._playerId.handle}
                 />
-              </ListItemAvatar>
-              <ListItemText
-                primary={standing._playerId.handle}
-              />
-              {
-                isNumber(standing.rank) && <ListItemSecondaryAction>
-                  <Avatar className={index < 4 ? classes.orange : ''}>
-                    {standing.rank.toString() || ''}
-                  </Avatar>
-                </ListItemSecondaryAction>
-              }
-            </ListItem>
-          ))
-        }
-      </List>
+                {
+                  isNumber(standing.rank) && <ListItemSecondaryAction>
+                    <Avatar className={index < 4 ? classes.orange : ''}>
+                      {standing.rank.toString() || ''}
+                    </Avatar>
+                  </ListItemSecondaryAction>
+                }
+              </ListItem>
+            ))
+          }
+        </List>
+      </Scrollbar>
     )
   }
 }

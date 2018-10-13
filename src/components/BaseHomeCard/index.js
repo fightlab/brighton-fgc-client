@@ -14,7 +14,7 @@ const styles = theme => ({
   },
   cardContent: {
     flexGrow: 1,
-    padding: 8
+    padding: '0 !important'
   }
 })
 

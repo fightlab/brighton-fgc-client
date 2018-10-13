@@ -13,6 +13,7 @@ import orderBy from 'lodash/orderBy'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import AppBar from 'material-ui/AppBar'
 import { Link } from 'react-router-dom'
+import Scrollbar from 'react-scrollbars-custom'
 
 const styles = theme => ({
   card: {
@@ -25,15 +26,19 @@ const styles = theme => ({
     flexGrow: 1
   },
   cardContent: {
-    flexGrow: 1
+    flexGrow: 1,
+    padding: '0 !important'
   },
-  list: {
+  scroll: {
     width: '100%',
     maxWidth: '100%',
+    minHeight: 400
+  },
+  list: {
     backgroundColor: theme.palette.background.paper,
     position: 'relative',
     overflow: 'auto',
-    maxHeight: 450
+    padding: 0
   }
 })
 
@@ -73,23 +78,25 @@ class PlayersCard extends React.Component {
               <CardContent
                 className={classes.cardContent}
               >
-                <List className={classes.list} dense>
-                  {
-                    players && map(orderBy(players, p => p.handle.toLowerCase(), 'asc'), player => (
-                      <ListItem button key={player.id} component={Link} to={`/players/${player.id}`}>
-                        <ListItemAvatar>
-                          <Avatar
-                            alt={player.handle}
-                            src={this.getImage(player)}
+                <Scrollbar className={classes.scroll}>
+                  <List className={classes.list} dense>
+                    {
+                      players && map(orderBy(players, p => p.handle.toLowerCase(), 'asc'), player => (
+                        <ListItem button key={player.id} component={Link} to={`/players/${player.id}`}>
+                          <ListItemAvatar>
+                            <Avatar
+                              alt={player.handle}
+                              src={this.getImage(player)}
+                            />
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={player.handle}
                           />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={player.handle}
-                        />
-                      </ListItem>
-                    ))
-                  }
-                </List>
+                        </ListItem>
+                      ))
+                    }
+                  </List>
+                </Scrollbar>
               </CardContent>
             </Card>
           }

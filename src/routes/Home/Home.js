@@ -33,6 +33,10 @@ const styles = theme => ({
     flexGrow: 1,
     marginTop: 30
   },
+  containerStats: {
+    marginTop: 8,
+    flexGrow: 1
+  },
   paper: {
     padding: 16,
     textAlign: 'left',
@@ -58,8 +62,8 @@ class Home extends React.Component {
   componentWillMount () {
     const { dispatch } = this.props
     // get events and tournaments
-    dispatch(eventActions.getAll(4))
-    dispatch(tournamentActions.getAll(4))
+    dispatch(eventActions.getAll(8))
+    dispatch(tournamentActions.getAll(8))
 
     // get global stats
     dispatch(eventActions.getCount())
@@ -137,7 +141,7 @@ class Home extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <BaseHomeCard title='Global Statistics'>
-              <Grid spacing={16} container className={classes.container}>
+              <Grid spacing={16} container className={classes.containerStats}>
                 <Grid item sm={3} xs={6}>
                   <Typography variant='title' gutterBottom align='center'>
                     Events

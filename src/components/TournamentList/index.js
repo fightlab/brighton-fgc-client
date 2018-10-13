@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import map from 'lodash/map'
 import orderBy from 'lodash/orderBy'
 import deepOrange from 'material-ui/colors/deepOrange'
+import Scrollbar from 'react-scrollbars-custom'
 
 import List, {
   ListItem,
@@ -15,16 +16,18 @@ import { DateService, MetaService } from '../../_services'
 
 const styles = theme => ({
   list: {
-    width: '100%',
-    maxWidth: '100%',
     backgroundColor: theme.palette.background.paper,
     position: 'relative',
     overflow: 'auto',
-    maxHeight: 460,
     padding: 0
   },
   orange: {
     backgroundColor: deepOrange[400]
+  },
+  scroll: {
+    width: '100%',
+    maxWidth: '100%',
+    minHeight: 400
   }
 })
 
@@ -43,22 +46,24 @@ class TournamentList extends React.Component {
     tournaments = orderBy(tournaments, ['dateStart'], ['desc'])
 
     return (
-      <List
-        className={classes.list}
-        subheader={!!subheader && <ListSubheader component='div'>{subheader}</ListSubheader>}
-        dense={dense}
-      >
-        {
-          tournaments.length && map(tournaments, (tournament, index) => (
-            <ListItem button key={tournament._id || tournament.id} component={Link} to={`/tournaments/${tournament._id || tournament.id}`}>
-              <ListItemText
-                primary={`${tournament.name}`}
-                secondary={this.getSecondary(tournament, showGame, detailed)}
-              />
-            </ListItem>
-          ))
-        }
-      </List>
+      <Scrollbar className={classes.scroll}>
+        <List
+          className={classes.list}
+          subheader={!!subheader && <ListSubheader component='div'>{subheader}</ListSubheader>}
+          dense={dense}
+        >
+          {
+            tournaments.length && map(tournaments, (tournament, index) => (
+              <ListItem button key={tournament._id || tournament.id} component={Link} to={`/tournaments/${tournament._id || tournament.id}`}>
+                <ListItemText
+                  primary={`${tournament.name}`}
+                  secondary={this.getSecondary(tournament, showGame, detailed)}
+                />
+              </ListItem>
+            ))
+          }
+        </List>
+      </Scrollbar>
     )
   }
 }
