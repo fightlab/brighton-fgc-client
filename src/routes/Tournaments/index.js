@@ -41,7 +41,6 @@ class Tournaments extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
     if (nextProps.match.isExact) {
       this.setBg('')
     } else {
@@ -50,7 +49,6 @@ class Tournaments extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     const { bg } = this.state
     const { match, classes } = this.props
     return (

@@ -19,6 +19,7 @@ import PlayersCard from '../../../components/PlayersCard'
 import YoutubeCard from '../../../components/YoutubeCard'
 
 import StandingList from '../../../components/StandingsList'
+import EloList from '../../../components/EloList'
 
 const styles = theme => ({
   container: {
@@ -145,7 +146,7 @@ class Tournament extends React.Component {
               fullWidth
             >
               <Tab label='Tournament Standings' />
-              {/* <Tab label='Game' /> */}
+              <Tab label='Game Elo Ranking' />
               {/* {!!series && <Tab label='Series Standings' />} */}
             </Tabs>
           </AppBar>
@@ -155,6 +156,15 @@ class Tournament extends React.Component {
                 className={classes.standingsCardContent}
               >
                 {id && <StandingList variant='tournament' id={id} />}
+              </CardContent>
+            </Card>
+          }
+          {
+            selectedTab === 1 && <Card className={classes.standingsCard} elevation={10}>
+              <CardContent
+                className={classes.standingsCardContent}
+              >
+                {id && <EloList id={game.id} />}
               </CardContent>
             </Card>
           }
