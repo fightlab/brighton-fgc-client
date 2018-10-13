@@ -8,12 +8,12 @@ import DateRangeIcon from '@material-ui/icons/DateRange'
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset'
 import PeopleIcon from '@material-ui/icons/People'
 import StarsIcon from '@material-ui/icons/Stars'
-import ViewListIcon from '@material-ui/icons/ViewList'
+// import ViewListIcon from '@material-ui/icons/ViewList'
 
 import AdminGame from './Game'
 import AdminTournament from './Tournament'
 import AdminPlayer from './Player'
-import AdminSeries from './Series'
+// import AdminSeries from './Series'
 import AdminEvent from './Event'
 
 const styles = theme => ({
@@ -60,7 +60,7 @@ class Admin extends React.Component {
           <BottomNavigationAction label='Events' icon={<DateRangeIcon />} />
           <BottomNavigationAction label='Games' icon={<VideogameAssetIcon />} />
           <BottomNavigationAction label='Players' icon={<PeopleIcon />} />
-          <BottomNavigationAction label='Series' icon={<ViewListIcon />} />
+          {/* <BottomNavigationAction label='Series' icon={<ViewListIcon />} /> */}
           <BottomNavigationAction label='Tournaments' icon={<StarsIcon />} />
         </BottomNavigation>
         {
@@ -93,7 +93,7 @@ class Admin extends React.Component {
             </div>
           )
         }
-        {
+        {/* {
           value === 3 && (
             <div>
               <Typography variant='headline' component='h3'>
@@ -102,9 +102,9 @@ class Admin extends React.Component {
               <AdminSeries />
             </div>
           )
-        }
+        } */}
         {
-          value === 4 && (
+          value === 3 && (
             <div>
               <Typography variant='headline' component='h3'>
                 Tournaments
