@@ -20,6 +20,7 @@ import YoutubeCard from '../../../components/YoutubeCard'
 
 import StandingList from '../../../components/StandingsList'
 import EloList from '../../../components/EloList'
+import MatchList from '../../../components/MatchList'
 
 const styles = theme => ({
   container: {
@@ -57,14 +58,20 @@ class Tournament extends React.Component {
     super(props)
 
     this.state = {
-      selectedTab: 0
+      selectedTab: 0,
+      selectedTabMatch: 0
     }
 
     this.handleTabChange = this.handleTabChange.bind(this)
+    this.handleTabChangeMatch = this.handleTabChangeMatch.bind(this)
   }
 
   handleTabChange (event, index) {
     this.setState({ selectedTab: index })
+  }
+
+  handleTabChangeMatch (event, index) {
+    this.setState({ selectedTabMatch: index })
   }
 
   componentWillMount () {
@@ -74,7 +81,7 @@ class Tournament extends React.Component {
 
   render () {
     const { classes, tournament: tournamentObj } = this.props
-    const { selectedTab } = this.state
+    const { selectedTab, selectedTabMatch } = this.state
     const { tournament } = tournamentObj
     const {
       event = {},
@@ -100,16 +107,22 @@ class Tournament extends React.Component {
       >
         <Grid item xs={12} className={classes.item}>
           <Typography variant='display1' component='h2'>
-            {name && name}
+            {
+              !!name && name
+            }
           </Typography>
           <Typography variant='caption' gutterBottom>
-            Last Updated - {updatedAt && DateService.format(updatedAt)}
+            Last Updated - {
+              !!updatedAt && DateService.format(updatedAt)
+            }
           </Typography>
           <Typography variant='subheading' component='h4'>
             <b>Event Date:</b>
             <br />
-            {dateStart && DateService.format(dateStart)} {
-              dateEnd && <span> - {DateService.format(dateEnd)}</span>
+            {
+              !!dateStart && DateService.format(dateStart)
+            } {
+              !!dateEnd && <span> - {DateService.format(dateEnd)}</span>
             }
           </Typography>
           <Typography variant='subheading' component='h4'>
@@ -122,19 +135,25 @@ class Tournament extends React.Component {
             Challonge Page
           </Button>
           {
-            dateStart && DateService.compareDates(dateStart, new Date().toISOString()) && <Button style={{marginLeft: 4}} variant='raised' color='secondary' href={signUpUrl && signUpUrl} target='_blank'>
+            !!dateStart && DateService.compareDates(dateStart, new Date().toISOString()) && <Button style={{marginLeft: 4}} variant='raised' color='secondary' href={signUpUrl && signUpUrl} target='_blank'>
               Sign Up Page
             </Button>
           }
         </Grid>
         <Grid item sm={6} xs={12}>
-          { event && <EventCard event={event} /> }
+          {
+            !!event && <EventCard event={event} />
+          }
         </Grid>
         <Grid item sm={6} xs={12}>
-          { game && <GameCard game={game} /> }
+          {
+            !!game && <GameCard game={game} />
+          }
         </Grid>
         <Grid item sm={6} xs={12}>
-          { players && <PlayersCard players={players} /> }
+          {
+            !!players && <PlayersCard players={players} />
+          }
         </Grid>
         <Grid item sm={6} xs={12} className={classes.cardGrid}>
           <AppBar position='static' color='default'>
@@ -155,7 +174,9 @@ class Tournament extends React.Component {
               <CardContent
                 className={classes.standingsCardContent}
               >
-                {id && <StandingList variant='tournament' id={id} />}
+                {
+                  !!id && <StandingList variant='tournament' id={id} />
+                }
               </CardContent>
             </Card>
           }
@@ -164,7 +185,9 @@ class Tournament extends React.Component {
               <CardContent
                 className={classes.standingsCardContent}
               >
-                {id && <EloList id={game.id} />}
+                {
+                  !!id && <EloList id={game.id} />
+                }
               </CardContent>
             </Card>
           }
@@ -178,17 +201,42 @@ class Tournament extends React.Component {
             </Card>
           } */}
         </Grid>
-        <Grid item xs={12}>
-          <Card
-            className={classes.card}
-          >
-            {
-              bracket && <iframe title='bracket' src={`${bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{minHeight: '500px', width: '100%'}} frameBorder='0' scrolling='yes' />
-            }
-          </Card>
+        <Grid item xs={12} className={classes.cardGrid}>
+          <AppBar position='static' color='default'>
+            <Tabs
+              value={selectedTabMatch}
+              onChange={this.handleTabChangeMatch}
+              indicatorColor='primary'
+              textColor='primary'
+              fullWidth
+            >
+              <Tab label='Bracket' />
+              {
+                !!dateEnd && <Tab label='Matches' />
+              }
+            </Tabs>
+          </AppBar>
+          {
+            selectedTabMatch === 0 && <Card
+              className={classes.card}
+            >
+              {
+                !!bracket && <iframe title='bracket' src={`${bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{minHeight: '450px', width: '100%'}} frameBorder='0' scrolling='yes' />
+              }
+            </Card>
+          }
+          {
+            selectedTabMatch === 1 && <Card className={classes.standingsCard} elevation={10}>
+              <CardContent
+                className={classes.standingsCardContent}
+              >
+                {id && <MatchList id={id} />}
+              </CardContent>
+            </Card>
+          }
         </Grid>
         {
-          youtube && <Grid item xs={12}>
+          !!youtube && <Grid item xs={12}>
             <YoutubeCard youtube={youtube} />
           </Grid>
         }
