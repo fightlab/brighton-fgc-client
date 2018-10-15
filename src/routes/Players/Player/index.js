@@ -26,9 +26,11 @@ import Steam from 'mdi-material-ui/Steam'
 import Twitch from 'mdi-material-ui/Twitch'
 import Discord from 'mdi-material-ui/Discord'
 import GithubCircle from 'mdi-material-ui/GithubCircle'
+
 import { playerActions } from '../../../_actions'
 import TournamentList from '../../../components/TournamentList'
 import GameList from '../../../components/GameList'
+import ChartBase from '../../../components/ChartBase'
 
 const styles = theme => ({
   container: {
@@ -126,6 +128,104 @@ class Player extends React.Component {
     const { classes, player: _player, match } = this.props
     const { player = {}, statistics = {}, opponents = [], headToHead = {} } = _player
     const { profile } = player
+
+    const optionsStats = {
+      chart: {
+        type: 'pie',
+        height: 328
+      },
+      title: {
+        text: 'Wins vs Losses'
+      },
+      subtitle: {
+        text: null
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -25,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: -90,
+          endAngle: 90,
+          center: ['50%', '75%'],
+          tooltip: {
+            pointFormat: '{point.y} | <b>{point.percentage:,.2f}%</b>'
+          },
+          size: '150%'
+        }
+      },
+      series: [{
+        name: 'Match - Wins vs Loss',
+        innerSize: '60%',
+        data: [[
+          'Match Wins', get(statistics.matches, `${selectedGame}.w`, 0)
+        ], [
+          'Match Losses', get(statistics.matches, `${selectedGame}.l`, 0)
+        ]]
+      }, {
+        name: 'Games - Wins vs Loss',
+        size: '65%',
+        data: [[
+          'Games Wins', get(statistics.rounds, `${selectedGame}.w`, 0)
+        ], [
+          'Games Losses', get(statistics.rounds, `${selectedGame}.l`, 0)
+        ]]
+      }]
+    }
+
+    const optionsH2H = {
+      chart: {
+        type: 'pie',
+        height: 328
+      },
+      title: {
+        text: 'Wins vs Losses'
+      },
+      subtitle: {
+        text: null
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -25,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: -90,
+          endAngle: 90,
+          center: ['50%', '75%'],
+          tooltip: {
+            pointFormat: '{point.y} | <b>{point.percentage:,.2f}%</b>'
+          },
+          size: '150%'
+        }
+      },
+      series: [{
+        name: 'Match - Wins vs Loss',
+        innerSize: '60%',
+        data: [[
+          'Match Wins', get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0)
+        ], [
+          'Match Losses', get(headToHead, `statistics.matches.${gameH2H}.player2wins`, 0)
+        ]]
+      }, {
+        name: 'Games - Wins vs Loss',
+        size: '65%',
+        data: [[
+          'Games Wins', get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0)
+        ], [
+          'Games Losses', get(headToHead, `statistics.games.${gameH2H}.player2wins`, 0)
+        ]]
+      }]
+    }
 
     return (
       <Grid spacing={16} container className={classes.container}>
@@ -280,7 +380,8 @@ class Player extends React.Component {
                 statistics.matches && statistics.rounds && <CardContent
                   className={classes.standingsCardContent}
                 >
-                  <Grid container>
+                  <ChartBase options={optionsStats} />
+                  {/* <Grid container>
                     <Grid item xs={12}>
                       <Typography variant='headline' gutterBottom align='center'>
                       Matches
@@ -355,7 +456,7 @@ class Player extends React.Component {
                         { this.calculateWinRatio(get(statistics.rounds, `${selectedGame}.w`, 0), get(statistics.rounds, `${selectedGame}.t`, 0)) }%
                       </Typography>
                     </Grid>
-                  </Grid>
+                  </Grid> */}
                 </CardContent>
               }
             </Card>
@@ -410,8 +511,11 @@ class Player extends React.Component {
                 className={classes.standingsCardContent}
               >
                 {
-                  get(headToHead, 'player1.id') === match.params.playerId && <Grid container>
-                    <Grid item xs={12}>
+                  get(headToHead, 'player1.id') === match.params.playerId && <ChartBase options={optionsH2H} />
+                }
+                {
+                  false && get(headToHead, 'player1.id') === match.params.playerId && <Grid container>
+                    {/* <Grid item xs={12}>
                       <Typography variant='headline' gutterBottom align='center'>
                       Matches
                       </Typography>
@@ -484,7 +588,7 @@ class Player extends React.Component {
                       <Typography variant='display1' gutterBottom align='center'>
                         { this.calculateWinRatio(get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.games.${gameH2H}.total`, 0)) }%
                       </Typography>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 }
               </CardContent>
