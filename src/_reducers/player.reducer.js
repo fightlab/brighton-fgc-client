@@ -98,6 +98,24 @@ export const player = (state = init, action) => {
         errorCode: action.status,
         player: action.player
       })
+    case playerConstants.GETELO_REQUEST:
+      state.elo = []
+      return merge({}, state, {
+        isFetching: true,
+        elo: action.elo
+      })
+    case playerConstants.GETELO_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        elo: action.elo
+      })
+    case playerConstants.GETELO_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        elo: action.elo
+      })
     default:
       return state
   }

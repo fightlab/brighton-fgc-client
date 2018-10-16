@@ -31,6 +31,7 @@ import { playerActions } from '../../../_actions'
 import TournamentList from '../../../components/TournamentList'
 import GameList from '../../../components/GameList'
 import ChartBase from '../../../components/ChartBase'
+import PlayerEloList from '../../../components/PlayerEloList'
 
 const styles = theme => ({
   container: {
@@ -310,38 +311,6 @@ class Player extends React.Component {
         <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
           <AppBar position='static' color='default'>
             <Tabs
-              value={selectedTab}
-              onChange={this.handleTabChange}
-              indicatorColor='primary'
-              textColor='primary'
-              fullWidth
-            >
-              <Tab label='Tournaments' />
-              <Tab label='Games' />
-            </Tabs>
-          </AppBar>
-          {
-            selectedTab === 0 && <Card className={classes.standingsCard} elevation={10}>
-              <CardContent
-                className={classes.standingsCardContent}
-              >
-                <TournamentList tournaments={statistics.tournaments} />
-              </CardContent>
-            </Card>
-          }
-          {
-            selectedTab === 1 && <Card className={classes.standingsCard} elevation={10}>
-              <CardContent
-                className={classes.standingsCardContent}
-              >
-                <GameList games={statistics.games} />
-              </CardContent>
-            </Card>
-          }
-        </Grid>
-        <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
-          <AppBar position='static' color='default'>
-            <Tabs
               value={selectedTabStats}
               onChange={this.handleTabChangeStats}
               indicatorColor='primary'
@@ -350,6 +319,7 @@ class Player extends React.Component {
             >
               <Tab label='Overall Statistics' />
               <Tab label='Head to Head Statistics' />
+              <Tab label='Elo Game Ranking' />
             </Tabs>
           </AppBar>
           {
@@ -591,6 +561,47 @@ class Player extends React.Component {
                     </Grid> */}
                   </Grid>
                 }
+              </CardContent>
+            </Card>
+          }
+          {
+            selectedTabStats === 2 && <Card className={classes.standingsCard} elevation={10}>
+              <CardContent
+                className={classes.standingsCardContent}
+              >
+                <PlayerEloList id={match.params.playerId} />
+              </CardContent>
+            </Card>
+          }
+        </Grid>
+        <Grid item xs={12} sm={12} lg={6} className={classes.cardGrid}>
+          <AppBar position='static' color='default'>
+            <Tabs
+              value={selectedTab}
+              onChange={this.handleTabChange}
+              indicatorColor='primary'
+              textColor='primary'
+              fullWidth
+            >
+              <Tab label='Tournaments' />
+              <Tab label='Games' />
+            </Tabs>
+          </AppBar>
+          {
+            selectedTab === 0 && <Card className={classes.standingsCard} elevation={10}>
+              <CardContent
+                className={classes.standingsCardContent}
+              >
+                <TournamentList tournaments={statistics.tournaments} />
+              </CardContent>
+            </Card>
+          }
+          {
+            selectedTab === 1 && <Card className={classes.standingsCard} elevation={10}>
+              <CardContent
+                className={classes.standingsCardContent}
+              >
+                <GameList games={statistics.games} />
               </CardContent>
             </Card>
           }

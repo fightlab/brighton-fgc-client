@@ -173,10 +173,47 @@ const getStatisticsHeadToHead = (p1id, p2id) => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getElo = id => dispatch => {
+  const request = id => {
+    return {
+      type: playerConstants.GETELO_REQUEST,
+      isFetching: true,
+      id,
+      elo: []
+    }
+  }
+
+  const success = elo => {
+    return {
+      type: playerConstants.GETELO_SUCCESS,
+      isFetching: false,
+      elo
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: playerConstants.GETELO_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText,
+      elo: []
+    }
+  }
+
+  dispatch(request({ id }))
+
+  PlayerService
+    .getElo(id)
+    .then(elo => dispatch(success(elo)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const playerActions = {
   getAll,
   get,
   getStatistics,
   getStatisticsHeadToHead,
-  getOpponents
+  getOpponents,
+  getElo
 }
