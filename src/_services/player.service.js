@@ -88,4 +88,11 @@ export class PlayerService {
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }
+
+  static getGameResults (id, gameId) {
+    return axios
+      .get(`${URL}/${id}/results/${gameId}`)
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
 }

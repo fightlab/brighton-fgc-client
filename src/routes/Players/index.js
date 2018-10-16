@@ -7,6 +7,7 @@ import { Route } from 'react-router-dom'
 
 import Player from './Player'
 import Root from './Root'
+import PlayerGame from './PlayerGame'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -25,7 +26,8 @@ const Players = ({match, classes}) => (
     <Typography variant='display2' component='h1'>
       Players
     </Typography>
-    <Route path={`${match.url}/:playerId`} component={Player} />
+    <Route exact path={`${match.url}/:playerId`} component={Player} />
+    <Route exact path={`${match.url}/:playerId/:gameId`} component={PlayerGame} />
     <Route exact path={match.url} component={Root} />
   </Paper>
 )

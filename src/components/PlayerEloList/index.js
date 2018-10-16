@@ -5,7 +5,6 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import map from 'lodash/map'
 import isNumber from 'lodash/isNumber'
-import deepOrange from 'material-ui/colors/deepOrange'
 import Typography from 'material-ui/Typography'
 import Scrollbar from 'react-scrollbars-custom'
 
@@ -48,7 +47,7 @@ class PlayerEloList extends React.Component {
         <List className={classes.list} dense>
           {
             !!elo.length && map(elo, (e, index) => (
-              <ListItem button key={e.id} component={Link} to={`/games/${e.game.id}`}>
+              <ListItem button key={e.id} component={Link} to={`/players/${e.player}/${e.game.id}`}>
                 <ListItemAvatar>
                   <Avatar
                     alt={e.game.name}

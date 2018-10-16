@@ -223,6 +223,10 @@ class ChartBase extends React.Component {
         text: 'subtitle.text'
       },
 
+      credits: {
+        enabled: false
+      },
+
       legend: {
         align: 'right',
         verticalAlign: 'middle',
@@ -292,5 +296,7 @@ class ChartBase extends React.Component {
 ChartBase.propTypes = {
   options: PropTypes.object
 }
+
+export { Highcharts }
 
 export default withStyles(styles)(ChartBase)

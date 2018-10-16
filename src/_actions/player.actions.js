@@ -209,11 +209,49 @@ const getElo = id => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getGameResults = (id, gameId) => dispatch => {
+  const request = (id, gameId) => {
+    return {
+      type: playerConstants.GETGAMERESULTS_REQUEST,
+      isFetching: true,
+      id,
+      gameId,
+      results: []
+    }
+  }
+
+  const success = results => {
+    return {
+      type: playerConstants.GETGAMERESULTS_SUCCESS,
+      isFetching: false,
+      results
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: playerConstants.GETGAMERESULTS_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText,
+      results: []
+    }
+  }
+
+  dispatch(request({ id }))
+
+  PlayerService
+    .getGameResults(id, gameId)
+    .then(results => dispatch(success(results)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const playerActions = {
   getAll,
   get,
   getStatistics,
   getStatisticsHeadToHead,
   getOpponents,
-  getElo
+  getElo,
+  getGameResults
 }
