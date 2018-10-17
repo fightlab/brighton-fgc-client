@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/Home'
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset'
 import StarsIcon from '@material-ui/icons/Stars'
 import PeopleIcon from '@material-ui/icons/People'
-import InfoOutlineIcon from '@material-ui/icons/InfoOutline'
+import InfoIcon from '@material-ui/icons/Info'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 // import AssessmentIcon from '@material-ui/icons/Assessment'
 import WebIcon from '@material-ui/icons/Web'
@@ -21,7 +23,7 @@ export const topListItems = (
     </ListItem>
     <ListItem button component={Link} to='/about'>
       <ListItemIcon>
-        <InfoOutlineIcon />
+        <InfoIcon />
       </ListItemIcon>
       <ListItemText primary='About' />
     </ListItem>

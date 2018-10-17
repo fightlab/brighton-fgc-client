@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
-import { withStyles } from 'material-ui/styles'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
 import orderBy from 'lodash/orderBy'
 import filter from 'lodash/filter'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { CircularProgress } from 'material-ui/Progress'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { tournamentActions } from '../../_actions'
 import { DateService } from '../../_services'
@@ -44,7 +44,7 @@ class Root extends React.Component {
         {
           tournament.isFetching && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
-              <Typography variant='display1' component='h2'>
+              <Typography variant='h4' component='h2'>
                 Upcoming Tournaments
               </Typography>
             </Grid>
@@ -56,7 +56,7 @@ class Root extends React.Component {
         {
           !!upcoming.length && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
-              <Typography variant='display1' component='h2'>
+              <Typography variant='h4' component='h2'>
                 Upcoming Tournaments
               </Typography>
             </Grid>
@@ -72,7 +72,7 @@ class Root extends React.Component {
         {
           tournament.isFetching && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
-              <Typography variant='display1' component='h2'>
+              <Typography variant='h4' component='h2'>
                 Past Tournaments
               </Typography>
             </Grid>
@@ -84,7 +84,7 @@ class Root extends React.Component {
         {
           !!past.length && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
-              <Typography variant='display1' component='h2'>
+              <Typography variant='h4' component='h2'>
                 Past Tournaments
               </Typography>
             </Grid>

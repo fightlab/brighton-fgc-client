@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
-import { withStyles } from 'material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import { Link } from 'react-router-dom'
 
@@ -45,7 +45,7 @@ class Header extends Component {
             <MenuIcon />
           </IconButton>
           <Link to='/' className={this.props.classes.home}>
-            <Typography variant='title' color='default'>
+            <Typography variant='h6' color='default'>
               Habrewken - Brighton FGC
             </Typography>
           </Link>

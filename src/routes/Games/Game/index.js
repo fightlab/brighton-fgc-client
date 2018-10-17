@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
 import orderBy from 'lodash/orderBy'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -42,7 +42,7 @@ class Game extends React.Component {
     return (
       <Grid spacing={16} container className={classes.container}>
         <Grid item xs={12}>
-          <Typography variant='display1' component='h2'>
+          <Typography variant='h4' component='h2'>
             {game.game && game.game.name}
           </Typography>
         </Grid>

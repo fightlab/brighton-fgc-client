@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Typography from 'material-ui/Typography'
-import Paper from 'material-ui/Paper'
-import Grid from 'material-ui/Grid'
-import Avatar from 'material-ui/Avatar'
-import TextField from 'material-ui/TextField'
-import Button from 'material-ui/Button'
-import Tooltip from 'material-ui/Tooltip'
-import Snackbar from 'material-ui/Snackbar'
-import IconButton from 'material-ui/IconButton'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+import Avatar from '@material-ui/core/Avatar'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Tooltip from '@material-ui/core/Tooltip'
+import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@material-ui/core/IconButton'
 import set from 'lodash/set'
 import get from 'lodash/get'
 import CloseIcon from '@material-ui/icons/Close'
@@ -118,7 +118,7 @@ class Profile extends React.Component {
 
     return (
       <Paper className={classes.root} elevation={0}>
-        <Typography variant='display2' component='h1'>
+        <Typography variant='h3' component='h1'>
           User Profile
         </Typography>
         <Grid
@@ -127,7 +127,7 @@ class Profile extends React.Component {
           className={classes.container}
         >
           <Grid item xs={12} className={classes.item}>
-            <Typography variant='display1' component='h2'>
+            <Typography variant='h4' component='h2'>
               {profile.name}
             </Typography>
             <Avatar
@@ -143,7 +143,7 @@ class Profile extends React.Component {
             </Typography>
           </Grid>
         </Grid>
-        <Typography variant='display2' component='h1'>
+        <Typography variant='h3' component='h1'>
           Habrewken Player Profile
         </Typography>
         <Grid

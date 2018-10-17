@@ -1,20 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import Grid from 'material-ui/Grid'
-import Button from 'material-ui/Button'
-import Avatar from 'material-ui/Avatar'
-import AppBar from 'material-ui/AppBar'
-import Tooltip from 'material-ui/Tooltip'
-import { withStyles } from 'material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import Avatar from '@material-ui/core/Avatar'
+import AppBar from '@material-ui/core/AppBar'
+import Tooltip from '@material-ui/core/Tooltip'
+import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import Card, { CardContent, CardHeader } from 'material-ui/Card'
-import { InputLabel } from 'material-ui/Input'
-import Select from 'material-ui/Select'
-import { MenuItem } from 'material-ui/Menu'
-import { FormControl } from 'material-ui/Form'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardHeader from '@material-ui/core/CardHeader'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
 import get from 'lodash/get'
 import Facebook from 'mdi-material-ui/Facebook'
 import Twitter from 'mdi-material-ui/Twitter'
@@ -231,7 +234,7 @@ class Player extends React.Component {
     return (
       <Grid spacing={16} container className={classes.container}>
         <Grid item xs={12} className={classes.item}>
-          <Typography variant='display1' component='h2' align='center'>
+          <Typography variant='h4' component='h2' align='center'>
             {player.handle}
           </Typography>
           <Avatar
@@ -239,7 +242,7 @@ class Player extends React.Component {
             alt={player.handle}
             src={this.getImage(player)}
           />
-          <Typography variant='subheading' component='h4' align='center'>
+          <Typography variant='subtitle1' component='h4' align='center'>
             {player.isStaff ? 'Habrewken Staff' : <span>&nbsp;</span>}
           </Typography>
           {
@@ -353,76 +356,76 @@ class Player extends React.Component {
                   <ChartBase options={optionsStats} />
                   {/* <Grid container>
                     <Grid item xs={12}>
-                      <Typography variant='headline' gutterBottom align='center'>
+                      <Typography variant='h5' gutterBottom align='center'>
                       Matches
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Total
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(statistics.matches, `${selectedGame}.t`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Wins
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(statistics.matches, `${selectedGame}.w`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Loss
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(statistics.matches, `${selectedGame}.l`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Win%
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { this.calculateWinRatio(get(statistics.matches, `${selectedGame}.w`, 0), get(statistics.matches, `${selectedGame}.t`, 0)) }%
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Typography variant='headline' gutterBottom align='center'>
+                      <Typography variant='h5' gutterBottom align='center'>
                       Match Games
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Total
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(statistics.rounds, `${selectedGame}.t`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Wins
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(statistics.rounds, `${selectedGame}.w`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Loss
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(statistics.rounds, `${selectedGame}.l`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Win%
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { this.calculateWinRatio(get(statistics.rounds, `${selectedGame}.w`, 0), get(statistics.rounds, `${selectedGame}.t`, 0)) }%
                       </Typography>
                     </Grid>
@@ -486,76 +489,76 @@ class Player extends React.Component {
                 {
                   false && get(headToHead, 'player1.id') === match.params.playerId && <Grid container>
                     {/* <Grid item xs={12}>
-                      <Typography variant='headline' gutterBottom align='center'>
+                      <Typography variant='h5' gutterBottom align='center'>
                       Matches
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Total
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(headToHead, `statistics.matches.${gameH2H}.total`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Wins VS
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Loss VS
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(headToHead, `statistics.matches.${gameH2H}.player2wins`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Win%
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { this.calculateWinRatio(get(headToHead, `statistics.matches.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.matches.${gameH2H}.total`, 0)) }%
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Typography variant='headline' gutterBottom align='center'>
+                      <Typography variant='h5' gutterBottom align='center'>
                       Match Games
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Total
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(headToHead, `statistics.games.${gameH2H}.total`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Wins VS
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Loss VS
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { get(headToHead, `statistics.games.${gameH2H}.player2wins`, 0) }
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <Typography variant='title' gutterBottom align='center'>
+                      <Typography variant='h6' gutterBottom align='center'>
                       Win%
                       </Typography>
-                      <Typography variant='display1' gutterBottom align='center'>
+                      <Typography variant='h4' gutterBottom align='center'>
                         { this.calculateWinRatio(get(headToHead, `statistics.games.${gameH2H}.player1wins`, 0), get(headToHead, `statistics.games.${gameH2H}.total`, 0)) }%
                       </Typography>
                     </Grid> */}

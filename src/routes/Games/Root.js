@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Grid from 'material-ui/Grid'
-import { withStyles } from 'material-ui/styles'
+import Grid from '@material-ui/core/Grid'
+import { withStyles } from '@material-ui/core/styles'
 import orderBy from 'lodash/orderBy'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { CircularProgress } from 'material-ui/Progress'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { gameActions } from '../../_actions'
 

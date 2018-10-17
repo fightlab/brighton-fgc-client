@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import Paper from 'material-ui/Paper'
-import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation'
-import { withStyles } from 'material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
+import { withStyles } from '@material-ui/core/styles'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset'
 import PeopleIcon from '@material-ui/icons/People'
@@ -49,7 +50,7 @@ class Admin extends React.Component {
 
     return (
       <Paper className={classes.root} elevation={0}>
-        <Typography variant='display2' component='h1'>
+        <Typography variant='h3' component='h1'>
           Admin
         </Typography>
         <BottomNavigation
@@ -66,7 +67,7 @@ class Admin extends React.Component {
         {
           value === 0 && (
             <div>
-              <Typography variant='headline' component='h3'>
+              <Typography variant='h5' component='h3'>
                 Events
               </Typography>
               <AdminEvent />
@@ -76,7 +77,7 @@ class Admin extends React.Component {
         {
           value === 1 && (
             <div>
-              <Typography variant='headline' component='h3'>
+              <Typography variant='h5' component='h3'>
                 Games
               </Typography>
               <AdminGame />
@@ -86,7 +87,7 @@ class Admin extends React.Component {
         {
           value === 2 && (
             <div>
-              <Typography variant='headline' component='h3'>
+              <Typography variant='h5' component='h3'>
                 Players
               </Typography>
               <AdminPlayer />
@@ -96,7 +97,7 @@ class Admin extends React.Component {
         {/* {
           value === 3 && (
             <div>
-              <Typography variant='headline' component='h3'>
+              <Typography variant='h5' component='h3'>
                 Series
               </Typography>
               <AdminSeries />
@@ -106,7 +107,7 @@ class Admin extends React.Component {
         {
           value === 3 && (
             <div>
-              <Typography variant='headline' component='h3'>
+              <Typography variant='h5' component='h3'>
                 Tournaments
               </Typography>
               <AdminTournament />

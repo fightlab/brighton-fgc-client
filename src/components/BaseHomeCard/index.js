@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import Card, { CardContent } from 'material-ui/Card'
-import AppBar from 'material-ui/AppBar'
-import Tabs, { Tab } from 'material-ui/Tabs'
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 
 const styles = theme => ({
   card: {

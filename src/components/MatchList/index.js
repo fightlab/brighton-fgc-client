@@ -1,18 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import map from 'lodash/map'
 import orderBy from 'lodash/orderBy'
-import deepOrange from 'material-ui/colors/deepOrange'
-import Typography from 'material-ui/Typography'
+import deepOrange from '@material-ui/core/colors/deepOrange'
+import Typography from '@material-ui/core/Typography'
 import Scrollbar from 'react-scrollbars-custom'
-import Grid from 'material-ui/Grid'
-import Card, { CardContent } from 'material-ui/Card'
-import Chip from 'material-ui/Chip'
-import Avatar from 'material-ui/Avatar'
-import ButtonBase from 'material-ui/ButtonBase'
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Chip from '@material-ui/core/Chip'
+import Avatar from '@material-ui/core/Avatar'
+import ButtonBase from '@material-ui/core/ButtonBase'
 
 import { tournamentActions } from '../../_actions'
 
@@ -91,10 +92,10 @@ class MatchList extends React.Component {
                     <Typography variant='caption' align='center'>
                       {`${match._player1EloAfter} ${match._player1EloAfter - match._player1EloBefore < 0 ? '-' : '+'}${Math.abs(match._player1EloAfter - match._player1EloBefore)}`}
                     </Typography>
-                    <Typography variant='subheading' align='center' className={match._winnerId.id === match._player1Id.id ? classes.orange : ''}>
+                    <Typography variant='subtitle1' align='center' className={match._winnerId.id === match._player1Id.id ? classes.orange : ''}>
                       {match.score[0].p1}
                     </Typography>
-                    <Typography variant='subheading' align='center' className={match._winnerId.id === match._player2Id.id ? classes.orange : ''}>
+                    <Typography variant='subtitle1' align='center' className={match._winnerId.id === match._player2Id.id ? classes.orange : ''}>
                       {match.score[0].p2}
                     </Typography>
                     <Typography variant='caption' align='center'>

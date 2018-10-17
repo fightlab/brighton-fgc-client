@@ -1,10 +1,10 @@
 import React from 'react'
-import Typography from 'material-ui/Typography'
-import Paper from 'material-ui/Paper'
-import Hidden from 'material-ui/Hidden'
-import Grid from 'material-ui/Grid'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import Hidden from '@material-ui/core/Hidden'
+import Grid from '@material-ui/core/Grid'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import orderBy from 'lodash/orderBy'
@@ -87,18 +87,18 @@ class Home extends React.Component {
     return (
       <Paper className={classes.root} elevation={0}>
         <Hidden mdUp>
-          <Typography variant='display2' component='h1'>
+          <Typography variant='h3' component='h1'>
             Habrewken
           </Typography>
-          <Typography variant='headline' component='h2'>
+          <Typography variant='h5' component='h2'>
             Brighton Fighting Game Community - Website and Resource
           </Typography>
         </Hidden>
         <Hidden smDown>
-          <Typography variant='display4' component='h1'>
+          <Typography variant='h1' component='h1'>
             Habrewken
           </Typography>
-          <Typography variant='display1' component='h2'>
+          <Typography variant='h4' component='h2'>
             Brighton Fighting Game Community - Website and Resource
           </Typography>
         </Hidden>
@@ -143,34 +143,34 @@ class Home extends React.Component {
             <BaseHomeCard title='Global Statistics'>
               <Grid spacing={16} container className={classes.containerStats}>
                 <Grid item sm={3} xs={6}>
-                  <Typography variant='title' gutterBottom align='center'>
+                  <Typography variant='h6' gutterBottom align='center'>
                     Events
                   </Typography>
-                  <Typography variant='display1' gutterBottom align='center'>
+                  <Typography variant='h4' gutterBottom align='center'>
                     {eventCount}
                   </Typography>
                 </Grid>
                 <Grid item sm={3} xs={6}>
-                  <Typography variant='title' gutterBottom align='center'>
+                  <Typography variant='h6' gutterBottom align='center'>
                     Tournaments
                   </Typography>
-                  <Typography variant='display1' gutterBottom align='center'>
+                  <Typography variant='h4' gutterBottom align='center'>
                     {tournamentCount}
                   </Typography>
                 </Grid>
                 <Grid item sm={3} xs={6}>
-                  <Typography variant='title' gutterBottom align='center'>
+                  <Typography variant='h6' gutterBottom align='center'>
                     Matches
                   </Typography>
-                  <Typography variant='display1' gutterBottom align='center'>
+                  <Typography variant='h4' gutterBottom align='center'>
                     {matchCount}
                   </Typography>
                 </Grid>
                 <Grid item sm={3} xs={6}>
-                  <Typography variant='title' gutterBottom align='center'>
+                  <Typography variant='h6' gutterBottom align='center'>
                    Match Games
                   </Typography>
-                  <Typography variant='display1' gutterBottom align='center'>
+                  <Typography variant='h4' gutterBottom align='center'>
                     {matchCountGames}
                   </Typography>
                 </Grid>

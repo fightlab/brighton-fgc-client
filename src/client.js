@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { hydrate } from 'react-dom'
 import BrowserRouter from 'react-router-dom/BrowserRouter'
 import theme from './theme'
-import { MuiThemeProvider } from 'material-ui/styles'
+import { MuiThemeProvider } from '@material-ui/core/styles'
 import { CookiesProvider } from 'react-cookie'
 import App from './App'
 

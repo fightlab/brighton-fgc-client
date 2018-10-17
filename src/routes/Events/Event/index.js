@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
 import orderBy from 'lodash/orderBy'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Button from 'material-ui/Button'
+import Button from '@material-ui/core/Button'
 
 import TournamentCard from '../../../components/TournamentCard'
 
@@ -40,13 +40,13 @@ class Event extends React.Component {
     return (
       <Grid spacing={16} container className={classes.container}>
         <Grid item xs={12} className={classes.item}>
-          <Typography variant='display1' component='h2'>
+          <Typography variant='h4' component='h2'>
             {event && event.name}
           </Typography>
-          <Typography variant='subheading' component='h4'>
+          <Typography variant='subtitle1' component='h4'>
             {event && DateService.format(event.date)}
           </Typography>
-          <Typography variant='subheading' component='h4'>
+          <Typography variant='subtitle1' component='h4'>
             {event && event.venue}
           </Typography>
           <Button dense='true' color='primary' href={event && event.url} target='_blank'>
@@ -55,7 +55,7 @@ class Event extends React.Component {
         </Grid>
         {
           !!tournaments.length && <Grid item xs={12}>
-            <Typography variant='title' component='h3'>
+            <Typography variant='h6' component='h3'>
                 Tournaments
             </Typography>
           </Grid>

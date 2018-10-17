@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-// import Grid from 'material-ui/Grid'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
-import Tooltip from 'material-ui/Tooltip'
-import Button from 'material-ui/Button'
+import { withStyles } from '@material-ui/core/styles'
+// import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
-import Avatar from 'material-ui/Avatar'
+import Avatar from '@material-ui/core/Avatar'
 import Facebook from 'mdi-material-ui/Facebook'
 import Twitter from 'mdi-material-ui/Twitter'
 import Instagram from 'mdi-material-ui/Instagram'
@@ -60,7 +62,7 @@ class PlayerCard extends React.Component {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Typography variant='headline' component='h2' align='center' noWrap>
+          <Typography variant='h5' component='h2' align='center' noWrap>
             {player.handle}
           </Typography>
           <Typography component='p' align='center' variant='caption'>

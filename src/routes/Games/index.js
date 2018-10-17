@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import Paper from 'material-ui/Paper'
-import { withStyles } from 'material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import { withStyles } from '@material-ui/core/styles'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import get from 'lodash/get'
@@ -58,7 +58,7 @@ class Games extends React.Component {
 
     return (
       <Paper style={bg} className={classes.root} elevation={0}>
-        <Typography variant='display2' component='h1'>
+        <Typography variant='h3' component='h1'>
           Games
         </Typography>
         <Route path={`${match.url}/:gameId`} render={props => <Game {...props} />} />

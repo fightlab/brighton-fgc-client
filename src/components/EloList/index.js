@@ -1,21 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import map from 'lodash/map'
 import isNumber from 'lodash/isNumber'
-import deepOrange from 'material-ui/colors/deepOrange'
-import Typography from 'material-ui/Typography'
+import deepOrange from '@material-ui/core/colors/deepOrange'
+import Typography from '@material-ui/core/Typography'
 import Scrollbar from 'react-scrollbars-custom'
 
-import List, {
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  ListItemSecondaryAction
-} from 'material-ui/List'
-import Avatar from 'material-ui/Avatar'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import Avatar from '@material-ui/core/Avatar'
 
 import { gameActions } from '../../_actions'
 
@@ -69,7 +68,7 @@ class EloList extends React.Component {
                 />
                 {
                   isNumber(e.elo) && <ListItemSecondaryAction>
-                    <Typography variant='headline' className={index < 4 ? classes.orange : ''}>
+                    <Typography variant='h5' className={index < 4 ? classes.orange : ''}>
                       {e.elo.toString() || ''}
                     </Typography>
                   </ListItemSecondaryAction>

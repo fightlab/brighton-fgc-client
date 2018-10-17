@@ -1,18 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import map from 'lodash/map'
 import orderBy from 'lodash/orderBy'
-import deepOrange from 'material-ui/colors/deepOrange'
+import deepOrange from '@material-ui/core/colors/deepOrange'
 import Scrollbar from 'react-scrollbars-custom'
 
-import List, {
-  ListItem,
-  ListItemAvatar,
-  ListItemText
-} from 'material-ui/List'
-import Avatar from 'material-ui/Avatar'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItemText from '@material-ui/core/ListItemText'
+import Avatar from '@material-ui/core/Avatar'
 
 const styles = theme => ({
   list: {

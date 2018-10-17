@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Button from 'material-ui/Button'
-import Card, { CardContent } from 'material-ui/Card'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import AppBar from 'material-ui/AppBar'
+import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import AppBar from '@material-ui/core/AppBar'
 
 import { DateService, MetaService } from '../../../_services'
 import { tournamentActions } from '../../../_actions'
@@ -106,7 +108,7 @@ class Tournament extends React.Component {
         className={classes.container}
       >
         <Grid item xs={12} className={classes.item}>
-          <Typography variant='display1' component='h2'>
+          <Typography variant='h4' component='h2'>
             {
               !!name && name
             }
@@ -116,7 +118,7 @@ class Tournament extends React.Component {
               !!updatedAt && DateService.format(updatedAt)
             }
           </Typography>
-          <Typography variant='subheading' component='h4'>
+          <Typography variant='subtitle1' component='h4'>
             <b>Event Date:</b>
             <br />
             {
@@ -125,7 +127,7 @@ class Tournament extends React.Component {
               !!dateEnd && <span> - {DateService.format(dateEnd)}</span>
             }
           </Typography>
-          <Typography variant='subheading' component='h4'>
+          <Typography variant='subtitle1' component='h4'>
             <b>Type:</b>
             <br />
             {MetaService.toTitleCase(tournament.type || '')}

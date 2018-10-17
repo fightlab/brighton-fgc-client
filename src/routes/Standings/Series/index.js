@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import Grid from 'material-ui/Grid'
-import { withStyles } from 'material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { seriesActions } from '../../../_actions'
 import { DateService } from '../../../_services'
-import Card, { CardContent } from 'material-ui/Card'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import orderBy from 'lodash/orderBy'
 
 import GameCard from '../../../components/GameCard'
@@ -48,7 +49,7 @@ class Series extends React.Component {
     return (
       <Grid spacing={16} container className={classes.container}>
         <Grid item xs={12}>
-          <Typography variant='display1' component='h2'>
+          <Typography variant='h4' component='h2'>
             { name }
           </Typography>
           <Typography variant='caption' gutterBottom>
@@ -70,7 +71,7 @@ class Series extends React.Component {
         {
           !!tournaments.length && <Grid spacing={16} container className={classes.container}>
             <Grid item xs={12}>
-              <Typography variant='display1' component='h2'>
+              <Typography variant='h4' component='h2'>
                 Tournaments
               </Typography>
             </Grid>

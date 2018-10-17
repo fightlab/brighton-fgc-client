@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Typography from 'material-ui/Typography'
-import Paper from 'material-ui/Paper'
-import { withStyles } from 'material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import { withStyles } from '@material-ui/core/styles'
 import { Route } from 'react-router-dom'
 
 import Root from './Root'
@@ -30,7 +30,7 @@ class Events extends React.Component {
 
     return (
       <Paper className={classes.root} elevation={0}>
-        <Typography variant='display2' component='h1'>
+        <Typography variant='h3' component='h1'>
           Events
         </Typography>
         <Route path={`${match.url}/:eventId`} render={props => <Event {...props} />} />
