@@ -140,7 +140,7 @@ class PlayerGame extends React.Component {
         sort: true,
         customBodyRender: value => {
           return (
-            <Button size='small' className={classes.button} component={Link} to={`/players/${value.id}`}>
+            <Button size='small' className={classes.button} component={Link} to={`/tournaments/${value.id}`}>
               {value.name}
             </Button>
           )
