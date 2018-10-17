@@ -57,11 +57,12 @@ class PlayerCard extends React.Component {
   }
 
   render () {
-    const { player = {}, classes } = this.props
+    const { player = {}, classes, hide = false } = this.props
     const { profile } = player
+    console.log(player)
     return (
       <Card className={classes.card}>
-        <CardContent>
+        <CardContent classNmae={classes.cardContent} style={{flexGrow: 1}}>
           <Typography variant='h5' component='h2' align='center' noWrap>
             {player.handle}
           </Typography>
@@ -73,19 +74,23 @@ class PlayerCard extends React.Component {
             alt={player.handle}
             src={this.getImage(player)}
           />
-          <Typography component='p' align='center' variant='caption'>
-            Tournaments:
-          </Typography>
-          <Typography component='p' align='center' gutterBottom>
-            {player.tournaments}
-          </Typography>
           {
-            profile && <Typography component='p' align='center' variant='caption'>
+            !hide && <Typography component='p' align='center' variant='caption'>
+              Tournaments:
+            </Typography>
+          }
+          {
+            !hide && <Typography component='p' align='center' gutterBottom>
+              {player.tournaments}
+            </Typography>
+          }
+          {
+            !hide && profile && <Typography component='p' align='center' variant='caption'>
               Profiles:
             </Typography>
           }
           {
-            profile && <Typography component='p' align='center' gutterBottom>
+            !hide && profile && <Typography component='p' align='center' gutterBottom>
               {
                 profile.web && <Button size='small' target='_blank' href={profile.web}>
                   <Web />
@@ -147,7 +152,7 @@ class PlayerCard extends React.Component {
             </Typography>
           }
         </CardContent>
-        <CardActions className={classes.cardActions}>
+        <CardActions>
           <Button dense='true' color='primary' component={Link} to={`/players/${player._id}`}>
             View Player
           </Button>
@@ -159,7 +164,8 @@ class PlayerCard extends React.Component {
 
 PlayerCard.propTypes = {
   player: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  hide: PropTypes.bool
 }
 
 export default withStyles(styles)(PlayerCard)

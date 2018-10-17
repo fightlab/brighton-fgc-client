@@ -1,17 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
 import MUIDataTable from 'mui-datatables'
 
 import { playerActions, gameActions } from '../../../_actions'
+import { DateService } from '../../../_services'
 import PlayerCard from '../../../components/PlayerCard'
 import GameCard from '../../../components/GameCard'
 import ChartBase from '../../../components/ChartBase'
+import PlayerChip from '../../../components/PlayerChip'
 
 const styles = theme => ({
   container: {
@@ -33,6 +36,9 @@ const styles = theme => ({
   standingsCardContent: {
     flexGrow: 1,
     padding: '0 !important'
+  },
+  button: {
+    margin: theme.spacing.unit
   }
 })
 
@@ -126,19 +132,46 @@ class PlayerGame extends React.Component {
       name: 'Tournament',
       options: {
         filter: true,
-        sort: true
+        sort: true,
+        customBodyRender: value => {
+          return (
+            <Button size='small' className={classes.button} component={Link} to={`/players/${value.id}`}>
+              {value.name}
+            </Button>
+          )
+        }
       }
     }, {
       name: 'Date',
       options: {
         filter: true,
-        sort: true
+        sort: true,
+        customBodyRender: value => {
+          return (
+            DateService.toISODate(value)
+          )
+        }
       }
     }, {
       name: 'Opponent',
       options: {
         filter: true,
-        sort: true
+        sort: true,
+        customBodyRender: value => {
+          return (
+            <PlayerChip
+              playerId={value.id}
+              imageUrl={value.imageUrl}
+              handle={value.handle}
+            />
+          )
+        }
+      }
+    }, {
+      name: 'Round',
+      options: {
+        filter: false,
+        sort: false
       }
     }, {
       name: 'Result',
@@ -169,9 +202,10 @@ class PlayerGame extends React.Component {
     let data
     if (player && game && matches) {
       data = matches.map(m => [
-        m._tournamentId.name,
+        m._tournamentId,
         m.endDate,
-        player.id === m._player1Id.id ? m._player2Id.handle : m._player1Id.handle,
+        player.id === m._player1Id.id ? m._player2Id : m._player1Id,
+        m.roundName || `${m.round < 0 ? 'Losers' : ''} Round ${Math.abs(m.round)}`,
         player.id === m._winnerId ? 'W' : 'L',
         `${m.score[0].p1} - ${m.score[0].p2}`,
         player.id === m._player1Id.id ? m._player1EloAfter - m._player1EloBefore : m._player2EloAfter - m._player2EloBefore,
@@ -188,7 +222,8 @@ class PlayerGame extends React.Component {
       print: false,
       download: false,
       filterType: 'dropdown',
-      viewColumns: false
+      viewColumns: false,
+      filter: false
     }
 
     return (
@@ -198,7 +233,7 @@ class PlayerGame extends React.Component {
         className={classes.container}
       >
         <Grid item sm={6} xs={12} className={classes.item}>
-          { !!player && <PlayerCard player={player} />}
+          { !!player && <PlayerCard player={player} hide />}
         </Grid>
         <Grid item sm={6} xs={12} className={classes.item}>
           { !!game && <GameCard game={game} />}
