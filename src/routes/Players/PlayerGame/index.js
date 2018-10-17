@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import MUIDataTable from 'mui-datatables'
 
 import { playerActions, gameActions } from '../../../_actions'
 import PlayerCard from '../../../components/PlayerCard'
@@ -121,6 +122,75 @@ class PlayerGame extends React.Component {
       }
     }
 
+    const columns = [{
+      name: 'Tournament',
+      options: {
+        filter: true,
+        sort: true
+      }
+    }, {
+      name: 'Date',
+      options: {
+        filter: true,
+        sort: true
+      }
+    }, {
+      name: 'Opponent',
+      options: {
+        filter: true,
+        sort: true
+      }
+    }, {
+      name: 'Result',
+      options: {
+        filter: true,
+        sort: false
+      }
+    }, {
+      name: 'Score',
+      options: {
+        filter: false,
+        sort: false
+      }
+    }, {
+      name: 'Elo Change',
+      options: {
+        filter: false,
+        sort: true
+      }
+    }, {
+      name: 'Elo Rating',
+      options: {
+        filter: false,
+        sort: true
+      }
+    }]
+
+    let data
+    if (player && game && matches) {
+      data = matches.map(m => [
+        m._tournamentId.name,
+        m.endDate,
+        player.id === m._player1Id.id ? m._player2Id.handle : m._player1Id.handle,
+        player.id === m._winnerId ? 'W' : 'L',
+        `${m.score[0].p1} - ${m.score[0].p2}`,
+        player.id === m._player1Id.id ? m._player1EloAfter - m._player1EloBefore : m._player2EloAfter - m._player2EloBefore,
+        player.id === m._player1Id.id ? m._player1EloAfter : m._player2EloAfter
+      ])
+    }
+
+    const optionsTable = {
+      responsive: 'scroll',
+      rowsPerPage: 25,
+      rowsPerPageOptions: [10, 25, 50, 100],
+      selectableRows: false,
+      search: false,
+      print: false,
+      download: false,
+      filterType: 'dropdown',
+      viewColumns: false
+    }
+
     return (
       <Grid
         spacing={16}
@@ -148,7 +218,12 @@ class PlayerGame extends React.Component {
               className={classes.standingsCardContent}
             >
               {
-                JSON.stringify(matches)
+                !!data && <MUIDataTable
+                  title={`Matches - ${player.handle} - ${game.name}`}
+                  data={data}
+                  columns={columns}
+                  options={optionsTable}
+                />
               }
             </CardContent>
           </Card>
