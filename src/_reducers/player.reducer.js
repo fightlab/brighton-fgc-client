@@ -134,6 +134,24 @@ export const player = (state = init, action) => {
         errorCode: action.status,
         results: action.results
       })
+    case playerConstants.GETGAMEMATCHES_REQUEST:
+      state.matches = []
+      return merge({}, state, {
+        isFetching: true,
+        matches: action.matches
+      })
+    case playerConstants.GETGAMEMATCHES_SUCCESS:
+      return merge({}, state, {
+        isFetching: false,
+        matches: action.matches
+      })
+    case playerConstants.GETGAMEMATCHES_FAILURE:
+      return merge({}, state, {
+        isFetching: false,
+        errorMessage: action.statusText,
+        errorCode: action.status,
+        matches: action.matches
+      })
     default:
       return state
   }

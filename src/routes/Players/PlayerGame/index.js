@@ -38,18 +38,18 @@ class PlayerGame extends React.Component {
   componentWillMount () {
     const { dispatch, match } = this.props
     dispatch(playerActions.get(match.params.playerId))
-    dispatch(playerActions.getGameResults(match.params.playerId, match.params.gameId))
     dispatch(gameActions.get(match.params.gameId))
+    dispatch(playerActions.getGameResults(match.params.playerId, match.params.gameId))
+    dispatch(playerActions.getGameMatches(match.params.playerId, match.params.gameId))
   }
 
   render () {
     const { player: _player, game: _game, classes } = this.props
 
-    const { player, results } = _player
+    const { player, results, matches } = _player
     const { game } = _game
 
     let options
-
     if (results && game && player) {
       options = {
         colors: ['#ff5722'],
@@ -142,7 +142,15 @@ class PlayerGame extends React.Component {
           </Card>
         </Grid>
         <Grid item xs={12} className={classes.item}>
-          Player Matches Game + Elo
+          <Card className={classes.standingsCard} elevation={10}>
+            <CardContent
+              className={classes.standingsCardContent}
+            >
+              {
+                JSON.stringify(matches)
+              }
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     )

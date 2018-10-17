@@ -246,6 +246,43 @@ const getGameResults = (id, gameId) => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getGameMatches = (id, gameId) => dispatch => {
+  const request = (id, gameId) => {
+    return {
+      type: playerConstants.GETGAMEMATCHES_REQUEST,
+      isFetching: true,
+      id,
+      gameId,
+      matches: []
+    }
+  }
+
+  const success = matches => {
+    return {
+      type: playerConstants.GETGAMEMATCHES_SUCCESS,
+      isFetching: false,
+      matches
+    }
+  }
+
+  const failure = error => {
+    return {
+      type: playerConstants.GETGAMEMATCHES_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText,
+      matches: []
+    }
+  }
+
+  dispatch(request({ id }))
+
+  PlayerService
+    .getGameMatches(id, gameId)
+    .then(matches => dispatch(success(matches)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const playerActions = {
   getAll,
   get,
@@ -253,5 +290,6 @@ export const playerActions = {
   getStatisticsHeadToHead,
   getOpponents,
   getElo,
-  getGameResults
+  getGameResults,
+  getGameMatches
 }
