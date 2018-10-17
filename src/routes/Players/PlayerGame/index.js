@@ -89,20 +89,33 @@ class PlayerGame extends React.Component {
               ]
             },
             marker: {
-              radius: 2
+              radius: 3
             },
-            lineWidth: 1,
+            lineWidth: 2,
             states: {
               hover: {
-                lineWidth: 1
+                lineWidth: 2
               }
             },
             threshold: null
+          },
+          series: {
+            cursor: 'pointer',
+            point: {
+              events: {
+                click: event => {
+                  this.props.history.push(`/tournaments/${event.point.options.key}`)
+                }
+              }
+            }
           }
         },
         series: [{
           name: `${player.handle} - ${game.name}`,
-          data: results.map(r => r.eloAfter)
+          data: results.map(r => ({
+            y: r.eloAfter,
+            key: r._tournamentId.id
+          }))
         }]
       }
     }
@@ -141,7 +154,8 @@ PlayerGame.propTypes = {
   player: PropTypes.object.isRequired,
   game: PropTypes.object.isRequired,
   match: PropTypes.any,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object
 }
 
 const mapStateToProps = state => {

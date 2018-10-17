@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { withRouter } from 'react-router-dom'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import assign from 'lodash/assign'
@@ -299,4 +300,4 @@ ChartBase.propTypes = {
 
 export { Highcharts }
 
-export default withStyles(styles)(ChartBase)
+export default withRouter(withStyles(styles)(ChartBase))
