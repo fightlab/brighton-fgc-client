@@ -51,6 +51,11 @@ class PlayerGame extends React.Component {
     dispatch(playerActions.getGameMatches(match.params.playerId, match.params.gameId))
   }
 
+  getImage (player) {
+    if (player.imageUrl) return player.imageUrl
+    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  }
+
   render () {
     const { player: _player, game: _game, classes } = this.props
 
@@ -161,7 +166,7 @@ class PlayerGame extends React.Component {
           return (
             <PlayerChip
               playerId={value.id}
-              imageUrl={value.imageUrl}
+              imageUrl={this.getImage(value)}
               handle={value.handle}
             />
           )
