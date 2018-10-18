@@ -60,11 +60,12 @@ class EventRow extends React.Component {
 
     return (
       <TableRow>
-        <TableCell style={{padding: '5px'}}>{event.id}</TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>{event.id}</TableCell>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='number'
             name='number'
+            type='number'
             value={event.number || 1}
             onChange={this.handleChange}
             placeholder='Number'
@@ -72,7 +73,7 @@ class EventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='name'
             name='name'
@@ -83,7 +84,7 @@ class EventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='date'
             name='date'
@@ -94,7 +95,7 @@ class EventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='venue'
             name='venue'
@@ -105,7 +106,7 @@ class EventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='url'
             name='url'
@@ -116,7 +117,7 @@ class EventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <IconButton onClick={this.saveEvent} aria-label='Save'>
             <SaveIcon />
           </IconButton>
@@ -178,19 +179,19 @@ class NewEventRow extends React.Component {
     return (
       <TableRow>
         <TableCell />
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='number'
             name='number'
             value={event.number || 1}
-            variant='number'
+            type='number'
             onChange={this.handleChange}
             placeholder='Number'
             fullWidth
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='name'
             name='name'
@@ -201,7 +202,7 @@ class NewEventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='date'
             name='date'
@@ -212,7 +213,7 @@ class NewEventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='venue'
             name='venue'
@@ -223,7 +224,7 @@ class NewEventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='url'
             name='url'
@@ -234,7 +235,7 @@ class NewEventRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <IconButton onClick={() => addEvent(event)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
@@ -328,12 +329,12 @@ class AdminEvent extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={{padding: '5px'}}>ID</TableCell>
-              <TableCell style={{padding: '5px'}}>Number</TableCell>
-              <TableCell style={{padding: '5px'}}>Name</TableCell>
-              <TableCell style={{padding: '5px'}}>Date</TableCell>
-              <TableCell style={{padding: '5px'}}>Venue</TableCell>
-              <TableCell style={{padding: '5px'}}>URL</TableCell>
+              <TableCell style={{ padding: '5px' }}>ID</TableCell>
+              <TableCell style={{ padding: '5px' }}>Number</TableCell>
+              <TableCell style={{ padding: '5px' }}>Name</TableCell>
+              <TableCell style={{ padding: '5px' }}>Date</TableCell>
+              <TableCell style={{ padding: '5px' }}>Venue</TableCell>
+              <TableCell style={{ padding: '5px' }}>URL</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>

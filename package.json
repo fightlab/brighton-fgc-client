@@ -1,13 +1,13 @@
 {
   "name": "brighton-fgc-client",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "license": "MIT",
   "scripts": {
     "dev": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start": "react-scripts build && NODE_ENV=production node server.js",
-    "analyze": "source-map-explorer build/static/js/main.*",
+    "analyze": "source-map-explorer build/static/js/1.*",
     "react-scripts-dev": "react-scripts start",
     "react-scripts-build": "react-scripts build",
     "react-scripts-test": "react-scripts test --env=jsdom"
