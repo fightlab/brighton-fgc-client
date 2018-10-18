@@ -107,6 +107,7 @@ class Home extends React.Component {
             <BaseHomeCard title='Tournaments'>
               {
                 !!nextTournaments.length && <TournamentList
+                  height={nextTournaments.length * 100}
                   subheader='Upcoming'
                   tournaments={nextTournaments}
                   dense
@@ -114,6 +115,7 @@ class Home extends React.Component {
               }
               {
                 !!pastTournaments.length && <TournamentList
+                  height={pastTournaments.length * 100}
                   subheader='Past'
                   tournaments={pastTournaments}
                   dense
@@ -125,6 +127,7 @@ class Home extends React.Component {
             <BaseHomeCard title='Events'>
               {
                 !!nextEvents.length && <EventList
+                  height={nextEvents.length * 100}
                   subheader='Upcoming'
                   events={nextEvents}
                   dense
@@ -132,6 +135,7 @@ class Home extends React.Component {
               }
               {
                 !!pastEvents.length && <EventList
+                  height={pastEvents.length * 100}
                   subheader='Past'
                   events={pastEvents}
                   dense

@@ -24,8 +24,7 @@ const styles = theme => ({
   },
   scroll: {
     width: '100%',
-    maxWidth: '100%',
-    minHeight: 400
+    maxWidth: '100%'
   }
 })
 
@@ -39,12 +38,11 @@ class TournamentList extends React.Component {
   }
 
   render () {
-    const { classes, subheader, dense = false, showGame = true, detailed = false } = this.props
+    const { classes, subheader, dense = false, showGame = true, detailed = false, height = 400 } = this.props
     let { tournaments = [] } = this.props
     tournaments = orderBy(tournaments, ['dateStart'], ['desc'])
-
     return (
-      <Scrollbar className={classes.scroll}>
+      <Scrollbar style={{ minHeight: Math.min(height, 400) }} className={classes.scroll}>
         <List
           className={classes.list}
           subheader={!!subheader && <ListSubheader component='div'>{subheader}</ListSubheader>}
@@ -72,7 +70,8 @@ TournamentList.propTypes = {
   dense: PropTypes.bool,
   subheader: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  tournaments: PropTypes.array
+  tournaments: PropTypes.array,
+  height: PropTypes.number
 }
 
 export default withStyles(styles)(TournamentList)

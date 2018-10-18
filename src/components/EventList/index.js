@@ -24,19 +24,18 @@ const styles = theme => ({
   },
   scroll: {
     width: '100%',
-    maxWidth: '100%',
-    minHeight: 400
+    maxWidth: '100%'
   }
 })
 
 class EventList extends React.Component {
   render () {
-    const { classes, subheader, dense = false } = this.props
+    const { classes, subheader, dense = false, height = 400 } = this.props
     let { events = [] } = this.props
     events = orderBy(events, ['date'], ['desc'])
 
     return (
-      <Scrollbar className={classes.scroll}>
+      <Scrollbar style={{ minHeight: Math.min(height, 400) }} className={classes.scroll}>
         <List
           className={classes.list}
           subheader={!!subheader && <ListSubheader component='div'>{subheader}</ListSubheader>}
@@ -62,7 +61,8 @@ EventList.propTypes = {
   dense: PropTypes.bool,
   subheader: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  events: PropTypes.array
+  events: PropTypes.array,
+  height: PropTypes.number
 }
 
 export default withStyles(styles)(EventList)
