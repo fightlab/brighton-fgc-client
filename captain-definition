@@ -10,7 +10,7 @@
                         "ENV NODE_ENV production",
                         "ENV PORT 80",
                         "EXPOSE 80",
-                        "RUN apk add curl",
+                        "RUN apk update && apk add curl curl-dev bash",
                         "CMD [ \"npm\", \"start\" ]"
                     ]
  }
