@@ -76,6 +76,7 @@ class PlayerGame extends React.Component {
           text: `${player.handle} - ${game.name}`
         },
         xAxis: {
+          // eslint-disable-next-line
           categories: results.map(r => r._tournamentId.name.replace(/[^\x00-\x7F]/g, '')),
           visible: false
         },
