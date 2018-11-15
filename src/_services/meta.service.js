@@ -38,6 +38,28 @@ export class MetaService {
             padding: '4px',
             textAlign: 'center'
           }
+        },
+        MUIDataTableHeadCell: {
+          fixedHeader: {
+            backgroundColor: 'inherit'
+          }
+        },
+        MUIDataTableViewCol: {
+          label: {
+            color: '#FFF'
+          },
+          title: {
+            color: '#FFF'
+          }
+        },
+        MUIDataTableFilter: {
+          title: {
+            color: '#FFF'
+          },
+          resetLink: {
+            color: deepOrange[600],
+            backgroundColor: 'inherit'
+          }
         }
       }
     })
