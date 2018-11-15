@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
@@ -10,6 +9,10 @@ import Button from '@material-ui/core/Button'
 import MUIDataTable from 'mui-datatables'
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
 import IconButton from '@material-ui/core/IconButton'
+import {
+  MuiThemeProvider,
+  withStyles
+} from '@material-ui/core/styles'
 
 import { playerActions, gameActions } from '../../../_actions'
 import { DateService } from '../../../_services'
@@ -17,6 +20,7 @@ import PlayerCard from '../../../components/PlayerCard'
 import GameCard from '../../../components/GameCard'
 import ChartBase from '../../../components/ChartBase'
 import PlayerChip from '../../../components/PlayerChip'
+import { MetaService } from '../../../_services/meta.service'
 
 const styles = theme => ({
   container: {
@@ -51,6 +55,10 @@ class PlayerGame extends React.Component {
     dispatch(gameActions.get(match.params.gameId))
     dispatch(playerActions.getGameResults(match.params.playerId, match.params.gameId))
     dispatch(playerActions.getGameMatches(match.params.playerId, match.params.gameId))
+  }
+
+  getMuiTheme () {
+    return MetaService.tableDarkThemePadding()
   }
 
   getImage (player) {
@@ -164,7 +172,7 @@ class PlayerGame extends React.Component {
       name: 'Opponent',
       options: {
         filter: true,
-        sort: true,
+        sort: false,
         customBodyRender: value => {
           return (
             <PlayerChip
@@ -228,27 +236,43 @@ class PlayerGame extends React.Component {
           }
         }
       }
+    }, {
+      name: 'Characters',
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: value => {
+          return (
+            <ul>
+              {
+                value.map(v => <li key={v.id} value={v.short}>{ v.short }</li>)
+              }
+            </ul>
+          )
+        }
+      }
     }]
 
     let data
     if (player && game && matches) {
       data = matches.map(m => [
-        m._tournamentId,
-        m.endDate,
-        player.id === m._player1Id.id ? m._player2Id : m._player1Id,
-        m.roundName || `${m.round < 0 ? 'Losers' : ''} Round ${Math.abs(m.round)}`,
-        player.id === m._winnerId ? 'W' : 'L',
-        `${m.score[0].p1} - ${m.score[0].p2}`,
-        player.id === m._player1Id.id ? m._player1EloAfter - m._player1EloBefore : m._player2EloAfter - m._player2EloBefore,
-        player.id === m._player1Id.id ? m._player1EloAfter : m._player2EloAfter,
-        m.youtubeId ? `https://www.youtube.com/watch?v=${m.youtubeId}&t=${m.youtubeTimestamp}` : ''
+        m.tournament,
+        m.date,
+        m.opponent,
+        m.round,
+        m.result,
+        m.score,
+        m.eloChange,
+        m.eloAfter,
+        m.youtube,
+        m.characters
       ])
     }
 
     const optionsTable = {
       responsive: 'scroll',
-      rowsPerPage: 25,
-      rowsPerPageOptions: [10, 25, 50, 100],
+      rowsPerPage: 10,
+      rowsPerPageOptions: [5, 10, 25, 50],
       selectableRows: false,
       search: true,
       print: false,
@@ -285,12 +309,14 @@ class PlayerGame extends React.Component {
               className={classes.standingsCardContent}
             >
               {
-                !!data && <MUIDataTable
-                  title={`Matches - ${player.handle} - ${game.name}`}
-                  data={data}
-                  columns={columns}
-                  options={optionsTable}
-                />
+                !!data && <MuiThemeProvider theme={this.getMuiTheme()}>
+                  <MUIDataTable
+                    title={`Matches - ${player.handle} - ${game.name}`}
+                    data={data}
+                    columns={columns}
+                    options={optionsTable}
+                  />
+                </MuiThemeProvider>
               }
             </CardContent>
           </Card>

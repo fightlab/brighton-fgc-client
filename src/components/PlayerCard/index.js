@@ -59,7 +59,7 @@ class PlayerCard extends React.Component {
   render () {
     const { player = {}, classes, hide = false } = this.props
     const { profile } = player
-    console.log(player)
+
     return (
       <Card className={classes.card}>
         <CardContent className={classes.cardContent} style={{flexGrow: 1}}>

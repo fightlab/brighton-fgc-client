@@ -1,3 +1,8 @@
+import {
+  createMuiTheme
+} from '@material-ui/core/styles'
+import { deepOrange, orange } from '@material-ui/core/colors'
+
 export class MetaService {
   static toTitleCase (str = '') {
     const smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i
@@ -14,6 +19,27 @@ export class MetaService {
       }
 
       return match.charAt(0).toUpperCase() + match.substr(1)
+    })
+  }
+
+  static tableDarkThemePadding () {
+    return createMuiTheme({
+      typography: {
+        useNextVariants: true
+      },
+      palette: {
+        primary: deepOrange,
+        accent: orange,
+        type: 'dark'
+      },
+      overrides: {
+        MuiTableCell: {
+          root: {
+            padding: '4px',
+            textAlign: 'center'
+          }
+        }
+      }
     })
   }
 }
