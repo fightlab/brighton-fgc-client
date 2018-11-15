@@ -8,6 +8,8 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import MUIDataTable from 'mui-datatables'
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
+import IconButton from '@material-ui/core/IconButton'
 
 import { playerActions, gameActions } from '../../../_actions'
 import { DateService } from '../../../_services'
@@ -139,9 +141,9 @@ class PlayerGame extends React.Component {
       options: {
         filter: true,
         sort: true,
-        customBodyRender: value => {
+        customBodyRender: (value, meta) => {
           return (
-            <Button size='small' className={classes.button} component={Link} to={`/tournaments/${value.id}`}>
+            <Button value={`${DateService.toISODate(meta.rowData[1])} - ${value.name}`} size='small' className={classes.button} component={Link} to={`/tournaments/${value.id}`}>
               {value.name}
             </Button>
           )
@@ -150,7 +152,7 @@ class PlayerGame extends React.Component {
     }, {
       name: 'Date',
       options: {
-        filter: true,
+        filter: false,
         sort: true,
         customBodyRender: value => {
           return (
@@ -169,6 +171,7 @@ class PlayerGame extends React.Component {
               playerId={value.id}
               imageUrl={this.getImage(value)}
               handle={value.handle}
+              value={value.handle}
             />
           )
         }
@@ -176,7 +179,7 @@ class PlayerGame extends React.Component {
     }, {
       name: 'Round',
       options: {
-        filter: false,
+        filter: true,
         sort: false
       }
     }, {
@@ -203,6 +206,28 @@ class PlayerGame extends React.Component {
         filter: false,
         sort: true
       }
+    }, {
+      name: 'VOD',
+      options: {
+        filter: true,
+        sort: false,
+        customBodyRender: value => {
+          if (value) {
+            return (
+              // eslint-disable-next-line
+              <a href={value} value='Yes' target='_blank'>
+                <IconButton color='primary'>
+                  <VideoLibraryIcon />
+                </IconButton>
+              </a>
+            )
+          } else {
+            return (
+              <span value='No' />
+            )
+          }
+        }
+      }
     }]
 
     let data
@@ -215,7 +240,8 @@ class PlayerGame extends React.Component {
         player.id === m._winnerId ? 'W' : 'L',
         `${m.score[0].p1} - ${m.score[0].p2}`,
         player.id === m._player1Id.id ? m._player1EloAfter - m._player1EloBefore : m._player2EloAfter - m._player2EloBefore,
-        player.id === m._player1Id.id ? m._player1EloAfter : m._player2EloAfter
+        player.id === m._player1Id.id ? m._player1EloAfter : m._player2EloAfter,
+        m.youtubeId ? `https://www.youtube.com/watch?v=${m.youtubeId}&t=${m.youtubeTimestamp}` : ''
       ])
     }
 
@@ -224,12 +250,12 @@ class PlayerGame extends React.Component {
       rowsPerPage: 25,
       rowsPerPageOptions: [10, 25, 50, 100],
       selectableRows: false,
-      search: false,
+      search: true,
       print: false,
       download: false,
       filterType: 'dropdown',
-      viewColumns: false,
-      filter: false
+      viewColumns: true,
+      filter: true
     }
 
     return (

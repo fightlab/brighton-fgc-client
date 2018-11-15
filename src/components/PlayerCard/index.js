@@ -62,7 +62,7 @@ class PlayerCard extends React.Component {
     console.log(player)
     return (
       <Card className={classes.card}>
-        <CardContent classNmae={classes.cardContent} style={{flexGrow: 1}}>
+        <CardContent className={classes.cardContent} style={{flexGrow: 1}}>
           <Typography variant='h5' component='h2' align='center' noWrap>
             {player.handle}
           </Typography>
