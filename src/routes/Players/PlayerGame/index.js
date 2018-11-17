@@ -13,6 +13,16 @@ import {
   MuiThemeProvider,
   withStyles
 } from '@material-ui/core/styles'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Typography from '@material-ui/core/Typography'
+import Select from '@material-ui/core/Select'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import _ from 'lodash'
 
 import { playerActions, gameActions } from '../../../_actions'
 import { DateService } from '../../../_services'
@@ -45,16 +55,48 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit
+  },
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular
   }
 })
 
 class PlayerGame extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      tournament: '',
+      opponent: '',
+      round: '',
+      result: '',
+      vod: null,
+      character: '',
+      data: []
+    }
+
+    this.handleFormChange = this.handleFormChange.bind(this)
+  }
+
   componentWillMount () {
     const { dispatch, match } = this.props
     dispatch(playerActions.get(match.params.playerId))
     dispatch(gameActions.get(match.params.gameId))
     dispatch(playerActions.getGameResults(match.params.playerId, match.params.gameId))
     dispatch(playerActions.getGameMatches(match.params.playerId, match.params.gameId))
+  }
+
+  handleFormChange (event) {
+    this.setState({ [event.target.name]: event.target.value })
   }
 
   getMuiTheme () {
@@ -253,20 +295,57 @@ class PlayerGame extends React.Component {
       }
     }]
 
-    let data
+    let data = []
+    const filterLists = {
+      tournaments: [],
+      opponents: [],
+      rounds: [],
+      characters: []
+    }
     if (player && game && matches) {
-      data = matches.map(m => [
-        m.tournament,
-        m.date,
-        m.opponent,
-        m.round,
-        m.result,
-        m.score,
-        m.eloChange,
-        m.eloAfter,
-        m.youtube,
-        m.characters
-      ])
+      data = matches
+        .filter(m => {
+          if (this.state.tournament) return this.state.tournament === m.tournament.id
+          return true
+        })
+        .filter(m => {
+          if (this.state.opponent) return this.state.opponent === m.opponent.id
+          return true
+        })
+        .filter(m => {
+          if (this.state.round) return this.state.round === m.round
+          return true
+        })
+        .filter(m => {
+          if (this.state.character) return !!m.characters.find(character => character.id === this.state.character)
+          return true
+        })
+        .filter(m => {
+          if (this.state.result) return this.state.result === m.result
+          return true
+        })
+        .filter(m => {
+          if (this.state.vod === true) return !!m.youtube
+          if (this.state.vod === false) return !m.youtube
+          return true
+        })
+        .map(m => [
+          m.tournament,
+          m.date,
+          m.opponent,
+          m.round,
+          m.result,
+          m.score,
+          m.eloChange,
+          m.eloAfter,
+          m.youtube,
+          m.characters
+        ])
+
+      filterLists.tournaments = _(matches).map(match => ({ id: match.tournament.id, name: match.tournament.name, date: match.date })).uniqBy(tournament => tournament.id).value()
+      filterLists.opponents = _(matches).map(match => match.opponent).uniqBy(opponent => opponent.id).value()
+      filterLists.rounds = _(matches).map(match => match.round).uniq().value()
+      filterLists.characters = _(matches).map(match => match.characters).flattenDeep().uniqBy(character => character.id).value()
     }
 
     const optionsTable = {
@@ -274,12 +353,12 @@ class PlayerGame extends React.Component {
       rowsPerPage: 10,
       rowsPerPageOptions: [5, 10, 25, 50],
       selectableRows: false,
-      search: true,
+      search: false,
       print: false,
       download: false,
       filterType: 'dropdown',
       viewColumns: true,
-      filter: true
+      filter: false
     }
 
     return (
@@ -309,14 +388,93 @@ class PlayerGame extends React.Component {
               className={classes.standingsCardContent}
             >
               {
-                !!data && <MuiThemeProvider theme={this.getMuiTheme()}>
-                  <MUIDataTable
-                    title={`Matches - ${player.handle} - ${game.name}`}
-                    data={data}
-                    columns={columns}
-                    options={optionsTable}
-                  />
-                </MuiThemeProvider>
+                !!data && !!game && !!player && <div>
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography className={classes.heading}>Matches Filters</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <form className={classes.root} autoComplete='off'>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel>Tournament</InputLabel>
+                          <Select
+                            name='tournament'
+                            value={this.state.tournament}
+                            onChange={this.handleFormChange}
+                          >
+                            <MenuItem value='' />
+                            { filterLists.tournaments.map(tournament => <MenuItem key={tournament.id} value={tournament.id}>{`${DateService.toISODate(tournament.date)} - ${tournament.name}`}</MenuItem>) }
+                          </Select>
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel>Opponent</InputLabel>
+                          <Select
+                            name='opponent'
+                            value={this.state.opponent}
+                            onChange={this.handleFormChange}
+                          >
+                            <MenuItem value='' />
+                            { filterLists.opponents.map(opponent => <MenuItem key={opponent.id} value={opponent.id}>{opponent.handle}</MenuItem>) }
+                          </Select>
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel>Rounds</InputLabel>
+                          <Select
+                            name='round'
+                            value={this.state.round}
+                            onChange={this.handleFormChange}
+                          >
+                            <MenuItem value='' />
+                            { filterLists.rounds.map(round => <MenuItem key={round} value={round}>{round}</MenuItem>) }
+                          </Select>
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel>Characters</InputLabel>
+                          <Select
+                            name='character'
+                            value={this.state.character}
+                            onChange={this.handleFormChange}
+                          >
+                            <MenuItem value='' />
+                            { filterLists.characters.map(character => <MenuItem key={character.id} value={character.id}>{character.short}</MenuItem>) }
+                          </Select>
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel>Result</InputLabel>
+                          <Select
+                            name='result'
+                            value={this.state.result}
+                            onChange={this.handleFormChange}
+                          >
+                            <MenuItem value='' />
+                            <MenuItem value='W'>W</MenuItem>
+                            <MenuItem value='L'>L</MenuItem>
+                          </Select>
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel>VOD</InputLabel>
+                          <Select
+                            name='vod'
+                            value={this.state.vod}
+                            onChange={this.handleFormChange}
+                          >
+                            <MenuItem value='' />
+                            <MenuItem value>YES</MenuItem>
+                            <MenuItem value={false}>NO</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </form>
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  <MuiThemeProvider theme={this.getMuiTheme()}>
+                    <MUIDataTable
+                      title={`Matches - ${player.handle} - ${game.name}`}
+                      data={data}
+                      columns={columns}
+                      options={optionsTable}
+                    />
+                  </MuiThemeProvider>
+                </div>
               }
             </CardContent>
           </Card>
