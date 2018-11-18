@@ -11,6 +11,8 @@ import Scrollbar from 'react-scrollbars-custom'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
 
 import { tournamentActions } from '../../_actions'
 import { MetaService } from '../../_services'
@@ -40,6 +42,9 @@ const styles = theme => ({
   },
   cardActions: {
     flexGrow: 1
+  },
+  noDeco: {
+    textDecoration: 'none'
   }
 })
 
@@ -61,7 +66,7 @@ class MatchList extends React.Component {
 
     return (
       <Scrollbar className={classes.scroll}>
-        <Grid container spacing={8} style={{margin: 0, width: '100%'}}>
+        <Grid container spacing={8} style={{ margin: 0, width: '100%' }}>
           {
             !!matches.length && map(orderBy(matches, m => new Date(m.endDate).getTime()), match => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={match.id}>
@@ -98,10 +103,17 @@ class MatchList extends React.Component {
                         orange={match._winnerId.id === match._player2Id.id}
                       />
                     </Typography>
+
                   </CardContent>
-                  {/* <CardActions>
-                    <Button size='small'>Learn More</Button>
-                  </CardActions> */}
+                  {
+                    !!match.youtubeId && <CardActions>
+                      <a className={classes.noDeco} href={`https://www.youtube.com/watch?v=${match.youtubeId}&t=${match.youtubeTimestamp}`} target='_blank'>
+                        <Button variant='outlined' color='primary' size='small'>
+                          View VOD
+                        </Button>
+                      </a>
+                    </CardActions>
+                  }
                 </Card>
               </Grid>
             ))
