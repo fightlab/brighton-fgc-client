@@ -12,6 +12,7 @@ import Players from './Players'
 import Standings from './Standings'
 import About from './About/About'
 import Login from './Login'
+import Matches from './Matches'
 import Admin from './Admin'
 import Profile from './Profile'
 
@@ -24,6 +25,7 @@ const Main = ({ isAuthenticated, isAdmin }) => (
     <Route path='/players' component={Players} />
     <Route path='/standings' component={Standings} />
     <Route path='/about' component={About} />
+    <Route path='/matches' component={Matches} />
     <Route path='/login' component={Login} />
     <LoggedInRoute path='/profile' component={Profile} isAuthenticated={isAuthenticated} />
     <AdminRoute path='/admin' isAdmin={isAdmin} component={Admin} />

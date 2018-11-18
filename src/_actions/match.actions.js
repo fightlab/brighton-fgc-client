@@ -63,7 +63,39 @@ const getCountGames = () => dispatch => {
     .catch(error => dispatch(failure(error)))
 }
 
+const getMatchesYoutube = () => dispatch => {
+  const request = () => ({
+    type: matchConstants.GETMATCHESYOUTUBE_REQUEST,
+    isFetching: true,
+    matches: []
+  })
+
+  const success = matches => ({
+    type: matchConstants.GETMATCHESYOUTUBE_SUCCESS,
+    isFetching: false,
+    matches
+  })
+
+  const failure = error => {
+    return {
+      type: matchConstants.GETMATCHESYOUTUBE_FAILURE,
+      isFetching: false,
+      status: error.status,
+      statusText: error.statusText,
+      matches: []
+    }
+  }
+
+  dispatch(request())
+
+  MatchService
+    .getMatchesYoutube()
+    .then(countGames => dispatch(success(countGames)))
+    .catch(error => dispatch(failure(error)))
+}
+
 export const matchActions = {
   getCount,
-  getCountGames
+  getCountGames,
+  getMatchesYoutube
 }

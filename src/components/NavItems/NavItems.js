@@ -5,13 +5,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/Home'
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset'
-import StarsIcon from '@material-ui/icons/Stars'
 import PeopleIcon from '@material-ui/icons/People'
 import InfoIcon from '@material-ui/icons/Info'
 import DateRangeIcon from '@material-ui/icons/DateRange'
-// import AssessmentIcon from '@material-ui/icons/Assessment'
 import WebIcon from '@material-ui/icons/Web'
 import PersonOutline from '@material-ui/icons/PersonOutline'
+import SwordCrossIcon from 'mdi-material-ui/SwordCross'
+import TournamentIcon from 'mdi-material-ui/Tournament'
 
 export const topListItems = (
   <div>
@@ -40,16 +40,10 @@ export const otherListItems = (
     </ListItem>
     <ListItem button component={Link} to='/tournaments'>
       <ListItemIcon>
-        <StarsIcon />
+        <TournamentIcon />
       </ListItemIcon>
       <ListItemText primary='Tournaments' />
     </ListItem>
-    {/* <ListItem button component={Link} to='/standings'>
-      <ListItemIcon>
-        <AssessmentIcon />
-      </ListItemIcon>
-      <ListItemText primary='Standings' />
-    </ListItem> */}
     <ListItem button component={Link} to='/players'>
       <ListItemIcon>
         <PeopleIcon />
@@ -61,6 +55,12 @@ export const otherListItems = (
         <VideogameAssetIcon />
       </ListItemIcon>
       <ListItemText primary='Games' />
+    </ListItem>
+    <ListItem button component={Link} to='/matches'>
+      <ListItemIcon>
+        <SwordCrossIcon />
+      </ListItemIcon>
+      <ListItemText primary='Matches' />
     </ListItem>
   </div>
 )

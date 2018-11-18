@@ -22,7 +22,8 @@ import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import _ from 'lodash'
+import { uniq, uniqBy, flattenDeep } from 'lodash'
+import memoize from 'memoize-one'
 
 import { playerActions, gameActions } from '../../../_actions'
 import { DateService } from '../../../_services'
@@ -85,9 +86,59 @@ class PlayerGame extends React.Component {
     }
 
     this.handleFormChange = this.handleFormChange.bind(this)
+
+    this.getFilterList = memoize(
+      (matches = []) => ({
+        tournaments: uniqBy(matches.map(match => ({ id: match.tournament.id, name: match.tournament.name, date: match.date })), tournament => tournament.id),
+        opponents: uniqBy(matches.map(match => match.opponent), opponent => opponent.id),
+        rounds: uniq(matches.map(match => match.round)),
+        characters: uniqBy(flattenDeep(matches.map(match => match.characters)), character => character.id)
+      })
+    )
+
+    this.getMatches = memoize(
+      (matches = [], filters) => matches
+        .filter(m => {
+          if (this.state.tournament) return this.state.tournament === m.tournament.id
+          return true
+        })
+        .filter(m => {
+          if (filters.opponent) return filters.opponent === m.opponent.id
+          return true
+        })
+        .filter(m => {
+          if (filters.round) return filters.round === m.round
+          return true
+        })
+        .filter(m => {
+          if (filters.character) return !!m.characters.find(character => character.id === filters.character)
+          return true
+        })
+        .filter(m => {
+          if (filters.result) return filters.result === m.result
+          return true
+        })
+        .filter(m => {
+          if (filters.vod === true) return !!m.youtube
+          if (filters.vod === false) return !m.youtube
+          return true
+        })
+        .map(m => [
+          m.tournament,
+          m.date,
+          m.opponent,
+          m.round,
+          m.result,
+          m.score,
+          m.eloChange,
+          m.eloAfter,
+          m.youtube,
+          m.characters
+        ])
+    )
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch, match } = this.props
     dispatch(playerActions.get(match.params.playerId))
     dispatch(gameActions.get(match.params.gameId))
@@ -110,8 +161,10 @@ class PlayerGame extends React.Component {
 
   render () {
     const { player: _player, game: _game, classes } = this.props
+    const filters = { ...this.state }
+    delete filters.data
 
-    const { player, results, matches } = _player
+    const { player, results, matches = [] } = _player
     const { game } = _game
 
     let options
@@ -295,58 +348,9 @@ class PlayerGame extends React.Component {
       }
     }]
 
-    let data = []
-    const filterLists = {
-      tournaments: [],
-      opponents: [],
-      rounds: [],
-      characters: []
-    }
-    if (player && game && matches) {
-      data = matches
-        .filter(m => {
-          if (this.state.tournament) return this.state.tournament === m.tournament.id
-          return true
-        })
-        .filter(m => {
-          if (this.state.opponent) return this.state.opponent === m.opponent.id
-          return true
-        })
-        .filter(m => {
-          if (this.state.round) return this.state.round === m.round
-          return true
-        })
-        .filter(m => {
-          if (this.state.character) return !!m.characters.find(character => character.id === this.state.character)
-          return true
-        })
-        .filter(m => {
-          if (this.state.result) return this.state.result === m.result
-          return true
-        })
-        .filter(m => {
-          if (this.state.vod === true) return !!m.youtube
-          if (this.state.vod === false) return !m.youtube
-          return true
-        })
-        .map(m => [
-          m.tournament,
-          m.date,
-          m.opponent,
-          m.round,
-          m.result,
-          m.score,
-          m.eloChange,
-          m.eloAfter,
-          m.youtube,
-          m.characters
-        ])
+    const filterLists = this.getFilterList(matches)
 
-      filterLists.tournaments = _(matches).map(match => ({ id: match.tournament.id, name: match.tournament.name, date: match.date })).uniqBy(tournament => tournament.id).value()
-      filterLists.opponents = _(matches).map(match => match.opponent).uniqBy(opponent => opponent.id).value()
-      filterLists.rounds = _(matches).map(match => match.round).uniq().value()
-      filterLists.characters = _(matches).map(match => match.characters).flattenDeep().uniqBy(character => character.id).value()
-    }
+    const data = this.getMatches(matches, filters)
 
     const optionsTable = {
       responsive: 'scroll',
