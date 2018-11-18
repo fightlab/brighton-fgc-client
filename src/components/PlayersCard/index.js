@@ -16,6 +16,8 @@ import AppBar from '@material-ui/core/AppBar'
 import { Link } from 'react-router-dom'
 import Scrollbar from 'react-scrollbars-custom'
 
+import { MetaService } from '../../_services'
+
 const styles = theme => ({
   card: {
     width: '100%',
@@ -50,11 +52,7 @@ class PlayersCard extends React.Component {
     this.state = {
       selectedTab: 0
     }
-  }
-
-  getImage (player) {
-    if (player.imageUrl) return player.imageUrl
-    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+    this.getImage = MetaService.getImage
   }
 
   render () {
@@ -63,7 +61,7 @@ class PlayersCard extends React.Component {
     const { selectedTab } = this.state
 
     return (
-      <div style={{width: 'inherit', height: 'inherit'}}>
+      <div style={{ width: 'inherit', height: 'inherit' }}>
         <AppBar position='static' color='default'>
           <Tabs
             value={selectedTab}

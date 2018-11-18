@@ -21,7 +21,7 @@ import Twitch from 'mdi-material-ui/Twitch'
 import Discord from 'mdi-material-ui/Discord'
 import GithubCircle from 'mdi-material-ui/GithubCircle'
 
-// import { MetaService } from '../../_services'
+import { MetaService } from '../../_services'
 
 const styles = theme => ({
   card: {
@@ -51,9 +51,10 @@ const styles = theme => ({
 })
 
 class PlayerCard extends React.Component {
-  getImage (player) {
-    if (player.imageUrl) return player.imageUrl
-    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  constructor (props) {
+    super(props)
+
+    this.getImage = MetaService.getImage
   }
 
   render () {

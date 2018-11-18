@@ -31,6 +31,7 @@ import Discord from 'mdi-material-ui/Discord'
 import GithubCircle from 'mdi-material-ui/GithubCircle'
 
 import { playerActions } from '../../../_actions'
+import { MetaService } from '../../../_services'
 import TournamentList from '../../../components/TournamentList'
 import GameList from '../../../components/GameList'
 import ChartBase from '../../../components/ChartBase'
@@ -87,6 +88,8 @@ class Player extends React.Component {
       gameH2H: 'total'
     }
 
+    this.getImage = MetaService.getImage
+
     this.handleTabChange = this.handleTabChange.bind(this)
     this.handleTabChangeStats = this.handleTabChangeStats.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -113,11 +116,6 @@ class Player extends React.Component {
   calculateWinRatio (wins = 0, games = 0) {
     if (!games) return '∞'
     return ((wins / games) * 100).toFixed(2)
-  }
-
-  getImage (player) {
-    if (player.imageUrl) return player.imageUrl
-    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
   }
 
   componentWillMount () {

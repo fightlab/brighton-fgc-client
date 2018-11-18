@@ -22,7 +22,7 @@ const styles = theme => ({
 const Matches = ({ match, classes }) => (
   <Paper className={classes.root} elevation={0}>
     <Typography variant='h3' component='h1'>
-      Matches
+      Matches Archive
     </Typography>
     <Route exact path={match.url} component={Root} />
   </Paper>

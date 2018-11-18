@@ -90,7 +90,7 @@ const getMatchesYoutube = () => dispatch => {
 
   MatchService
     .getMatchesYoutube()
-    .then(countGames => dispatch(success(countGames)))
+    .then(matches => dispatch(success(matches)))
     .catch(error => dispatch(failure(error)))
 }
 

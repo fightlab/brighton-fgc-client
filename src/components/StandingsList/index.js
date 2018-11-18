@@ -16,6 +16,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Avatar from '@material-ui/core/Avatar'
 
 import { tournamentActions, gameActions, seriesActions } from '../../_actions'
+import { MetaService } from '../../_services'
 
 const styles = theme => ({
   list: {
@@ -35,9 +36,10 @@ const styles = theme => ({
 })
 
 class StandingsList extends React.Component {
-  getImage (player) {
-    if (player.imageUrl) return player.imageUrl
-    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  constructor (props) {
+    super(props)
+
+    this.getImage = MetaService.getImage
   }
 
   componentWillMount () {

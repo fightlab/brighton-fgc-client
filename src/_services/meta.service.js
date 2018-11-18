@@ -64,4 +64,9 @@ export class MetaService {
       }
     })
   }
+
+  static getImage (player) {
+    if (player.imageUrl) return player.imageUrl
+    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  }
 }

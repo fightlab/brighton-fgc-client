@@ -13,6 +13,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
 import { tournamentActions } from '../../_actions'
+import { MetaService } from '../../_services'
 import PlayerChip from '../../components/PlayerChip'
 
 const styles = theme => ({
@@ -43,9 +44,10 @@ const styles = theme => ({
 })
 
 class MatchList extends React.Component {
-  getImage (player) {
-    if (player.imageUrl) return player.imageUrl
-    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
+  constructor (props) {
+    super(props)
+
+    this.getImage = MetaService.getImage
   }
 
   componentWillMount () {

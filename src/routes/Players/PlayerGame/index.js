@@ -26,12 +26,11 @@ import { uniq, uniqBy, flattenDeep } from 'lodash'
 import memoize from 'memoize-one'
 
 import { playerActions, gameActions } from '../../../_actions'
-import { DateService } from '../../../_services'
+import { DateService, MetaService } from '../../../_services'
 import PlayerCard from '../../../components/PlayerCard'
 import GameCard from '../../../components/GameCard'
 import ChartBase from '../../../components/ChartBase'
 import PlayerChip from '../../../components/PlayerChip'
-import { MetaService } from '../../../_services/meta.service'
 
 const styles = theme => ({
   container: {
@@ -85,6 +84,8 @@ class PlayerGame extends React.Component {
       data: []
     }
 
+    this.getImage = MetaService.getImage
+
     this.handleFormChange = this.handleFormChange.bind(this)
 
     this.getFilterList = memoize(
@@ -136,117 +137,15 @@ class PlayerGame extends React.Component {
           m.characters
         ])
     )
-  }
 
-  componentDidMount () {
-    const { dispatch, match } = this.props
-    dispatch(playerActions.get(match.params.playerId))
-    dispatch(gameActions.get(match.params.gameId))
-    dispatch(playerActions.getGameResults(match.params.playerId, match.params.gameId))
-    dispatch(playerActions.getGameMatches(match.params.playerId, match.params.gameId))
-  }
-
-  handleFormChange (event) {
-    this.setState({ [event.target.name]: event.target.value })
-  }
-
-  getMuiTheme () {
-    return MetaService.tableDarkThemePadding()
-  }
-
-  getImage (player) {
-    if (player.imageUrl) return player.imageUrl
-    return `https://www.gravatar.com/avatar/${player.emailHash}?d=robohash`
-  }
-
-  render () {
-    const { player: _player, game: _game, classes } = this.props
-    const filters = { ...this.state }
-    delete filters.data
-
-    const { player, results, matches = [] } = _player
-    const { game } = _game
-
-    let options
-    if (results && game && player) {
-      options = {
-        colors: ['#ff5722'],
-        chart: {
-          type: 'area'
-        },
-        title: {
-          text: 'Elo Ratings'
-        },
-        subtitle: {
-          text: `${player.handle} - ${game.name}`
-        },
-        xAxis: {
-          // eslint-disable-next-line
-          categories: results.map(r => r._tournamentId.name.replace(/[^\x00-\x7F]/g, '')),
-          visible: false
-        },
-        yAxis: {
-          title: {
-            text: ''
-          }
-        },
-        legend: {
-          enabled: false
-        },
-        plotOptions: {
-          area: {
-            fillColor: {
-              linearGradient: {
-                x1: 0,
-                y1: 0,
-                x2: 0,
-                y2: 1
-              },
-              stops: [
-                [0, '#ff5722'],
-                [1, 'rgba(255,87,34,0)']
-              ]
-            },
-            marker: {
-              radius: 3
-            },
-            lineWidth: 2,
-            states: {
-              hover: {
-                lineWidth: 2
-              }
-            },
-            threshold: null
-          },
-          series: {
-            cursor: 'pointer',
-            point: {
-              events: {
-                click: event => {
-                  this.props.history.push(`/tournaments/${event.point.options.key}`)
-                }
-              }
-            }
-          }
-        },
-        series: [{
-          name: `${player.handle} - ${game.name}`,
-          data: results.map(r => ({
-            y: r.eloAfter,
-            key: r._tournamentId.id
-          }))
-        }]
-      }
-    }
-
-    const columns = [{
+    this.columns = [{
       name: 'Tournament',
       options: {
         filter: true,
         sort: true,
         customBodyRender: (value, meta) => {
           return (
-            <Button value={`${DateService.toISODate(meta.rowData[1])} - ${value.name}`} size='small' className={classes.button} component={Link} to={`/tournaments/${value.id}`}>
+            <Button value={`${DateService.toISODate(meta.rowData[1])} - ${value.name}`} size='small' className={props.classes.button} component={Link} to={`/tournaments/${value.id}`}>
               {value.name}
             </Button>
           )
@@ -348,11 +247,7 @@ class PlayerGame extends React.Component {
       }
     }]
 
-    const filterLists = this.getFilterList(matches)
-
-    const data = this.getMatches(matches, filters)
-
-    const optionsTable = {
+    this.tableOptions = {
       responsive: 'scroll',
       rowsPerPage: 10,
       rowsPerPageOptions: [5, 10, 25, 50],
@@ -364,6 +259,107 @@ class PlayerGame extends React.Component {
       viewColumns: true,
       filter: false
     }
+  }
+
+  componentDidMount () {
+    const { dispatch, match } = this.props
+    dispatch(playerActions.get(match.params.playerId))
+    dispatch(gameActions.get(match.params.gameId))
+    dispatch(playerActions.getGameResults(match.params.playerId, match.params.gameId))
+    dispatch(playerActions.getGameMatches(match.params.playerId, match.params.gameId))
+  }
+
+  handleFormChange (event) {
+    this.setState({ [event.target.name]: event.target.value })
+  }
+
+  getMuiTheme () {
+    return MetaService.tableDarkThemePadding()
+  }
+
+  render () {
+    const { player: _player, game: _game, classes } = this.props
+    const { columns, tableOptions } = this
+    const filters = { ...this.state }
+    delete filters.data
+
+    const { player, results, matches = [] } = _player
+    const { game } = _game
+
+    let options
+    if (results && game && player) {
+      options = {
+        colors: ['#ff5722'],
+        chart: {
+          type: 'area'
+        },
+        title: {
+          text: 'Elo Ratings'
+        },
+        subtitle: {
+          text: `${player.handle} - ${game.name}`
+        },
+        xAxis: {
+          // eslint-disable-next-line
+          categories: results.map(r => r._tournamentId.name.replace(/[^\x00-\x7F]/g, '')),
+          visible: false
+        },
+        yAxis: {
+          title: {
+            text: ''
+          }
+        },
+        legend: {
+          enabled: false
+        },
+        plotOptions: {
+          area: {
+            fillColor: {
+              linearGradient: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1
+              },
+              stops: [
+                [0, '#ff5722'],
+                [1, 'rgba(255,87,34,0)']
+              ]
+            },
+            marker: {
+              radius: 3
+            },
+            lineWidth: 2,
+            states: {
+              hover: {
+                lineWidth: 2
+              }
+            },
+            threshold: null
+          },
+          series: {
+            cursor: 'pointer',
+            point: {
+              events: {
+                click: event => {
+                  this.props.history.push(`/tournaments/${event.point.options.key}`)
+                }
+              }
+            }
+          }
+        },
+        series: [{
+          name: `${player.handle} - ${game.name}`,
+          data: results.map(r => ({
+            y: r.eloAfter,
+            key: r._tournamentId.id
+          }))
+        }]
+      }
+    }
+
+    const filterLists = this.getFilterList(matches)
+    const data = this.getMatches(matches, filters)
 
     return (
       <Grid
@@ -475,7 +471,7 @@ class PlayerGame extends React.Component {
                       title={`Matches - ${player.handle} - ${game.name}`}
                       data={data}
                       columns={columns}
-                      options={optionsTable}
+                      options={tableOptions}
                     />
                   </MuiThemeProvider>
                 </div>
