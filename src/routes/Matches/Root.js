@@ -18,7 +18,7 @@ import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import { uniq } from 'lodash'
+import { uniq, find, flattenDeep } from 'lodash'
 
 import { matchActions } from '../../_actions'
 import { MetaService, DateService } from '../../_services'
@@ -291,6 +291,13 @@ class Matches extends React.Component {
     )
 
     this.handleFormChange = this.handleFormChange.bind(this)
+    this.filterTournaments = this.filterTournaments.bind(this)
+    this.filterPlayers = this.filterPlayers.bind(this)
+    this.filterWinners = this.filterWinners.bind(this)
+    this.filterLosers = this.filterLosers.bind(this)
+    this.filterCharacters = this.filterCharacters.bind(this)
+    this.filterGames = this.filterGames.bind(this)
+    this.filterRounds = this.filterRounds.bind(this)
   }
 
   componentDidMount () {
@@ -306,12 +313,369 @@ class Matches extends React.Component {
     return MetaService.tableDarkThemePadding()
   }
 
+  getMatchFilterByPlayer ({ player, matches }) {
+    return matches.filter(m => {
+      if (player === m.player1) return true
+      if (player === m.player2) return true
+      return false
+    })
+  }
+
+  getMatchFilterWinner ({ winner, matches }) {
+    return matches.filter(m => {
+      if (winner === m.player1) return true
+      if (winner === m.player2) return true
+      return false
+    })
+  }
+
+  getMatchFilterLoser ({ loser, matches }) {
+    return matches.filter(m => {
+      if (loser === m.player1) return true
+      if (loser === m.player2) return true
+      return false
+    })
+  }
+
+  getMatchFilterTournament ({ tournament, matches }) {
+    return matches.filter(m => tournament === m.tournament)
+  }
+
+  getMatchFilterRound ({ round, matches }) {
+    return matches.filter(m => round === m.round)
+  }
+
+  getMatchFilterCharacter ({ character, matches }) {
+    return matches.filter(m => !!m.characters.find(c => c === character))
+  }
+
+  getMatchFilterGame ({ game, matches, map }) {
+    return matches.filter(m => game === map.get(m.tournament)._gameId)
+  }
+
+  filterTournaments ({ tournaments = [], matches = [], map }) {
+    const { game, player, winner, loser, round, character } = this.state
+
+    // filter tournaments by player/winner/loser/round/character
+    // first get all matches with player
+    if (player) {
+      matches = this.getMatchFilterByPlayer({ player, matches })
+    }
+
+    // next check for winner
+    if (winner) {
+      matches = this.getMatchFilterWinner({ winner, matches })
+    }
+
+    // next check for loser
+    if (loser) {
+      matches = this.getMatchFilterLoser({ loser, matches })
+    }
+
+    // next check for round
+    if (round) {
+      matches = this.getMatchFilterRound({ round, matches })
+    }
+
+    // next check for characters
+    if (character) {
+      matches = this.getMatchFilterCharacter({ character, matches })
+    }
+
+    if (game) {
+      matches = this.getMatchFilterGame({ game, matches, map })
+    }
+
+    // now map to tournaments
+    if (player || winner || loser || round || character || game) {
+      const _tournaments = []
+      uniq(matches.map(m => m.tournament)).forEach(id => {
+        const tournament = find(tournaments, t => t.id === id)
+        if (tournament) _tournaments.push(tournament)
+      })
+      tournaments = _tournaments
+    }
+
+    // return updated (or not updated tournaments)
+    return tournaments
+  }
+
+  filterPlayers ({ players = [], matches = [], map }) {
+    const { game, winner, loser, round, character, tournament } = this.state
+
+    // next check for winner
+    if (winner) {
+      matches = this.getMatchFilterWinner({ winner, matches })
+    }
+
+    // next check for loser
+    if (loser) {
+      matches = this.getMatchFilterLoser({ loser, matches })
+    }
+
+    // next check for round
+    if (round) {
+      matches = this.getMatchFilterRound({ round, matches })
+    }
+
+    // next check for characters
+    if (character) {
+      matches = this.getMatchFilterCharacter({ character, matches })
+    }
+
+    // and tournaments
+    if (tournament) {
+      matches = this.getMatchFilterTournament({ tournament, matches })
+    }
+
+    if (game) {
+      matches = this.getMatchFilterGame({ game, matches, map })
+    }
+
+    // now map
+    if (tournament || winner || loser || round || character || game) {
+      const _players = []
+      uniq([...matches.map(m => m.player1), ...matches.map(m => m.player2)]).forEach(id => {
+        const player = find(players, p => p.id === id)
+        if (player) _players.push(player)
+      })
+      players = _players
+    }
+
+    return players
+  }
+
+  filterWinners ({ players = [], matches = [], map }) {
+    const { game, player, loser, round, character, tournament } = this.state
+
+    // next check for player
+    if (player) {
+      matches = this.getMatchFilterPlayer({ player, matches })
+    }
+
+    // next check for loser
+    if (loser) {
+      matches = this.getMatchFilterLoser({ loser, matches })
+    }
+
+    // next check for round
+    if (round) {
+      matches = this.getMatchFilterRound({ round, matches })
+    }
+
+    // next check for characters
+    if (character) {
+      matches = this.getMatchFilterCharacter({ character, matches })
+    }
+
+    // and tournaments
+    if (tournament) {
+      matches = this.getMatchFilterTournament({ tournament, matches })
+    }
+
+    if (game) {
+      matches = this.getMatchFilterGame({ game, matches, map })
+    }
+
+    // now map
+    if (tournament || player || loser || round || character || game) {
+      const _winners = []
+      uniq(matches.map(m => m.winner)).forEach(id => {
+        const winner = find(players, p => p.id === id)
+        if (winner) _winners.push(winner)
+      })
+      players = _winners
+    }
+
+    return players
+  }
+
+  filterLosers ({ players = [], matches = [], map }) {
+    const { game, player, winner, round, character, tournament } = this.state
+
+    // next check for player
+    if (player) {
+      matches = this.getMatchFilterPlayer({ player, matches })
+    }
+
+    // next check for winner
+    if (winner) {
+      matches = this.getMatchFilterWinner({ winner, matches })
+    }
+
+    // next check for round
+    if (round) {
+      matches = this.getMatchFilterRound({ round, matches })
+    }
+
+    // next check for characters
+    if (character) {
+      matches = this.getMatchFilterCharacter({ character, matches })
+    }
+
+    // and tournaments
+    if (tournament) {
+      matches = this.getMatchFilterTournament({ tournament, matches })
+    }
+
+    if (game) {
+      matches = this.getMatchFilterGame({ game, matches, map })
+    }
+
+    // now map
+    if (tournament || player || winner || round || character || game) {
+      const _losers = []
+      uniq(matches.map(m => m.loser)).forEach(id => {
+        const loser = find(players, p => p.id === id)
+        if (loser) _losers.push(loser)
+      })
+      players = _losers
+    }
+
+    return players
+  }
+
+  filterGames ({ games = [], matches = [], map }) {
+    const { player, winner, loser, round, character, tournament } = this.state
+
+    // next check for winner
+    if (winner) {
+      matches = this.getMatchFilterWinner({ winner, matches })
+    }
+
+    // next check for loser
+    if (loser) {
+      matches = this.getMatchFilterLoser({ loser, matches })
+    }
+
+    // next check for round
+    if (round) {
+      matches = this.getMatchFilterRound({ round, matches })
+    }
+
+    // next check for characters
+    if (character) {
+      matches = this.getMatchFilterCharacter({ character, matches })
+    }
+
+    // and tournaments
+    if (tournament) {
+      matches = this.getMatchFilterTournament({ tournament, matches })
+    }
+
+    if (player) {
+      matches = this.getMatchFilterByPlayer({ player, matches })
+    }
+
+    // now map
+    if (tournament || winner || loser || round || character || player) {
+      const _games = []
+      uniq(matches.map(m => map.get(m.tournament)._gameId)).forEach(id => {
+        const game = find(games, p => p.id === id)
+        if (game) _games.push(game)
+      })
+      games = _games
+    }
+
+    return games
+  }
+
+  filterCharacters ({ characters = [], matches, map }) {
+    const { player, winner, loser, round, game, tournament } = this.state
+
+    // next check for winner
+    if (winner) {
+      matches = this.getMatchFilterWinner({ winner, matches })
+    }
+
+    // next check for loser
+    if (loser) {
+      matches = this.getMatchFilterLoser({ loser, matches })
+    }
+
+    // next check for round
+    if (round) {
+      matches = this.getMatchFilterRound({ round, matches })
+    }
+
+    // next check for games
+    if (game) {
+      matches = this.getMatchFilterGame({ game, matches, map })
+    }
+
+    // and tournaments
+    if (tournament) {
+      matches = this.getMatchFilterTournament({ tournament, matches })
+    }
+
+    if (player) {
+      matches = this.getMatchFilterByPlayer({ player, matches })
+    }
+
+    // now map
+    if (tournament || winner || loser || round || game || player) {
+      const _characters = []
+      uniq(flattenDeep(matches.map(m => m.characters || []))).forEach(id => {
+        const character = find(characters, p => p.id === id)
+        if (character) _characters.push(character)
+      })
+      characters = _characters
+    }
+
+    return characters
+  }
+
+  filterRounds ({ rounds = [], matches = [], map }) {
+    const { player, winner, loser, character, game, tournament } = this.state
+
+    // next check for winner
+    if (winner) {
+      matches = this.getMatchFilterWinner({ winner, matches })
+    }
+
+    // next check for loser
+    if (loser) {
+      matches = this.getMatchFilterLoser({ loser, matches })
+    }
+
+    // next check for character
+    if (character) {
+      matches = this.getMatchFilterCharacter({ character, matches })
+    }
+
+    // next check for games
+    if (game) {
+      matches = this.getMatchFilterGame({ game, matches, map })
+    }
+
+    // and tournaments
+    if (tournament) {
+      matches = this.getMatchFilterTournament({ tournament, matches })
+    }
+
+    if (player) {
+      matches = this.getMatchFilterByPlayer({ player, matches })
+    }
+
+    // now map
+    if (tournament || winner || loser || character || game || player) {
+      const _rounds = []
+      uniq(matches.map(m => m.round)).forEach(round => {
+        const rFind = find(rounds, r => r === round)
+        if (rFind) _rounds.push(round)
+      })
+      rounds = _rounds
+    }
+
+    return rounds
+  }
+
   render () {
     const { classes, match: { matches: _matches = {} } } = this.props
     const { columns, options } = this
     const filters = { ...this.state }
 
-    const {
+    let {
       matches = [],
       tournaments = [],
       games = [],
@@ -319,9 +683,18 @@ class Matches extends React.Component {
       players = []
     } = _matches
 
-    const rounds = this.getRounds(matches)
     const map = this.buildMap({ tournaments, games, characters, players })
     const data = this.getMatches(matches, filters, map)
+    let rounds = this.getRounds(matches)
+
+    // update filters
+    tournaments = this.filterTournaments({ tournaments, matches, map })
+    players = this.filterPlayers({ players, matches, map })
+    games = this.filterGames({ games, matches, map })
+    characters = this.filterCharacters({ characters, matches, map })
+    rounds = this.filterRounds({ rounds, matches, map })
+    const winners = this.filterWinners({ players, matches, map })
+    const losers = this.filterLosers({ players, matches, map })
 
     return (
       <Paper className={classes.root} elevation={0}>
@@ -374,9 +747,9 @@ class Matches extends React.Component {
                 >
                   <MenuItem value='' />
                   {
-                    players.map(
-                      player => <MenuItem key={player.id} value={player.id}>
-                        {player.handle}
+                    winners.map(
+                      winner => <MenuItem key={winner.id} value={winner.id}>
+                        {winner.handle}
                       </MenuItem>
                     )
                   }
@@ -391,9 +764,9 @@ class Matches extends React.Component {
                 >
                   <MenuItem value='' />
                   {
-                    players.map(
-                      player => <MenuItem key={player.id} value={player.id}>
-                        {player.handle}
+                    losers.map(
+                      loser => <MenuItem key={loser.id} value={loser.id}>
+                        {loser.handle}
                       </MenuItem>
                     )
                   }
