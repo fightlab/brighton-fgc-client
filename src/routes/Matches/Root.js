@@ -450,7 +450,7 @@ class Matches extends React.Component {
 
     // next check for player
     if (player) {
-      matches = this.getMatchFilterPlayer({ player, matches })
+      matches = this.getMatchFilterByPlayer({ player, matches })
     }
 
     // next check for loser
@@ -495,7 +495,7 @@ class Matches extends React.Component {
 
     // next check for player
     if (player) {
-      matches = this.getMatchFilterPlayer({ player, matches })
+      matches = this.getMatchFilterByPlayer({ player, matches })
     }
 
     // next check for winner
