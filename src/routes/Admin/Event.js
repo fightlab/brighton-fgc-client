@@ -260,7 +260,7 @@ class AdminEvent extends React.Component {
     this.closeDeleted = this.closeDeleted.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     EventService
       .getAll()
       .then(events => this.setState({ events: orderBy(events, 'date', 'desc') }))

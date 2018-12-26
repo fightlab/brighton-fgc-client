@@ -43,7 +43,7 @@ class EloList extends React.Component {
     this.getImage = MetaService.getImage
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { id = '', dispatch } = this.props
 
     dispatch(gameActions.getElo(id))

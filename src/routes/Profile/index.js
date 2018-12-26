@@ -105,7 +105,7 @@ class Profile extends React.Component {
     }
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch } = this.props
     dispatch(userActions.getProfile())
     dispatch(userActions.getPlayer())

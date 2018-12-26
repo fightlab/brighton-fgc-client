@@ -59,7 +59,7 @@ class Home extends React.Component {
     this.setState({ selectedTab: index })
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch } = this.props
     // get events and tournaments
     dispatch(eventActions.getAll(8))

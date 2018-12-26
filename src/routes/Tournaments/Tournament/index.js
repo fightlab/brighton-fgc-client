@@ -76,7 +76,7 @@ class Tournament extends React.Component {
     this.setState({ selectedTabMatch: index })
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch, match } = this.props
     dispatch(tournamentActions.get(match.params.tournamentId))
   }
@@ -98,7 +98,8 @@ class Tournament extends React.Component {
       signUpUrl = '',
       id = '',
       // series = null,
-      youtube = ''
+      youtube = '',
+      type = ''
     } = tournament || {}
 
     return (
@@ -130,7 +131,7 @@ class Tournament extends React.Component {
           <Typography variant='subtitle1' component='h4'>
             <b>Type:</b>
             <br />
-            {MetaService.toTitleCase(tournament.type || '')}
+            {MetaService.toTitleCase(type || '')}
           </Typography>
           <br />
           <Button style={{marginRight: 4}} color='primary' href={bracket && bracket} target='_blank'>

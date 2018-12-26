@@ -261,7 +261,7 @@ class AdminSeries extends React.Component {
     this.closeDeleted = this.closeDeleted.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     SeriesService
       .getAll()
       .then(serieses => this.setState({ serieses: orderBy(serieses.map(s => {

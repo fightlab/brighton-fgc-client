@@ -32,7 +32,7 @@ const styles = theme => ({
 })
 
 class Series extends React.Component {
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch, match } = this.props
 
     dispatch(seriesActions.get(match.params.seriesId))

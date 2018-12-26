@@ -32,7 +32,7 @@ const styles = theme => ({
 })
 
 class PlayerEloList extends React.Component {
-  componentWillMount () {
+  componentDidMount () {
     const { id = '', dispatch } = this.props
 
     dispatch(playerActions.getElo(id))

@@ -80,7 +80,7 @@ class App extends React.Component {
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch } = this.props
     dispatch(userActions.checkIfAuthenticated())
     dispatch(userActions.checkIfAdmin())

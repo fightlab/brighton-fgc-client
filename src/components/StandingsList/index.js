@@ -42,7 +42,7 @@ class StandingsList extends React.Component {
     this.getImage = MetaService.getImage
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { variant = '', id = '', dispatch, limit } = this.props
     if (id) {
       switch (variant) {

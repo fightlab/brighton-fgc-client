@@ -234,7 +234,7 @@ class AdminGame extends React.Component {
     this.closeDeleted = this.closeDeleted.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     GameService
       .getAll()
       .then(games => this.setState({ games }))

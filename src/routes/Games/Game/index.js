@@ -26,7 +26,7 @@ const styles = theme => ({
 })
 
 class Game extends React.Component {
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch, match } = this.props
     dispatch(gameActions.get(match.params.gameId))
     dispatch(gameActions.getTournaments(match.params.gameId))

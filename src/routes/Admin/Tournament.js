@@ -300,7 +300,7 @@ class AdminTournament extends React.Component {
     this.performDeleteTournament = this.performDeleteTournament.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     TournamentService
       .getAllNoGame()
       .then(tournaments => this.setState({ tournaments: orderBy(tournaments, 'dateStart', 'desc') }))

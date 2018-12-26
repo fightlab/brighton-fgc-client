@@ -55,7 +55,7 @@ class MatchList extends React.Component {
     this.getImage = MetaService.getImage
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { id = '', dispatch } = this.props
 
     dispatch(tournamentActions.getMatches(id))

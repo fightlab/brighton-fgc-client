@@ -26,7 +26,7 @@ const styles = theme => ({
 })
 
 class Root extends React.Component {
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch } = this.props
     dispatch(playerActions.getAll())
   }

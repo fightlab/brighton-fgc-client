@@ -20,7 +20,7 @@ const styles = theme => ({
 })
 
 class Login extends React.Component {
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch, history } = this.props
     const { location } = history
     const { hash = '' } = location

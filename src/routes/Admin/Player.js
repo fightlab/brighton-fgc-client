@@ -507,7 +507,7 @@ class AdminPlayer extends React.Component {
     this.closeDeleted = this.closeDeleted.bind(this)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     PlayerService
       .all()
       .then(players => this.setState({ players }))

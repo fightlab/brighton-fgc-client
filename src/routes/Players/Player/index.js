@@ -118,7 +118,7 @@ class Player extends React.Component {
     return ((wins / games) * 100).toFixed(2)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { dispatch, match } = this.props
     dispatch(playerActions.get(match.params.playerId))
     dispatch(playerActions.getStatistics(match.params.playerId))
