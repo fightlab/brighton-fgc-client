@@ -6,10 +6,10 @@ import get from 'lodash/get'
 export class AuthService {
   constructor () {
     this.auth0 = new auth0.WebAuth({
-      domain: 'mkn-sh.eu.auth0.com',
-      clientID: '7cfMMfmUiD4AZean1vz9ln9pT2Y7qRUG',
-      redirectUri: process.env.REACT_APP_AUTH0_REDIRECT_URI || 'http://localhost:3000/login',
-      audience: 'https://api.hbk.gg',
+      domain: process.env.REACT_APP_AUTH0_DOMAIN,
+      clientID: process.env.REACT_APP_AUTH0_CLIENTID,
+      redirectUri: process.env.REACT_APP_AUTH0_REDIRECT_URI,
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
       responseType: 'token id_token',
       scope: 'openid profile email'
     })
