@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Snackbar from '@material-ui/core/Snackbar'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button'
 
 import { GameService } from '../../_services'
 
@@ -28,6 +29,7 @@ class GameRow extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.saveGame = this.saveGame.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
+    this.recalcElo = this.recalcElo.bind(this)
   }
 
   handleChange (event) {
@@ -48,6 +50,16 @@ class GameRow extends React.Component {
       .catch(error => this.setState({ error }))
   }
 
+  recalcElo () {
+    const { token } = this.props
+    const { game } = this.state
+
+    GameService
+      .recalcElo(token, game.id)
+      .then(() => this.setState({ saved: true }))
+      .catch(error => this.setState({ error }))
+  }
+
   closeSnackbar () {
     this.setState({
       saved: false
@@ -60,8 +72,8 @@ class GameRow extends React.Component {
 
     return (
       <TableRow>
-        <TableCell style={{padding: '5px'}}>{game.id}</TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>{game.id}</TableCell>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='name'
             name='name'
@@ -72,7 +84,7 @@ class GameRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='short'
             name='short'
@@ -83,7 +95,7 @@ class GameRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='imageUrl'
             name='imageUrl'
@@ -94,7 +106,7 @@ class GameRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='bgUrl'
             name='bgUrl'
@@ -105,13 +117,16 @@ class GameRow extends React.Component {
             margin='normal'
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <IconButton onClick={this.saveGame} aria-label='Save'>
             <SaveIcon />
           </IconButton>
           <IconButton onClick={() => deleteGame(game.id)} aria-label='Delete'>
             <DeleteIcon />
           </IconButton>
+          <Button raised='true' color='primary' onClick={this.recalcElo}>
+            Recalc Elo
+          </Button>
           <Snackbar
             anchorOrigin={{
               vertical: 'bottom',
@@ -165,7 +180,7 @@ class NewGameRow extends React.Component {
     return (
       <TableRow>
         <TableCell />
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='name'
             name='name'
@@ -176,7 +191,7 @@ class NewGameRow extends React.Component {
             fullWidth
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='short'
             name='short'
@@ -187,7 +202,7 @@ class NewGameRow extends React.Component {
             fullWidth
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='imageUrl'
             name='imageUrl'
@@ -198,7 +213,7 @@ class NewGameRow extends React.Component {
             fullWidth
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <TextField
             id='bgUrl'
             name='bgUrl'
@@ -209,7 +224,7 @@ class NewGameRow extends React.Component {
             fullWidth
           />
         </TableCell>
-        <TableCell style={{padding: '5px'}}>
+        <TableCell style={{ padding: '5px' }}>
           <IconButton onClick={() => addGame(game)} aria-label='Save'>
             <AddCircleIcon />
           </IconButton>
@@ -303,12 +318,12 @@ class AdminGame extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={{padding: '5px'}}>ID</TableCell>
-              <TableCell style={{padding: '5px'}}>Name</TableCell>
-              <TableCell style={{padding: '5px'}}>Short</TableCell>
-              <TableCell style={{padding: '5px'}}>Image URL</TableCell>
-              <TableCell style={{padding: '5px'}}>Background URL</TableCell>
-              <TableCell style={{padding: '5px'}}>Actions</TableCell>
+              <TableCell style={{ padding: '5px' }}>ID</TableCell>
+              <TableCell style={{ padding: '5px' }}>Name</TableCell>
+              <TableCell style={{ padding: '5px' }}>Short</TableCell>
+              <TableCell style={{ padding: '5px' }}>Image URL</TableCell>
+              <TableCell style={{ padding: '5px' }}>Background URL</TableCell>
+              <TableCell style={{ padding: '5px' }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -60,4 +60,11 @@ export class GameService {
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err.response))
   }
+
+  static recalcElo (token, id) {
+    return axios
+      .put(`${URL}/${id}/elo`, {}, getAuthHeader(token))
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response))
+  }
 }

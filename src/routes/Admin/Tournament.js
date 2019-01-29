@@ -111,17 +111,6 @@ class TournamentRow extends React.Component {
         </TableCell>
         <TableCell style={{padding: '5px'}}>
           <TextField
-            id='series'
-            name='series'
-            placeholder='Series ID'
-            value={tournament.series || ''}
-            fullWidth
-            margin='normal'
-            onChange={this.handleChange}
-          />
-        </TableCell>
-        <TableCell style={{padding: '5px'}}>
-          <TextField
             id='event'
             name='event'
             placeholder='Event ID'
@@ -240,17 +229,6 @@ class NewTournamentRow extends React.Component {
             fullWidth
             margin='normal'
             onChange={this.handleChange}
-          />
-        </TableCell>
-        <TableCell style={{padding: '5px'}}>
-          <TextField
-            id='series'
-            name='series'
-            placeholder='Series ID'
-            value={tournament.series || ''}
-            onChange={this.handleChange}
-            fullWidth
-            margin='normal'
           />
         </TableCell>
         <TableCell style={{padding: '5px'}}>
@@ -377,7 +355,6 @@ class AdminTournament extends React.Component {
               <TableCell style={{padding: '5px'}}>Bracket</TableCell>
               <TableCell style={{padding: '5px'}}>Sign Up</TableCell>
               <TableCell style={{padding: '5px'}}>YouTube</TableCell>
-              <TableCell style={{padding: '5px'}}>Series</TableCell>
               <TableCell style={{padding: '5px'}}>Event</TableCell>
               <TableCell style={{padding: '5px'}}>Game</TableCell>
               <TableCell style={{padding: '5px'}}>Actions</TableCell>
