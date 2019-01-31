@@ -30,7 +30,7 @@ Change directory:
 ```sh
 $ cd brighton-fgc-client
 ```
-Install the dependencies (I use yarn, but npm also works):
+Install the dependencies yarn is preferable thanks to the lockfile so you should get the same version i have, but npm should work too:
 ```sh
 $ yarn #if using yarn
 $ #or
