@@ -3,17 +3,16 @@
   "dockerfileLines" :[
                         "FROM node:8-alpine",
                         "RUN apk update",
-                        "RUN apk add yarn",
+                        "RUN apk add yarn curl",
                         "RUN mkdir -p /usr/src/app",
                         "WORKDIR /usr/src/app",
                         "COPY ./src/package.json /usr/src/app/",
                         "COPY ./src/yarn.lock /usr/src/app/",
-                        "RUN yarn && yarn cache clean --force",
+                        "RUN yarn --prod && yarn cache clean --force",
                         "COPY ./src /usr/src/app",
                         "ENV NODE_ENV production",
                         "ENV PORT 80",
                         "EXPOSE 80",
-                        "RUN apk add curl",
                         "CMD [ \"npm\", \"start\" ]"
                     ]
  }
