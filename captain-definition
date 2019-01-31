@@ -2,6 +2,7 @@
   "schemaVersion" :1 ,
   "dockerfileLines" :[
                         "FROM node:8-alpine",
+                        "RUN apk update",
                         "RUN apk add yarn",
                         "RUN mkdir -p /usr/src/app",
                         "WORKDIR /usr/src/app",
@@ -11,7 +12,7 @@
                         "ENV NODE_ENV production",
                         "ENV PORT 80",
                         "EXPOSE 80",
-                        "RUN apk update && apk add curl",
+                        "RUN apk add curl",
                         "CMD [ \"npm\", \"start\" ]"
                     ]
  }
