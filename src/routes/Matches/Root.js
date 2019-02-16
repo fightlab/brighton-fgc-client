@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import qs from 'query-string'
 import Paper from '@material-ui/core/Paper'
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
@@ -18,7 +19,7 @@ import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import { uniq, find, flattenDeep } from 'lodash'
+import { uniq, find, flattenDeep, omitBy } from 'lodash'
 
 import { matchActions } from '../../_actions'
 import { MetaService, DateService } from '../../_services'
@@ -301,12 +302,20 @@ class Matches extends React.Component {
   }
 
   componentDidMount () {
-    const { dispatch } = this.props
+    const { dispatch, location } = this.props
+    this.setState(qs.parse(location.search))
     dispatch(matchActions.getMatchesYoutube())
   }
 
   handleFormChange (event) {
-    this.setState({ [event.target.name]: event.target.value })
+    this.setState({ [event.target.name]: event.target.value }, this.updateQueryString)
+  }
+
+  updateQueryString () {
+    // update query string
+    const { history } = this.props
+    const search = qs.stringify(omitBy(this.state, v => v === ''))
+    history.push({ search })
   }
 
   getMuiTheme () {
@@ -835,6 +844,8 @@ class Matches extends React.Component {
 
 Matches.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 }
