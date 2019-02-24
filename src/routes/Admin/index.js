@@ -9,6 +9,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange'
 import VideogameAssetIcon from '@material-ui/icons/VideogameAsset'
 import PeopleIcon from '@material-ui/icons/People'
 import StarsIcon from '@material-ui/icons/Stars'
+import WcIcon from '@material-ui/icons/Wc'
 // import ViewListIcon from '@material-ui/icons/ViewList'
 
 import AdminGame from './Game'
@@ -16,6 +17,7 @@ import AdminTournament from './Tournament'
 import AdminPlayer from './Player'
 // import AdminSeries from './Series'
 import AdminEvent from './Event'
+import AdminCharacter from './Character'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -63,6 +65,7 @@ class Admin extends React.Component {
           <BottomNavigationAction label='Players' icon={<PeopleIcon />} />
           {/* <BottomNavigationAction label='Series' icon={<ViewListIcon />} /> */}
           <BottomNavigationAction label='Tournaments' icon={<StarsIcon />} />
+          <BottomNavigationAction label='Characters' icon={<WcIcon />} />
         </BottomNavigation>
         {
           value === 0 && (
@@ -111,6 +114,16 @@ class Admin extends React.Component {
                 Tournaments
               </Typography>
               <AdminTournament />
+            </div>
+          )
+        }
+        {
+          value === 4 && (
+            <div>
+              <Typography variant='h5' component='h3'>
+                Characters
+              </Typography>
+              <AdminCharacter />
             </div>
           )
         }

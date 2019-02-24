@@ -124,7 +124,7 @@ class GameRow extends React.Component {
           <IconButton onClick={() => deleteGame(game.id)} aria-label='Delete'>
             <DeleteIcon />
           </IconButton>
-          <Button variant="contained" color='primary' onClick={this.recalcElo}>
+          <Button variant='contained' color='primary' onClick={this.recalcElo}>
             Recalc Elo
           </Button>
           <Snackbar
