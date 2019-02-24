@@ -1,6 +1,6 @@
 {
   "name": "brighton-fgc-client",
-  "version": "1.8.4",
+  "version": "1.9.0",
   "license": "MIT",
   "scripts": {
     "start": "REACT_APP_ENV_API_VERSION=$(curl https://api.hbk.gg) REACT_APP_ENV_CLIENT_VERSION=$npm_package_version react-scripts build && NODE_ENV=production node server.js",
