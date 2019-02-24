@@ -68,7 +68,7 @@ class PlayersCard extends React.Component {
             onChange={this.handleTabChange}
             indicatorColor='primary'
             textColor='primary'
-            fullWidth
+            variant='fullWidth'
           >
             <Tab label='Players' />
           </Tabs>

@@ -29,7 +29,7 @@ class BaseHomeCard extends React.Component {
           value={0}
           indicatorColor='primary'
           textColor='primary'
-          fullWidth
+          variant='fullWidth'
         >
           <Tab label={title} />
         </Tabs>

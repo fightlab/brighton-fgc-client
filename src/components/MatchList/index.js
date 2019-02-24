@@ -107,7 +107,7 @@ class MatchList extends React.Component {
                   </CardContent>
                   {
                     !!match.youtubeId && <CardActions>
-                      <a className={classes.noDeco} href={`https://www.youtube.com/watch?v=${match.youtubeId}&t=${match.youtubeTimestamp}`} target='_blank'>
+                      <a className={classes.noDeco} href={`https://www.youtube.com/watch?v=${match.youtubeId}&t=${match.youtubeTimestamp}`} target='_blank' rel='noopener noreferrer'>
                         <Button variant='outlined' color='primary' size='small'>
                           View VOD
                         </Button>

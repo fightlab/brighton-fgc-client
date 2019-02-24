@@ -316,7 +316,7 @@ class Player extends React.Component {
               onChange={this.handleTabChangeStats}
               indicatorColor='primary'
               textColor='primary'
-              fullWidth
+              variant='fullWidth'
             >
               <Tab label='Overall Statistics' />
               <Tab label='Head to Head Statistics' />
@@ -582,7 +582,7 @@ class Player extends React.Component {
               onChange={this.handleTabChange}
               indicatorColor='primary'
               textColor='primary'
-              fullWidth
+              variant='fullWidth'
             >
               <Tab label='Tournaments' />
               <Tab label='Games' />

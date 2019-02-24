@@ -284,7 +284,7 @@ class Profile extends React.Component {
                 </Tooltip>
               </Grid>
               <Grid item xs={12} className={classes.item}>
-                <Button variant='raised' color='secondary' onClick={this.savePlayer} className={classes.button}>
+                <Button variant='contained' color='secondary' onClick={this.savePlayer} className={classes.button}>
                   Save
                 </Button>
               </Grid>

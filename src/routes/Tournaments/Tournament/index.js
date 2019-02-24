@@ -134,11 +134,11 @@ class Tournament extends React.Component {
             {MetaService.toTitleCase(type || '')}
           </Typography>
           <br />
-          <Button style={{marginRight: 4}} color='primary' href={bracket && bracket} target='_blank'>
+          <Button style={{ marginRight: 4 }} color='primary' href={bracket && bracket} target='_blank'>
             Challonge Page
           </Button>
           {
-            !!dateStart && DateService.compareDates(dateStart, new Date().toISOString()) && <Button style={{marginLeft: 4}} variant='raised' color='secondary' href={signUpUrl && signUpUrl} target='_blank'>
+            !!dateStart && DateService.compareDates(dateStart, new Date().toISOString()) && <Button style={{ marginLeft: 4 }} variant='contained' color='secondary' href={signUpUrl && signUpUrl} target='_blank'>
               Sign Up Page
             </Button>
           }
@@ -165,7 +165,7 @@ class Tournament extends React.Component {
               onChange={this.handleTabChange}
               indicatorColor='primary'
               textColor='primary'
-              fullWidth
+              variant='fullWidth'
             >
               <Tab label='Tournament Standings' />
               <Tab label='Game Elo Ranking' />
@@ -211,7 +211,7 @@ class Tournament extends React.Component {
               onChange={this.handleTabChangeMatch}
               indicatorColor='primary'
               textColor='primary'
-              fullWidth
+              variant='fullWidth'
             >
               <Tab label='Bracket' />
               {
@@ -224,7 +224,7 @@ class Tournament extends React.Component {
               className={classes.card}
             >
               {
-                !!bracket && <iframe title='bracket' src={`${bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{minHeight: '450px', width: '100%'}} frameBorder='0' scrolling='yes' />
+                !!bracket && <iframe title='bracket' src={`${bracket.replace('http://', 'https://')}/module?multiplier=1&match_width_multiplier=1&show_final_results=0&show_standings=0&theme=2&subdomain=`} style={{ minHeight: '450px', width: '100%' }} frameBorder='0' scrolling='yes' />
               }
             </Card>
           }
