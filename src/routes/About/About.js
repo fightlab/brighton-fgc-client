@@ -21,7 +21,7 @@ const styles = theme => ({
   }
 })
 
-const About = ({classes}) => (
+const About = ({ classes }) => (
   <Paper className={classes.root} elevation={0}>
     <Typography variant='h3' component='h1'>
       About Us

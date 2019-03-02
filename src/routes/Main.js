@@ -15,6 +15,7 @@ import Login from './Login'
 import Matches from './Matches'
 import Admin from './Admin'
 import Profile from './Profile'
+import Privacy from './Privacy'
 
 const Main = ({ isAuthenticated, isAdmin }) => (
   <Switch>
@@ -25,6 +26,7 @@ const Main = ({ isAuthenticated, isAdmin }) => (
     <Route path='/players' component={Players} />
     <Route path='/standings' component={Standings} />
     <Route path='/about' component={About} />
+    <Route path='/privacy-terms-cookies' component={Privacy} />
     <Route path='/matches' component={Matches} />
     <Route path='/login' component={Login} />
     <LoggedInRoute path='/profile' component={Profile} isAuthenticated={isAuthenticated} />
