@@ -180,6 +180,7 @@ class Matches extends React.Component {
         filter: false,
         sort: false,
         customBodyRender: (value = []) => {
+          console.log(value)
           return (
             <ul>
               {

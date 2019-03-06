@@ -132,9 +132,9 @@ class CharacterRow extends React.Component {
   }
 
   handleChange (event) {
-    const { game } = this.state
-    game[event.target.name] = event.target.value
-    this.setState({ game })
+    const { character } = this.state
+    character[event.target.name] = event.target.value
+    this.setState({ character })
   }
 
   save () {
