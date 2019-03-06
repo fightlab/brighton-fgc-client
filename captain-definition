@@ -1,20 +1,8 @@
 {
   "schemaVersion": 2,
   "dockerfileLines": [
-    "FROM node:10-alpine",
-    "RUN apk update",
-    "RUN apk add yarn curl",
-    "RUN mkdir -p /usr/src/app",
-    "WORKDIR /usr/src/app",
-    "COPY ./package.json /usr/src/app/",
-    "COPY ./yarn.lock /usr/src/app/",
-    "ENV NODE_ENV production",
-    "RUN yarn install --production=true",
-    "RUN yarn cache clean --force",
-    "COPY ./ /usr/src/app",
-    "ENV NODE_ENV production",
-    "ENV PORT 80",
-    "EXPOSE 80",
-    "CMD [ \"npm\", \"start\" ]"
+    "FROM socialengine/nginx-spa:latest", 
+    "COPY ./build /app", 
+    "RUN chmod -R 777 /app"
   ]
 }
