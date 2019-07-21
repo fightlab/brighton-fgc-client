@@ -2,6 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { hydrate } from 'react-dom'
 import BrowserRouter from 'react-router-dom/BrowserRouter'
+import * as serviceWorker from './serviceWorker'
 import theme from './theme'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { CookiesProvider } from 'react-cookie'
@@ -54,3 +55,5 @@ if (module.hot) {
     )
   })
 }
+
+serviceWorker.register()
