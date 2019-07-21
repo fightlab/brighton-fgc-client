@@ -136,7 +136,7 @@ class App extends React.Component {
           }
         </List>
         <Divider />
-        <div style={{justifyContent: 'flex-start'}} className={classes.drawerHeader}>
+        <div style={{ justifyContent: 'flex-start' }} className={classes.drawerHeader}>
           <Typography variant='caption' component='p'>
             <br />
             Brighton FGC Site by
@@ -180,7 +180,7 @@ class App extends React.Component {
           </Hidden>
           <Hidden smDown implementation='css'>
             <Drawer
-              style={{height: '100%'}}
+              style={{ height: '100%' }}
               variant='permanent'
               open
               classes={{

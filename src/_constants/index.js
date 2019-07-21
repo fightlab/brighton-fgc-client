@@ -6,3 +6,5 @@ export * from './tournament.constants'
 export * from './series.constants'
 export * from './player.constants'
 export * from './match.constants'
+
+export * from './home.constants'

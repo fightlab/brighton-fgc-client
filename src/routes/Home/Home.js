@@ -9,12 +9,16 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import orderBy from 'lodash/orderBy'
 import filter from 'lodash/filter'
-import { eventActions, tournamentActions, matchActions } from '../../_actions'
+import has from 'lodash/has'
+import get from 'lodash/get'
+
+import { eventActions, tournamentActions, HomeActions } from '../../_actions'
 import { DateService } from '../../_services'
 
 import BaseHomeCard from '../../components/BaseHomeCard'
 import TournamentList from '../../components/TournamentList'
 import EventList from '../../components/EventList'
+import { CircularProgress } from '@material-ui/core'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -66,23 +70,27 @@ class Home extends React.Component {
     dispatch(tournamentActions.getAll(8))
 
     // get global stats
-    dispatch(eventActions.getCount())
-    dispatch(tournamentActions.getCount())
-    dispatch(matchActions.getCount())
-    dispatch(matchActions.getCountGames())
+    // dispatch(eventActions.getCount())
+    // dispatch(tournamentActions.getCount())
+    // dispatch(matchActions.getCount())
+    // dispatch(matchActions.getCountGames())
+
+    // new stats
+    dispatch(HomeActions.statistics())
   }
 
   render () {
-    const { classes, event, tournament, match } = this.props
-    const { events = [], count: eventCount = 0 } = event
-    const { tournaments = [], count: tournamentCount = 0 } = tournament
-    const { count: matchCount = 0, countGames: matchCountGames = 0 } = match
+    const { classes, event, tournament, home } = this.props
+    const { events = [] } = event
+    const { tournaments = [] } = tournament
 
     const nextEvents = orderBy(filter(events, event => DateService.compareDates(event.date, new Date().toISOString())), 'date', 'desc')
     const pastEvents = orderBy(filter(events, event => DateService.compareDates(new Date().toISOString(), event.date)), 'date', 'desc')
 
     const nextTournaments = orderBy(filter(tournaments, tournament => DateService.compareDates(tournament.dateStart, new Date().toISOString())), 'date', 'desc')
     const pastTournaments = orderBy(filter(tournaments, tournament => DateService.compareDates(new Date().toISOString(), tournament.dateStart)), 'date', 'desc')
+
+    const { statistics } = home
 
     return (
       <Paper className={classes.root} elevation={0}>
@@ -151,7 +159,11 @@ class Home extends React.Component {
                     Events
                   </Typography>
                   <Typography variant='h4' gutterBottom align='center'>
-                    {eventCount}
+                    {
+                      has(statistics, 'data.events')
+                        ? get(statistics, 'data.events')
+                        : <CircularProgress />
+                    }
                   </Typography>
                 </Grid>
                 <Grid item sm={3} xs={6}>
@@ -159,7 +171,11 @@ class Home extends React.Component {
                     Tournaments
                   </Typography>
                   <Typography variant='h4' gutterBottom align='center'>
-                    {tournamentCount}
+                    {
+                      has(statistics, 'data.tournaments')
+                        ? get(statistics, 'data.tournaments')
+                        : <CircularProgress />
+                    }
                   </Typography>
                 </Grid>
                 <Grid item sm={3} xs={6}>
@@ -167,15 +183,23 @@ class Home extends React.Component {
                     Matches
                   </Typography>
                   <Typography variant='h4' gutterBottom align='center'>
-                    {matchCount}
+                    {
+                      has(statistics, 'data.matches')
+                        ? get(statistics, 'data.matches')
+                        : <CircularProgress />
+                    }
                   </Typography>
                 </Grid>
                 <Grid item sm={3} xs={6}>
                   <Typography variant='h6' gutterBottom align='center'>
-                   Match Games
+                   Players
                   </Typography>
                   <Typography variant='h4' gutterBottom align='center'>
-                    {matchCountGames}
+                    {
+                      has(statistics, 'data.players')
+                        ? get(statistics, 'data.players')
+                        : <CircularProgress />
+                    }
                   </Typography>
                 </Grid>
               </Grid>
@@ -191,21 +215,23 @@ Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   event: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  tournament: PropTypes.object.isRequired
+  tournament: PropTypes.object.isRequired,
+  home: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
   const {
     event,
     tournament,
-    match
+    match,
+    home
   } = state
 
   return {
     event,
     tournament,
-    match
+    match,
+    home
   }
 }
 

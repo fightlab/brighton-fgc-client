@@ -1,0 +1,5 @@
+export const HomeConstants = {
+  GET_STATS_REQ: 'HOME_GET_STATS_REQ',
+  GET_STATS_RES: 'HOME_GET_STATS_RES',
+  GET_STATS_ERR: 'HOME_GET_STATS_ERR'
+}

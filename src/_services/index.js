@@ -10,3 +10,5 @@ export * from './series.service'
 export * from './tournament.service'
 export * from './match.service'
 export * from './character.service'
+
+export * from './home.service'

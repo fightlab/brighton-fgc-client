@@ -7,6 +7,7 @@ import { series } from './series.reducer'
 import { player } from './player.reducer'
 import { query } from './query.reducer'
 import { match } from './match.reducer'
+import { home } from './home.reducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   series,
   player,
   query,
-  match
+  match,
+  home
 })
 
 export default rootReducer

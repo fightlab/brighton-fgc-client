@@ -6,7 +6,10 @@ import * as serviceWorker from './serviceWorker'
 import theme from './theme'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { CookiesProvider } from 'react-cookie'
+import { ApolloProvider } from 'react-apollo'
+
 import App from './App'
+import { gqlClient as client } from './_constants/api.constants'
 
 import { createstore } from './_store'
 
@@ -20,15 +23,17 @@ delete window.__PRELOADED_STATE__
 const sheetsManager = new WeakMap()
 
 const app = (
-  <Provider store={createstore(preloadedState)}>
-    <CookiesProvider>
-      <BrowserRouter>
-        <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-          <App />
-        </MuiThemeProvider>
-      </BrowserRouter>
-    </CookiesProvider>
-  </Provider>
+  <ApolloProvider client={client}>
+    <Provider store={createstore(preloadedState)}>
+      <CookiesProvider>
+        <BrowserRouter>
+          <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+            <App />
+          </MuiThemeProvider>
+        </BrowserRouter>
+      </CookiesProvider>
+    </Provider>
+  </ApolloProvider>
 )
 
 hydrate(
