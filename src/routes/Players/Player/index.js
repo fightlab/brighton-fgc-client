@@ -230,7 +230,7 @@ class Player extends React.Component {
     }
 
     return (
-      <Grid spacing={16} container className={classes.container}>
+      <Grid spacing={2} container className={classes.container}>
         <Grid item xs={12} className={classes.item}>
           <Typography variant='h4' component='h2' align='center'>
             {player.handle}

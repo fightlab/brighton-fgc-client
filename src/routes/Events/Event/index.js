@@ -38,7 +38,7 @@ class Event extends React.Component {
     const { tournaments = [], event } = _event
 
     return (
-      <Grid spacing={16} container className={classes.container}>
+      <Grid spacing={2} container className={classes.container}>
         <Grid item xs={12} className={classes.item}>
           <Typography variant='h4' component='h2'>
             {event && event.name}

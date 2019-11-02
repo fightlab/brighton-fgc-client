@@ -363,7 +363,7 @@ class PlayerGame extends React.Component {
 
     return (
       <Grid
-        spacing={16}
+        spacing={2}
         container
         className={classes.container}
       >

@@ -40,7 +40,7 @@ class Game extends React.Component {
     const pastTournaments = orderBy(filter(tournaments, tournament => DateService.compareDates(new Date().toISOString(), tournament.dateStart)), 'date', 'desc')
 
     return (
-      <Grid spacing={16} container className={classes.container}>
+      <Grid spacing={2} container className={classes.container}>
         <Grid item xs={12}>
           <Typography variant='h4' component='h2'>
             {game.game && game.game.name}

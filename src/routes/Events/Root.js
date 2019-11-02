@@ -42,60 +42,60 @@ class Root extends React.Component {
     return (
       <div>
         {
-          event.isFetching && <Grid spacing={16} container className={classes.container}>
-            <Grid item xs={12}>
-              <Typography variant='h4' component='h2'>
-              Upcoming Events
-              </Typography>
-            </Grid>
-            {
-              <CircularProgress className={classes.progress} size={50} />
-            }
-          </Grid>
-        }
-        {
-          !!upcoming.length && <Grid spacing={16} container className={classes.container}>
-            <Grid item xs={12}>
-              <Typography variant='h4' component='h2'>
+          event.isFetching &&
+            <Grid spacing={2} container className={classes.container}>
+              <Grid item xs={12}>
+                <Typography variant='h4' component='h2'>
                 Upcoming Events
-              </Typography>
-            </Grid>
-            {
-              upcoming.map(event => (
-                <Grid item xs={12} sm={4} lg={3} key={event.id}>
-                  <EventCard event={event} />
-                </Grid>
-              ))
-            }
-          </Grid>
-        }
-        {
-          event.isFetching && <Grid spacing={16} container className={classes.container}>
-            <Grid item xs={12}>
-              <Typography variant='h4' component='h2'>
-              Past Events
-              </Typography>
-            </Grid>
-            {
+                </Typography>
+              </Grid>
               <CircularProgress className={classes.progress} size={50} />
-            }
-          </Grid>
+            </Grid>
         }
         {
-          !!past.length && <Grid spacing={16} container className={classes.container}>
-            <Grid item xs={12}>
-              <Typography variant='h4' component='h2'>
-                Past Events
-              </Typography>
+          !!upcoming.length &&
+            <Grid spacing={2} container className={classes.container}>
+              <Grid item xs={12}>
+                <Typography variant='h4' component='h2'>
+                Upcoming Events
+                </Typography>
+              </Grid>
+              {
+                upcoming.map(event => (
+                  <Grid item xs={12} sm={4} lg={3} key={event.id}>
+                    <EventCard event={event} />
+                  </Grid>
+                ))
+              }
             </Grid>
-            {
-              past.map(event => (
-                <Grid item xs={12} sm={4} lg={3} key={event.id}>
-                  <EventCard event={event} />
-                </Grid>
-              ))
-            }
-          </Grid>
+        }
+        {
+          event.isFetching &&
+            <Grid spacing={2} container className={classes.container}>
+              <Grid item xs={12}>
+                <Typography variant='h4' component='h2'>
+              Past Events
+                </Typography>
+              </Grid>
+              <CircularProgress className={classes.progress} size={50} />
+            </Grid>
+        }
+        {
+          !!past.length &&
+            <Grid spacing={2} container className={classes.container}>
+              <Grid item xs={12}>
+                <Typography variant='h4' component='h2'>
+                Past Events
+                </Typography>
+              </Grid>
+              {
+                past.map(event => (
+                  <Grid item xs={12} sm={4} lg={3} key={event.id}>
+                    <EventCard event={event} />
+                  </Grid>
+                ))
+              }
+            </Grid>
         }
       </div>
     )

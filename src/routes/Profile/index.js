@@ -122,7 +122,7 @@ class Profile extends React.Component {
           User Profile
         </Typography>
         <Grid
-          spacing={16}
+          spacing={2}
           container
           className={classes.container}
         >
@@ -147,7 +147,7 @@ class Profile extends React.Component {
           Habrewken Player Profile
         </Typography>
         <Grid
-          spacing={16}
+          spacing={2}
           container
           className={classes.container}
         >

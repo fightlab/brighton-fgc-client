@@ -110,7 +110,7 @@ class Home extends React.Component {
             Brighton Fighting Game Community - Website and Resource
           </Typography>
         </Hidden>
-        <Grid spacing={16} container className={classes.container}>
+        <Grid spacing={2} container className={classes.container}>
           <Grid item md={6} sm={6} xs={12}>
             <BaseHomeCard title='Tournaments'>
               {
@@ -153,7 +153,7 @@ class Home extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <BaseHomeCard title='Global Statistics'>
-              <Grid spacing={16} container className={classes.containerStats}>
+              <Grid spacing={2} container className={classes.containerStats}>
                 <Grid item sm={3} xs={6}>
                   <Typography variant='h6' gutterBottom align='center'>
                     Events

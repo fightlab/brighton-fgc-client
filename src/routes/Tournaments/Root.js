@@ -42,7 +42,7 @@ class Root extends React.Component {
     return (
       <div>
         {
-          tournament.isFetching && <Grid spacing={16} container className={classes.container}>
+          tournament.isFetching && <Grid spacing={2} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='h4' component='h2'>
                 Upcoming Tournaments
@@ -54,7 +54,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          !!upcoming.length && <Grid spacing={16} container className={classes.container}>
+          !!upcoming.length && <Grid spacing={2} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='h4' component='h2'>
                 Upcoming Tournaments
@@ -70,7 +70,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          tournament.isFetching && <Grid spacing={16} container className={classes.container}>
+          tournament.isFetching && <Grid spacing={2} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='h4' component='h2'>
                 Past Tournaments
@@ -82,7 +82,7 @@ class Root extends React.Component {
           </Grid>
         }
         {
-          !!past.length && <Grid spacing={16} container className={classes.container}>
+          !!past.length && <Grid spacing={2} container className={classes.container}>
             <Grid item xs={12}>
               <Typography variant='h4' component='h2'>
                 Past Tournaments

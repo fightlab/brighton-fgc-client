@@ -66,7 +66,7 @@ class MatchList extends React.Component {
 
     return (
       <Scrollbar className={classes.scroll}>
-        <Grid container spacing={8} style={{ margin: 0, width: '100%' }}>
+        <Grid container spacing={1} style={{ margin: 0, width: '100%' }}>
           {
             !!matches.length && map(orderBy(matches, m => new Date(m.endDate).getTime()), match => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={match.id}>

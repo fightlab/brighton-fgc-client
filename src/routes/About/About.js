@@ -56,7 +56,7 @@ const About = ({ classes }) => (
       Information about the tournaments, events, games and players are available on this site, as well as via our Facebook, Twitter, and Discord, with links in the menu
     </Typography>
     <br />
-    <Grid container className={classes.container}>
+    <Grid container className={classes.container} spacing={2}>
       <Grid item md={7} sm={12}>
         <iframe title='map' src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2520.358867349505!2d-0.1376912838888517!3d50.82451637952868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4875859f85f1209d%3A0x34e8561b881ac235!2sBrewDog+Brighton!5e0!3m2!1sen!2suk!4v1481479563024' width='100%' height='500' frameBorder='0' allowFullScreen='allowfullscreen' />
       </Grid>

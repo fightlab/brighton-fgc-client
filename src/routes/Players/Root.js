@@ -40,14 +40,14 @@ class Root extends React.Component {
     return (
       <div>
         {
-          player.isFetching && <Grid spacing={16} container className={classes.container}>
+          player.isFetching && <Grid spacing={2} container className={classes.container}>
             {
               <CircularProgress className={classes.progress} size={50} />
             }
           </Grid>
         }
         {
-          !!players.length && <Grid spacing={16} container className={classes.container}>
+          !!players.length && <Grid spacing={2} container className={classes.container}>
             {
               players.map(player => (
                 <Grid item xs={6} sm={4} lg={3} key={player._id}>
