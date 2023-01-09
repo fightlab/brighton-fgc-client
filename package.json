@@ -20,7 +20,7 @@
     "highcharts": "^6.2.0",
     "highcharts-react-official": "^1.4.0",
     "lodash": "^4.17.11",
-    "luxon": "^1.4.3",
+    "luxon": "^1.28.1",
     "mdi-material-ui": "^5.5.0",
     "memoize-one": "^4.0.3",
     "morgan": "^1.9.1",
